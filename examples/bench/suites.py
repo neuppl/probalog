@@ -134,5 +134,5 @@ SUITES = {
     "dag": dict(gen=dag, ladder=[(6, w) for w in (3, 4, 5, 6)] + [(l, 6) for l in (7, 8, 9, 10, 12)]),
     "smokers": dict(gen=smokers, ladder=[(n,) for n in (20, 40, 60, 80, 100, 130, 160, 190)]),
     "sg": dict(gen=sg, ladder=[(d,) for d in (6, 8, 10, 11, 12, 13, 14, 15)]),
-    "pointsto": dict(gen=pointsto, ladder=[(n,) for n in (50, 150, 300, 600, 1000, 1200, 1400, 1700, 2000)]),
+    "pointsto": dict(gen=pointsto, ladder=[(n,) for n in (50, 150, 300, 600, 1000, 1700, 2500, 4000, 6000, 9000)]),
 }

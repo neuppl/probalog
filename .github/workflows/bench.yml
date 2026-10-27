@@ -12,7 +12,15 @@ concurrency:
 
 jobs:
   collect:
-    runs-on: ubuntu-latest
+    # The runner comes from the repository variable BENCH_RUNS_ON, as JSON:
+    # '["self-hosted", "linux", "x64"]' for the organization's machine, or
+    # unset for GitHub's hosted runner. Pull requests from forks always get
+    # the hosted runner, so outside code never runs on the self-hosted one.
+    runs-on: >-
+      ${{ (github.event_name == 'pull_request'
+           && github.event.pull_request.head.repo.full_name != github.repository)
+          && 'ubuntu-latest'
+          || fromJSON(vars.BENCH_RUNS_ON || '"ubuntu-latest"') }}
     timeout-minutes: 360
     permissions:
       contents: write
@@ -59,9 +67,12 @@ jobs:
 
       # Every comparison system lives under one directory, installed by
       # setup.sh. It is restored here and saved straight after setup, so
-      # a run whose report fails still keeps a warm cache for the next.
+      # a run whose report fails still keeps a warm cache for the next. A
+      # self-hosted machine keeps the directory on disk between runs, so
+      # it skips the cache.
       - name: Restore benchmark systems
         id: systems-cache
+        if: runner.environment == 'github-hosted'
         uses: actions/cache/restore@v6
         with:
           path: ~/.cache/probalog-bench
@@ -71,7 +82,7 @@ jobs:
         run: examples/bench/setup.sh
 
       - name: Save benchmark systems
-        if: steps.systems-cache.outputs.cache-hit != 'true'
+        if: runner.environment == 'github-hosted' && steps.systems-cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v6
         with:
           path: ~/.cache/probalog-bench

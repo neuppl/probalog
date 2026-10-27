@@ -125,16 +125,21 @@
 ;; Indexes hold facts, not guards: a fact's guard is read from the current
 ;; set when it is matched, so an index stays valid as guards grow and only
 ;; needs extending with facts that are new.
-(struct pred-index (all by-pos) #:transparent)
-(define (empty-pred-index) (pred-index '() (hash)))
+(struct pred-index (all count by-pos) #:transparent)
+(define (empty-pred-index) (pred-index '() 0 (hash)))
 
+;; by-pos maps a position to a hash from value to (cons count facts), so
+;; a lookup can pick the smallest bucket among the bound positions.
 (define (pred-index-add pi f)
   (define new-by-pos
     (for/fold ([bp (pred-index-by-pos pi)]) ([a (fact-args f)] [i (in-naturals)])
       (hash-update bp i
-                   (lambda (inner) (hash-update inner a (lambda (l) (cons f l)) '()))
+                   (lambda (inner)
+                     (hash-update inner a
+                                  (lambda (b) (cons (add1 (car b)) (cons f (cdr b))))
+                                  (cons 0 '())))
                    (hash))))
-  (pred-index (cons f (pred-index-all pi)) new-by-pos))
+  (pred-index (cons f (pred-index-all pi)) (add1 (pred-index-count pi)) new-by-pos))
 
 ;; predicate name -> pred-index
 (define (index-add idx keys)
@@ -143,35 +148,63 @@
                  (lambda (pi) (pred-index-add pi k))
                  empty-pred-index)))
 
-;; First argument position in clause whose value is already known
-;; (a literal constant, or a variable already in bindings), as
-;; (cons position value) — or #f if every argument is still unbound.
-(define (known-arg clause bindings)
-  (let loop ([args (fact-args clause)] [i 0])
-    (cond
-      [(null? args) #f]
-      [else
-       (define a (car args))
-       (cond
-         [(symbol? a)
-          (if (hash-has-key? bindings a)
-              (cons i (hash-ref bindings a))
-              (loop (cdr args) (add1 i)))]
-         [else (cons i a)])])))
+(define (index-size idx name)
+  (define pi (hash-ref idx name #f))
+  (if pi (pred-index-count pi) 0))
 
+;; The facts that could match `clause`: the smallest bucket over its
+;; arguments already known, or every fact of the predicate if none are.
 (define (candidates-for clause bindings idx)
-  (define pi (hash-ref idx (fact-name clause) (empty-pred-index)))
-  (define ka (known-arg clause bindings))
-  (if ka
-      (hash-ref (hash-ref (pred-index-by-pos pi) (car ka) (hash)) (cdr ka) '())
-      (pred-index-all pi)))
+  (define pi (hash-ref idx (fact-name clause) #f))
+  (cond
+    [(not pi) '()]
+    [else
+     (define best
+       (for/fold ([best #f]) ([a (in-list (fact-args clause))] [i (in-naturals)])
+         (define known? (or (not (symbol? a)) (hash-has-key? bindings a)))
+         (cond
+           [(not known?) best]
+           [else
+            (define v (if (symbol? a) (hash-ref bindings a) a))
+            (define bucket (hash-ref (hash-ref (pred-index-by-pos pi) i (hash)) v '(0)))
+            (if (or (not best) (< (car bucket) (car best))) bucket best)])))
+     (if best (cdr best) (pred-index-all pi))]))
+
+;; The smallest relation first (the delta on a tie), then at each step an
+;; atom sharing a bound argument, fewest arguments still unbound first and
+;; smaller relations breaking ties, so each step after the first is an
+;; index lookup rather than a cross product. The delta atom's size is the
+;; delta's.
+(define (join-order body delta-pos full-idx delta-idx)
+  (define (size ci)
+    (- (index-size (if (= (cdr ci) delta-pos) delta-idx full-idx) (fact-name (car ci)))
+       (if (= (cdr ci) delta-pos) 1/2 0)))
+  (define (unbound ci bound)
+    (define args (fact-args (car ci)))
+    (define free (for/sum ([a (in-list args)])
+                   (if (and (symbol? a) (not (hash-ref bound a #f))) 1 0)))
+    (if (and (pair? args) (= free (length args))) (+ free 1000) free))
+  (define (bind bound atom)
+    (for/fold ([bound bound]) ([a (in-list (fact-args atom))] #:when (symbol? a))
+      (hash-set bound a #t)))
+  (define atoms (for/list ([c (in-list body)] [i (in-naturals)]) (cons c i)))
+  (define start (argmin size atoms))
+  (let loop ([order (list start)]
+             [bound (bind (hasheq) (car start))]
+             [rest (remq start atoms)])
+    (cond
+      [(null? rest) (reverse order)]
+      [else
+       (define next (argmin (lambda (ci) (+ (* (unbound ci bound) 1e9) (size ci))) rest))
+       (loop (cons next order) (bind bound (car next)) (remq next rest))])))
 
 ;; Guards are read from `full`. Without `guards?`, every binding keeps
 ;; the guard true.
 (define (find-bindings-prob/at body full full-idx delta-idx delta-pos [guards? #t])
   (for/fold ([worlds (list (cons (hash) (guard-true)))])
-            ([clause body] [i (in-naturals)])
-    (define idx (if (= i delta-pos) delta-idx full-idx))
+            ([ci (in-list (join-order body delta-pos full-idx delta-idx))])
+    (define clause (car ci))
+    (define idx (if (= (cdr ci) delta-pos) delta-idx full-idx))
     (for*/list ([w worlds]
                 [f (candidates-for clause (car w) idx)]
                 [b (in-value (match-fact clause f (car w)))]

@@ -25,7 +25,9 @@ quiet() {
 }
 os="$(uname -s)"
 jobs="$(sysctl -n hw.ncpu 2>/dev/null || nproc)"
-sudo=""; [ "$(id -u)" -ne 0 ] && sudo="sudo"
+die() { echo "setup.sh: $*" >&2; exit 1; }
+# -n, so a missing sudo rule fails at once instead of waiting for a password
+sudo=""; [ "$(id -u)" -ne 0 ] && sudo="sudo -n"
 
 # Linux packages are installed through apt with its archive directory
 # inside the root, so a cached root needs no downloads.
@@ -35,6 +37,27 @@ apt_install() {
   $sudo apt-get install -y -q -o Dir::Cache::Archives="$DEBS" "$@" >/dev/null
   $sudo chown -R "$(id -u):$(id -g)" "$DEBS"
 }
+
+# --- Linux prerequisites ---------------------------------------------------
+
+# probalog's rsdd library is only built for x86_64, and the packages below
+# come from Ubuntu's repositories and an Ubuntu-only PPA.
+if [ "$os" = Linux ]; then
+  . /etc/os-release
+  [ "${ID:-}" = ubuntu ] || die "needs Ubuntu, found ${PRETTY_NAME:-unknown}"
+  [ "$(uname -m)" = x86_64 ] || die "needs x86_64, found $(uname -m)"
+  prereqs="software-properties-common lsb-release jq curl unzip python3 python3-venv
+           python3-dev build-essential cmake bison flex libffi-dev zlib1g-dev
+           libncurses-dev libreadline-dev mcpp"
+  missing="$(for p in $prereqs; do dpkg -s "$p" >/dev/null 2>&1 || echo "$p"; done)"
+  if [ -n "$missing" ]; then
+    [ -z "$sudo" ] || $sudo true 2>/dev/null \
+      || die "needs root or passwordless sudo to install: $(echo $missing)"
+    say "installing prerequisites: $(echo $missing)"
+    $sudo apt-get update -q >/dev/null
+    apt_install $missing
+  fi
+fi
 
 # --- ProbLog -------------------------------------------------------------
 
@@ -82,9 +105,6 @@ else
     say "installing Souffle"
     apt_install "$deb"
   fi
-  # Needed by PSouffle both to build and to link every program it compiles.
-  say "installing PSouffle prerequisites"
-  apt_install cmake bison flex libffi-dev zlib1g-dev libncurses-dev libreadline-dev mcpp
 fi
 
 # --- cplint ----------------------------------------------------------------

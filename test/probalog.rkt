@@ -721,6 +721,79 @@
     (void)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; relevance pruning: `#:goals` derives only what the goals depend on
+
+(module+ test
+  (parameterize ([current-namespace (make-base-namespace)])
+    (define core 'probalog/core)
+    (define fact* (dynamic-require core 'fact))
+    (define rule* (dynamic-require core 'rule))
+    (define run-datalog* (dynamic-require core 'run-datalog))
+    (define query-fact* (dynamic-require core 'query-fact))
+    (define result->string (dynamic-require core 'query-result->string))
+    (define facts
+      (list (cons (fact* 'Edge '("a" "b")) 0.5)
+            (cons (fact* 'Edge '("b" "c")) 0.6)
+            (cons (fact* 'Color '("a")) 0.3)))
+    (define rules
+      (list (rule* (fact* 'Path '(x y)) (list (fact* 'Edge '(x y))))
+            (rule* (fact* 'Path '(x z)) (list (fact* 'Path '(x y)) (fact* 'Edge '(y z))))
+            (rule* (fact* 'Bright '(x)) (list (fact* 'Color '(x))))))
+    (define goal (fact* 'Path '("a" "c")))
+    (define full (run-datalog* facts rules))
+    (define pruned (run-datalog* facts rules #:goals (list goal)))
+    (check-equal? (result->string (query-fact* pruned goal))
+                  (result->string (query-fact* full goal)))
+    ;; Edge is reached through Path's rules, so it is kept
+    (check-equal? (result->string (query-fact* pruned (fact* 'Edge '("a" "b"))))
+                  "#<pmf: [#t 0.5] [#f 0.5]>")
+    ;; Bright and Color are not, and asking says so rather than #f
+    (check-exn #rx"Bright\\(\"a\"\\) was not computed"
+               (lambda () (query-fact* pruned (fact* 'Bright '("a")))))
+    (check-equal? (result->string (query-fact* full (fact* 'Bright '("a"))))
+                  "#<pmf: [#t 0.3] [#f 0.7]>")
+
+    ;; magic sets derive Path("a", _) only: the goal's first argument
+    ;; is what the recursive call binds
+    (check-equal? (result->string (query-fact* pruned (fact* 'Path '("a" "b"))))
+                  "#<pmf: [#t 0.5] [#f 0.5]>")
+    (check-exn #rx"Path\\(\"b\", \"c\"\\) was not computed"
+               (lambda () (query-fact* pruned (fact* 'Path '("b" "c")))))
+    (define by-predicate (run-datalog* facts rules #:goals (list goal) #:magic? #f))
+    (check-equal? (result->string (query-fact* by-predicate goal))
+                  (result->string (query-fact* full goal)))
+    (check-equal? (result->string (query-fact* by-predicate (fact* 'Path '("b" "c"))))
+                  "#<pmf: [#t 0.6] [#f 0.4]>")))
+
+(module+ test
+  ;; a constant in a rule head, a nullary goal, and two goals sharing a
+  ;; predicate under different bindings
+  @check-queries['(0.5 0.25 0.3 0.25)]{
+    Edge("a", "b") :: 0.5.
+    Edge("b", "a") :: 0.5.
+    Edge("c", "d") :: 0.3.
+    Start("a") :: 0.5.
+    Reach(x, y) :- Edge(x, y).
+    Reach(x, z) :- Reach(x, y), Edge(y, z).
+    FromA(y) :- Reach("a", y).
+    Any() :- Start(x), Reach(x, y).
+    ? Reach("b", "a").
+    ? FromA("a").
+    ? Reach("c", "d").
+    ? Any().
+  })
+
+(module+ test
+  ;; a module's statements are its goals, so this prunes Bright
+  @check-queries['(0.3)]{
+    Color("a") :: 0.3.
+    Edge("a", "b") :: 0.5.
+    Bright(x) :- Color(x).
+    Path(x, y) :- Edge(x, y).
+    ? Color("a").
+  })
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; conditioning: differential test against exhaustive enumeration
 ;;
 ;; The distribution semantics say what a posterior is: sum the

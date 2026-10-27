@@ -23,7 +23,8 @@
           'find_bindings_ms (exact->inexact (list-ref r 2))
           'guard_build_ms   (exact->inexact (list-ref r 3))
           'set_union_ms     (exact->inexact (list-ref r 4))
-          'index_ms         (exact->inexact (list-ref r 5))))
+          'index_ms         (exact->inexact (list-ref r 5))
+          'bdd_ms           (exact->inexact (list-ref r 6))))
 
 (define (main)
   (define out-path (box "results.json"))
@@ -39,7 +40,7 @@
   (define sha (if (pair? positional) (first positional) "unknown"))
   (define message (if (> (length positional) 1) (second positional) ""))
 
-  (define-values (wall bindings guard union index)
+  (define-values (wall bindings guard union index bdd)
     (aggregate-timing benchmark-results))
 
   (define record
@@ -52,7 +53,8 @@
                                 'find_bindings_ms (exact->inexact bindings)
                                 'guard_build_ms   (exact->inexact guard)
                                 'set_union_ms     (exact->inexact union)
-                                'index_ms         (exact->inexact index))))
+                                'index_ms         (exact->inexact index)
+                                'bdd_ms           (exact->inexact bdd))))
 
   (call-with-output-file (unbox out-path)
     (lambda (o) (write-json record o) (newline o))

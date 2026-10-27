@@ -142,7 +142,7 @@
          (lambda () (make-supply-chain 8 10))
          (fact 'NeedsAudit (list "pkg0_0")))))
 
-;; Returns (name wall bindings guard union index). Timings
+;; Returns (name wall bindings guard union index bdd). Timings
 ;; subtract the exported accumulators before and after: set!-ing an
 ;; imported variable isn't allowed, so we subtract rather than reset.
 (define (run-benchmark name make-program query-target)
@@ -151,6 +151,7 @@
   (define guard-before total-guard-build-time)
   (define union-before total-set-union-time)
   (define index-before total-index-time)
+  (define bdd-before total-bdd-time)
   (define wall-start (current-inexact-monotonic-milliseconds))
   (define result (run-datalog facts rules))
   (define wall (- (current-inexact-monotonic-milliseconds) wall-start))
@@ -162,20 +163,23 @@
         (- total-find-bindings-time bindings-before)
         (- total-guard-build-time guard-before)
         (- total-set-union-time union-before)
-        (- total-index-time index-before)))
+        (- total-index-time index-before)
+        (- total-bdd-time bdd-before)))
 
 (define (run-benchmarks)
   (for/list ([b benchmarks])
     (run-benchmark (car b) (cadr b) (caddr b))))
 
-;; Sums each timing category across every benchmark.
+;; Sums each timing category across every benchmark. The rsdd time
+;; overlaps the others rather than adding to them.
 (define (aggregate-timing results)
-  (for/fold ([wall 0] [bindings 0] [guard 0] [union 0] [index 0])
+  (for/fold ([wall 0] [bindings 0] [guard 0] [union 0] [index 0] [bdd 0])
             ([r results])
     (values (+ wall (list-ref r 1))
             (+ bindings (list-ref r 2))
             (+ guard (list-ref r 3))
             (+ union (list-ref r 4))
-            (+ index (list-ref r 5)))))
+            (+ index (list-ref r 5))
+            (+ bdd (list-ref r 6)))))
 
 (define benchmark-results (run-benchmarks))

@@ -1,0 +1,9352 @@
+{
+ "ci_benchmarks": {
+  "benchmarks": [
+   {
+    "bdd_ms": 1.6599999999997692,
+    "find_bindings_ms": 0.8680000000000234,
+    "guard_build_ms": 3.204999999999984,
+    "index_ms": 0.2179999999999893,
+    "name": "layered-dag",
+    "set_union_ms": 0.09899999999996112,
+    "wall_ms": 4.975999999999999
+   },
+   {
+    "bdd_ms": 4.45499999999987,
+    "find_bindings_ms": 2.01400000000001,
+    "guard_build_ms": 1.738999999999976,
+    "index_ms": 0.2090000000000316,
+    "name": "cyclic-ring",
+    "set_union_ms": 1.9220000000000539,
+    "wall_ms": 6.603000000000009
+   },
+   {
+    "bdd_ms": 0.9150000000000773,
+    "find_bindings_ms": 2.3629999999999995,
+    "guard_build_ms": 21.13599999999994,
+    "index_ms": 1.0130000000000337,
+    "name": "family",
+    "set_union_ms": 0.5400000000000205,
+    "wall_ms": 27.573999999999984
+   },
+   {
+    "bdd_ms": 66.2140000000002,
+    "find_bindings_ms": 26.689999999999998,
+    "guard_build_ms": 40.53500000000008,
+    "index_ms": 0.18999999999999773,
+    "name": "supply-chain",
+    "set_union_ms": 0.12000000000008981,
+    "wall_ms": 68.99399999999997
+   }
+  ],
+  "commit": "49c5b0db5b9eee06213525ef89f5fc04de18ea06",
+  "message": "",
+  "racket": "9.1",
+  "timestamp": 1793125332,
+  "total": {
+   "bdd_ms": 73.24399999999991,
+   "find_bindings_ms": 31.93500000000003,
+   "guard_build_ms": 66.61499999999998,
+   "index_ms": 1.6300000000000523,
+   "set_union_ms": 2.6810000000001253,
+   "wall_ms": 108.14699999999996
+  }
+ },
+ "examples": [
+  {
+   "program": "examples/basics/edge-cases.rkt",
+   "status": "ok",
+   "wall_s": 0.213780082995072
+  },
+  {
+   "program": "examples/basics/family-example.rkt",
+   "status": "ok",
+   "wall_s": 0.22261141700437292
+  },
+  {
+   "program": "examples/basics/network-example.rkt",
+   "status": "ok",
+   "wall_s": 0.2173448329558596
+  },
+  {
+   "program": "examples/models/alarm.rkt",
+   "status": "ok",
+   "wall_s": 0.1919637499959208
+  },
+  {
+   "program": "examples/models/observation.rkt",
+   "status": "ok",
+   "wall_s": 0.19041074998676777
+  },
+  {
+   "program": "examples/models/smokers.rkt",
+   "status": "ok",
+   "wall_s": 0.21936941699823365
+  },
+  {
+   "program": "examples/ported/problog-biomine.rkt",
+   "status": "ok",
+   "wall_s": 0.18631791602820158
+  },
+  {
+   "program": "examples/ported/problog-epidemic.rkt",
+   "status": "ok",
+   "wall_s": 0.1852334999712184
+  },
+  {
+   "program": "examples/ported/problog-genetics.rkt",
+   "status": "ok",
+   "wall_s": 0.18756779201794416
+  },
+  {
+   "program": "examples/ported/psouffle-side-channel.rkt",
+   "status": "ok",
+   "wall_s": 0.19760491698980331
+  },
+  {
+   "program": "examples/ported/psouffle-taint.rkt",
+   "status": "ok",
+   "wall_s": 0.18696291698142886
+  },
+  {
+   "program": "examples/ported/souffle-points-to.rkt",
+   "status": "ok",
+   "wall_s": 0.19994991697603837
+  },
+  {
+   "program": "examples/ported/souffle-same-generation.rkt",
+   "status": "ok",
+   "wall_s": 0.18375124997692183
+  },
+  {
+   "program": "examples/semantics/correlation.rkt",
+   "status": "ok",
+   "wall_s": 0.20251858298433945
+  },
+  {
+   "program": "examples/semantics/cycles.rkt",
+   "status": "ok",
+   "wall_s": 0.1884521670290269
+  }
+ ],
+ "meta": {
+  "commit": "49c5b0db5b9eee06213525ef89f5fc04de18ea06",
+  "cpu": "Apple M1 Pro",
+  "cpus": 8,
+  "finished_at": "2026-10-27T18:43:37+00:00",
+  "generated_at": "2026-10-27T18:22:03+00:00",
+  "machine": "arm64",
+  "os": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "python": "3.14.3",
+  "quick": false,
+  "repeat_below_s": 2.0,
+  "timeout_s": 10,
+  "uncommitted_changes": true
+ },
+ "programs": [
+  {
+   "base_facts": 17,
+   "kind": "example",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.5] [#f 0.5]>",
+     "#t",
+     "#t",
+     "#f",
+     "#<pmf: [#t 0.125] [#f 0.875]>",
+     "#<pmf: [#t 0.75] [#f 0.25]>",
+     "#<pmf: [#t 0.9] [#f 0.09999999999999998]>",
+     "#<pmf: [#t 0.6] [#f 0.4]>",
+     "#<pmf: [#t 0.6] [#f 0.4]>",
+     "#f",
+     "#<pmf: [#t 0.9] [#f 0.09999999999999998]>",
+     "#<pmf: [#t 0.64] [#f 0.36]>",
+     "#<pmf: [#t 0.16000000000000003] [#f 0.84]>",
+     "#<pmf: [#t 0.36] [#f 0.64]>",
+     "#f",
+     "#f",
+     "#f",
+     "#<pmf: [#t 0.5] [#f 0.5]>",
+     "#<pmf: [#t 0.5] [#f 0.5]>",
+     "#<pmf: [#t 0.216] [#f 0.784]>",
+     "#<pmf: [#t 0.5] [#f 0.5]>",
+     "observed",
+     "#t",
+     "#<pmf: [#t 0.4000000000000001] [#f 0.5999999999999999]>",
+     "#<pmf: [#t 0.4000000000000001] [#f 0.5999999999999999]>",
+     "observed",
+     "observed absent",
+     "#t",
+     "#f",
+     "observed absent",
+     "#f",
+     "#t"
+    ],
+    "apply_calls": 113,
+    "find_bindings_ms": 0.04300000000006321,
+    "goal_bdd_nodes": [
+     1,
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     1,
+     1,
+     0,
+     1,
+     2,
+     2,
+     2,
+     0,
+     0,
+     0,
+     1,
+     1,
+     3,
+     1,
+     1,
+     2,
+     1,
+     2,
+     0,
+     0,
+     0,
+     0,
+     2,
+     1,
+     2
+    ],
+    "guard_build_ms": 0.016000000000019554,
+    "guard_ops": 90,
+    "index_ms": 0.009999999999990905,
+    "ms": 0.2939999999999827,
+    "rsdd_ms": 0.020000000000095497,
+    "runs_ms": [
+     0.4590000000000032,
+     0.2939999999999827,
+     0.2810000000000059
+    ],
+    "set_union_ms": 0.005999999999858119,
+    "status": "ok",
+    "tuples": 26,
+    "variables": 12
+   },
+   "program": "examples/basics/edge-cases.rkt",
+   "rules": 6,
+   "statements": 32,
+   "uncertain_facts": 14
+  },
+  {
+   "base_facts": 23,
+   "kind": "example",
+   "magic": {
+    "answers": [
+     "#t",
+     "#t",
+     "#t",
+     "#<pmf: [#t 0.7] [#f 0.30000000000000004]>",
+     "#t",
+     "#t"
+    ],
+    "apply_calls": 119,
+    "find_bindings_ms": 0.08100000000007412,
+    "goal_bdd_nodes": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    "guard_build_ms": 0.019999999999924967,
+    "guard_ops": 127,
+    "index_ms": 0.021000000000015007,
+    "ms": 0.37299999999999045,
+    "rsdd_ms": 0.02000000000015234,
+    "runs_ms": [
+     0.382000000000005,
+     0.36400000000003274,
+     0.37299999999999045
+    ],
+    "set_union_ms": 0.010999999999967258,
+    "status": "ok",
+    "tuples": 39,
+    "variables": 1
+   },
+   "program": "examples/basics/family-example.rkt",
+   "rules": 6,
+   "statements": 6,
+   "uncertain_facts": 1
+  },
+  {
+   "base_facts": 2,
+   "kind": "example",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.5] [#f 0.5]>",
+     "#<pmf: [#t 0.25] [#f 0.75]>",
+     "#<pmf: [#t 0.5] [#f 0.5]>"
+    ],
+    "apply_calls": 75,
+    "find_bindings_ms": 0.04099999999993997,
+    "goal_bdd_nodes": [
+     1,
+     2,
+     1
+    ],
+    "guard_build_ms": 0.012000000000000455,
+    "guard_ops": 74,
+    "index_ms": 0.007000000000061846,
+    "ms": 0.18500000000000227,
+    "rsdd_ms": 0.01800000000014279,
+    "runs_ms": [
+     0.22200000000003683,
+     0.18500000000000227,
+     0.18299999999999272
+    ],
+    "set_union_ms": 0.005999999999971806,
+    "status": "ok",
+    "tuples": 10,
+    "variables": 2
+   },
+   "program": "examples/basics/network-example.rkt",
+   "rules": 2,
+   "statements": 3,
+   "uncertain_facts": 2
+  },
+  {
+   "base_facts": 9,
+   "kind": "example",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.01] [#f 0.99]>",
+     "#<pmf: [#t 0.02] [#f 0.98]>",
+     "#<pmf: [#t 0.0162296551] [#f 0.9837703449]>",
+     "#<pmf: [#t 0.0638763551105] [#f 0.9361236448895001]>",
+     "#<pmf: [#t 0.0311335433986] [#f 0.9688664566014]>",
+     "observed",
+     "#<pmf: [#t 0.1350328224830436] [#f 0.8649671775169564]>",
+     "#<pmf: [#t 0.095283538798843] [#f 0.904716461201157]>",
+     "#<pmf: [#t 0.22994170284280377] [#f 0.7700582971571962]>",
+     "observed",
+     "#<pmf: [#t 0.9133500324241447] [#f 0.0866499675758553]>",
+     "#<pmf: [#t 0.5348627490523304] [#f 0.46513725094766956]>",
+     "#<pmf: [#t 0.3360252191995999] [#f 0.6639747808004002]>",
+     "observed",
+     "#<pmf: [#t 0.032309429434229736] [#f 0.9676905705657702]>",
+     "observed absent",
+     "#<pmf: [#t 0.028742207522367738] [#f 0.9712577924776322]>",
+     "#<pmf: [#t 0.8845695704294078] [#f 0.11543042957059224]>"
+    ],
+    "apply_calls": 171,
+    "find_bindings_ms": 0.03799999999995407,
+    "goal_bdd_nodes": [
+     1,
+     1,
+     7,
+     9,
+     9,
+     9,
+     1,
+     1,
+     7,
+     9,
+     7,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     7
+    ],
+    "guard_build_ms": 0.032000000000152795,
+    "guard_ops": 81,
+    "index_ms": 0.0029999999999290594,
+    "ms": 0.21500000000003183,
+    "rsdd_ms": 0.04199999999985948,
+    "runs_ms": [
+     0.27899999999999636,
+     0.21500000000003183,
+     0.19400000000001683
+    ],
+    "set_union_ms": 0.015999999999735337,
+    "status": "ok",
+    "tuples": 15,
+    "variables": 9
+   },
+   "program": "examples/models/alarm.rkt",
+   "rules": 7,
+   "statements": 18,
+   "uncertain_facts": 9
+  },
+  {
+   "base_facts": 22,
+   "kind": "example",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.6] [#f 0.4]>",
+     "#<pmf: [#t 0.42] [#f 0.5800000000000001]>",
+     "#<pmf: [#t 0.39359999999999995] [#f 0.6064]>",
+     "#<pmf: [#t 0.21] [#f 0.79]>",
+     "observed",
+     "observed",
+     "observed absent",
+     "observed absent",
+     "#<pmf: [#t 0.9815001417574762] [#f 0.01849985824252376]>",
+     "#<pmf: [#t 0.8798460106949623] [#f 0.12015398930503773]>",
+     "#<pmf: [#t 0.2559532994758485] [#f 0.7440467005241516]>",
+     "#<pmf: [#t 0.07998600097226925] [#f 0.9200139990277307]>",
+     "#<pmf: [#t 0.07678598984275456] [#f 0.9232140101572455]>"
+    ],
+    "apply_calls": 573,
+    "find_bindings_ms": 0.25300000000032696,
+    "goal_bdd_nodes": [
+     1,
+     2,
+     4,
+     3,
+     3,
+     4,
+     6,
+     5,
+     1,
+     2,
+     4,
+     3,
+     5
+    ],
+    "guard_build_ms": 0.10299999999961074,
+    "guard_ops": 526,
+    "index_ms": 0.05699999999995953,
+    "ms": 0.9150000000000205,
+    "rsdd_ms": 0.08100000000001728,
+    "runs_ms": [
+     0.9470000000000027,
+     0.9150000000000205,
+     0.8990000000000009
+    ],
+    "set_union_ms": 0.09100000000012187,
+    "status": "ok",
+    "tuples": 91,
+    "variables": 14
+   },
+   "program": "examples/models/observation.rkt",
+   "rules": 10,
+   "statements": 13,
+   "uncertain_facts": 14
+  },
+  {
+   "base_facts": 30,
+   "kind": "example",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.340562816] [#f 0.659437184]>",
+     "#<pmf: [#t 0.34056281599999993] [#f 0.6594371840000001]>",
+     "#<pmf: [#t 0.414933056] [#f 0.585066944]>",
+     "#<pmf: [#t 0.5554594559999999] [#f 0.4445405440000001]>",
+     "#<pmf: [#t 0.462265856] [#f 0.5377341440000001]>",
+     "#<pmf: [#t 0.1362251264] [#f 0.8637748735999999]>",
+     "#<pmf: [#t 0.1849063424] [#f 0.8150936576]>",
+     "#<pmf: [#t 0.5554594559999999] [#f 0.4445405440000001]>",
+     "observed",
+     "#t",
+     "#<pmf: [#t 0.6852265235358599] [#f 0.3147734764641401]>",
+     "#<pmf: [#t 0.5560459699870516] [#f 0.4439540300129484]>",
+     "#<pmf: [#t 0.3914489989346765] [#f 0.6085510010653234]>",
+     "#<pmf: [#t 0.3914489989346765] [#f 0.6085510010653234]>",
+     "observed absent",
+     "#<pmf: [#t 0.1679792458074678] [#f 0.8320207541925322]>",
+     "#<pmf: [#t 0.16797924580746776] [#f 0.8320207541925322]>",
+     "#t",
+     "#<pmf: [#t 0.980392156862745] [#f 0.019607843137255054]>",
+     "#<pmf: [#t 0.6862745098039215] [#f 0.31372549019607854]>"
+    ],
+    "apply_calls": 2354,
+    "find_bindings_ms": 0.26300000000003365,
+    "goal_bdd_nodes": [
+     17,
+     15,
+     18,
+     17,
+     17,
+     21,
+     18,
+     17,
+     19,
+     17,
+     17,
+     18,
+     17,
+     15,
+     18,
+     17,
+     15,
+     17,
+     1,
+     17
+    ],
+    "guard_build_ms": 0.1460000000001287,
+    "guard_ops": 498,
+    "index_ms": 0.026000000000067303,
+    "ms": 0.8639999999999759,
+    "rsdd_ms": 0.22999999999996135,
+    "runs_ms": [
+     0.8639999999999759,
+     0.9429999999999836,
+     0.8380000000000223
+    ],
+    "set_union_ms": 0.09199999999987085,
+    "status": "ok",
+    "tuples": 48,
+    "variables": 20
+   },
+   "program": "examples/models/smokers.rkt",
+   "rules": 4,
+   "statements": 20,
+   "uncertain_facts": 20
+  },
+  {
+   "base_facts": 8,
+   "kind": "example",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.85] [#f 0.15000000000000002]>",
+     "#<pmf: [#t 0.815] [#f 0.18500000000000005]>",
+     "#<pmf: [#t 0.7280000000000001] [#f 0.2719999999999999]>",
+     "#<pmf: [#t 0.415324] [#f 0.584676]>",
+     "#<pmf: [#t 0.415324] [#f 0.584676]>",
+     "#<pmf: [#t 0.425516] [#f 0.574484]>",
+     "#<pmf: [#t 0.5874520000000001] [#f 0.4125479999999999]>",
+     "observed",
+     "#<pmf: [#t 0.5705] [#f 0.4295]>",
+     "#t",
+     "#<pmf: [#t 0.8150000000000001] [#f 0.18499999999999994]>",
+     "observed absent",
+     "#<pmf: [#t 0.63] [#f 0.37]>",
+     "#<pmf: [#t 0.441] [#f 0.5589999999999999]>",
+     "#<pmf: [#t 0.8500000000000001] [#f 0.1499999999999999]>"
+    ],
+    "apply_calls": 2580,
+    "find_bindings_ms": 0.6160000000003265,
+    "goal_bdd_nodes": [
+     1,
+     4,
+     4,
+     9,
+     9,
+     8,
+     9,
+     1,
+     9,
+     4,
+     4,
+     1,
+     4,
+     9,
+     1
+    ],
+    "guard_build_ms": 0.31999999999993634,
+    "guard_ops": 1452,
+    "index_ms": 0.05900000000002592,
+    "ms": 1.6929999999999836,
+    "rsdd_ms": 0.2979999999994334,
+    "runs_ms": [
+     1.6929999999999836,
+     1.6539999999999964,
+     1.69399999999996
+    ],
+    "set_union_ms": 0.22499999999979536,
+    "status": "ok",
+    "tuples": 55,
+    "variables": 8
+   },
+   "program": "examples/ported/problog-biomine.rkt",
+   "rules": 4,
+   "statements": 15,
+   "uncertain_facts": 8
+  },
+  {
+   "base_facts": 32,
+   "kind": "example",
+   "magic": {
+    "answers": [
+     "#t",
+     "#t",
+     "#<pmf: [#t 0.6] [#f 0.4]>",
+     "#<pmf: [#t 0.84] [#f 0.16000000000000003]>",
+     "#<pmf: [#t 0.9377279999999999] [#f 0.062272000000000105]>",
+     "#<pmf: [#t 0.3] [#f 0.7]>",
+     "#<pmf: [#t 0.51] [#f 0.49]>",
+     "#f",
+     "#<pmf: [#t 0.2538] [#f 0.7462]>",
+     "#<pmf: [#t 0.512352] [#f 0.48764799999999997]>",
+     "#<pmf: [#t 0.512352] [#f 0.48764799999999997]>",
+     "observed",
+     "#<pmf: [#t 0.5035460992907801] [#f 0.4964539007092199]>",
+     "#<pmf: [#t 0.8581560283687942] [#f 0.14184397163120577]>",
+     "#<pmf: [#t 0.9841134751773049] [#f 0.015886524822695147]>",
+     "observed absent",
+     "#t",
+     "#t",
+     "#t",
+     "#<pmf: [#t 0.3] [#f 0.7]>"
+    ],
+    "apply_calls": 2142,
+    "find_bindings_ms": 1.2270000000000323,
+    "goal_bdd_nodes": [
+     0,
+     0,
+     1,
+     2,
+     9,
+     1,
+     2,
+     0,
+     6,
+     16,
+     16,
+     6,
+     1,
+     1,
+     9,
+     1,
+     1,
+     1,
+     1,
+     2
+    ],
+    "guard_build_ms": 0.24500000000011823,
+    "guard_ops": 1988,
+    "index_ms": 0.05900000000013961,
+    "ms": 2.301999999999964,
+    "rsdd_ms": 0.2150000000003729,
+    "runs_ms": [
+     2.40300000000002,
+     2.301999999999964,
+     2.291999999999973
+    ],
+    "set_union_ms": 0.17099999999970805,
+    "status": "ok",
+    "tuples": 88,
+    "variables": 24
+   },
+   "program": "examples/ported/problog-epidemic.rkt",
+   "rules": 5,
+   "statements": 20,
+   "uncertain_facts": 24
+  },
+  {
+   "base_facts": 15,
+   "kind": "example",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.0975] [#f 0.9025]>",
+     "#<pmf: [#t 0.09631250000000002] [#f 0.9036875]>",
+     "#<pmf: [#t 0.0024375000000000004] [#f 0.9975625]>",
+     "#<pmf: [#t 0.0024375000000000004] [#f 0.9975625]>",
+     "#<pmf: [#t 0.0025000000000000005] [#f 0.9975]>",
+     "observed",
+     "#t",
+     "#t",
+     "#<pmf: [#t 0.25] [#f 0.75]>",
+     "#<pmf: [#t 0.75] [#f 0.25]>",
+     "#<pmf: [#t 0.5384615384615384] [#f 0.46153846153846156]>",
+     "#<pmf: [#t 0.5384615384615384] [#f 0.46153846153846156]>",
+     "observed absent",
+     "#f",
+     "#<pmf: [#t 0.6666666666666666] [#f 0.33333333333333337]>",
+     "#t"
+    ],
+    "apply_calls": 344,
+    "find_bindings_ms": 0.13799999999991996,
+    "goal_bdd_nodes": [
+     4,
+     10,
+     9,
+     9,
+     4,
+     9,
+     4,
+     1,
+     9,
+     10,
+     1,
+     1,
+     9,
+     9,
+     10,
+     9
+    ],
+    "guard_build_ms": 0.04100000000005366,
+    "guard_ops": 257,
+    "index_ms": 0.026000000000124146,
+    "ms": 0.5059999999999718,
+    "rsdd_ms": 0.055000000000063665,
+    "runs_ms": [
+     0.5380000000000109,
+     0.5059999999999718,
+     0.49399999999997135
+    ],
+    "set_union_ms": 0.04099999999988313,
+    "status": "ok",
+    "tuples": 48,
+    "variables": 9
+   },
+   "program": "examples/ported/problog-genetics.rkt",
+   "rules": 5,
+   "statements": 16,
+   "uncertain_facts": 9
+  },
+  {
+   "base_facts": 6,
+   "kind": "example",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.72] [#f 0.28]>",
+     "#<pmf: [#t 0.18] [#f 0.8200000000000001]>",
+     "#<pmf: [#t 0.6552] [#f 0.3448]>",
+     "#<pmf: [#t 0.153] [#f 0.847]>",
+     "#f",
+     "observed",
+     "#t",
+     "#t",
+     "#<pmf: [#t 0.153] [#f 0.847]>"
+    ],
+    "apply_calls": 72,
+    "find_bindings_ms": 0.03099999999994907,
+    "goal_bdd_nodes": [
+     1,
+     1,
+     2,
+     2,
+     0,
+     2,
+     1,
+     1,
+     2
+    ],
+    "guard_build_ms": 0.009999999999990905,
+    "guard_ops": 71,
+    "index_ms": 0.007000000000061846,
+    "ms": 0.18200000000001637,
+    "rsdd_ms": 0.014000000000010004,
+    "runs_ms": [
+     0.21399999999999864,
+     0.17799999999999727,
+     0.18200000000001637
+    ],
+    "set_union_ms": 0.005999999999971806,
+    "status": "ok",
+    "tuples": 16,
+    "variables": 4
+   },
+   "program": "examples/ported/psouffle-side-channel.rkt",
+   "rules": 2,
+   "statements": 9,
+   "uncertain_facts": 4
+  },
+  {
+   "base_facts": 17,
+   "kind": "example",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.55] [#f 0.44999999999999996]>",
+     "#<pmf: [#t 0.21] [#f 0.79]>",
+     "#f",
+     "#<pmf: [#t 0.36300000000000004] [#f 0.637]>",
+     "#<pmf: [#t 0.12389999999999998] [#f 0.8761]>",
+     "#<pmf: [#t 0.32661550848] [#f 0.67338449152]>",
+     "#<pmf: [#t 0.29040000000000005] [#f 0.7096]>",
+     "#<pmf: [#t 0.261292406784] [#f 0.738707593216]>",
+     "#f",
+     "observed",
+     "#t",
+     "#t",
+     "#t",
+     "#<pmf: [#t 0.76061696] [#f 0.23938304]>",
+     "#<pmf: [#t 0.6084935680000001] [#f 0.3915064319999999]>"
+    ],
+    "apply_calls": 247,
+    "find_bindings_ms": 0.09799999999995634,
+    "goal_bdd_nodes": [
+     1,
+     1,
+     0,
+     2,
+     2,
+     6,
+     3,
+     8,
+     0,
+     3,
+     1,
+     1,
+     1,
+     6,
+     8
+    ],
+    "guard_build_ms": 0.025999999999953616,
+    "guard_ops": 210,
+    "index_ms": 0.013000000000033651,
+    "ms": 0.3620000000000232,
+    "rsdd_ms": 0.03299999999995862,
+    "runs_ms": [
+     0.39800000000002456,
+     0.3620000000000232,
+     0.36000000000001364
+    ],
+    "set_union_ms": 0.0190000000000623,
+    "status": "ok",
+    "tuples": 34,
+    "variables": 10
+   },
+   "program": "examples/ported/psouffle-taint.rkt",
+   "rules": 3,
+   "statements": 15,
+   "uncertain_facts": 10
+  },
+  {
+   "base_facts": 9,
+   "kind": "example",
+   "magic": {
+    "answers": [
+     "#t",
+     "#t",
+     "#t",
+     "#t",
+     "#<pmf: [#t 0.7] [#f 0.30000000000000004]>",
+     "#<pmf: [#t 0.3] [#f 0.7]>",
+     "#<pmf: [#t 0.6] [#f 0.4]>",
+     "#<pmf: [#t 0.4] [#f 0.6]>",
+     "#<pmf: [#t 0.7] [#f 0.30000000000000004]>",
+     "#<pmf: [#t 0.4] [#f 0.6]>",
+     "#<pmf: [#t 0.6] [#f 0.4]>",
+     "#<pmf: [#t 0.42] [#f 0.5800000000000001]>",
+     "observed",
+     "#t",
+     "#t",
+     "#<pmf: [#t 0.6] [#f 0.4]>",
+     "#<pmf: [#t 0.6] [#f 0.4]>",
+     "observed absent",
+     "#f",
+     "#f",
+     "#f",
+     "#<pmf: [#t 0.6999999999999998] [#f 0.30000000000000016]>"
+    ],
+    "apply_calls": 528,
+    "find_bindings_ms": 0.41999999999990223,
+    "goal_bdd_nodes": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     1
+    ],
+    "guard_build_ms": 0.047000000000025466,
+    "guard_ops": 561,
+    "index_ms": 0.03300000000001546,
+    "ms": 0.8659999999999854,
+    "rsdd_ms": 0.07400000000012597,
+    "runs_ms": [
+     0.8919999999999959,
+     0.8659999999999854,
+     0.853999999999985
+    ],
+    "set_union_ms": 0.05400000000003047,
+    "status": "ok",
+    "tuples": 48,
+    "variables": 4
+   },
+   "program": "examples/ported/souffle-points-to.rkt",
+   "rules": 5,
+   "statements": 22,
+   "uncertain_facts": 4
+  },
+  {
+   "base_facts": 11,
+   "kind": "example",
+   "magic": {
+    "answers": [
+     "#t",
+     "#t",
+     "#t",
+     "#<pmf: [#t 0.7] [#f 0.30000000000000004]>",
+     "#<pmf: [#t 0.7] [#f 0.30000000000000004]>",
+     "#<pmf: [#t 0.7] [#f 0.30000000000000004]>",
+     "#<pmf: [#t 0.5599999999999999] [#f 0.44000000000000006]>",
+     "#<pmf: [#t 0.5599999999999999] [#f 0.44000000000000006]>",
+     "#f",
+     "observed",
+     "#t",
+     "#t",
+     "#t"
+    ],
+    "apply_calls": 408,
+    "find_bindings_ms": 0.27999999999991587,
+    "goal_bdd_nodes": [
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     2,
+     2,
+     0,
+     2,
+     1,
+     1,
+     1
+    ],
+    "guard_build_ms": 0.055000000000063665,
+    "guard_ops": 457,
+    "index_ms": 0.051999999999964075,
+    "ms": 0.7259999999999991,
+    "rsdd_ms": 0.04299999999989268,
+    "runs_ms": [
+     0.7560000000000286,
+     0.7259999999999991,
+     0.7240000000000464
+    ],
+    "set_union_ms": 0.05899999999985539,
+    "status": "ok",
+    "tuples": 73,
+    "variables": 2
+   },
+   "program": "examples/ported/souffle-same-generation.rkt",
+   "rules": 3,
+   "statements": 13,
+   "uncertain_facts": 2
+  },
+  {
+   "base_facts": 20,
+   "kind": "example",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.4375] [#f 0.5625]>",
+     "#<pmf: [#t 0.5] [#f 0.5]>",
+     "#<pmf: [#t 0.672] [#f 0.32799999999999996]>",
+     "#<pmf: [#t 0.4] [#f 0.6]>",
+     "#<pmf: [#t 0.75] [#f 0.25]>",
+     "#<pmf: [#t 0.75] [#f 0.25]>",
+     "observed",
+     "#<pmf: [#t 0.84] [#f 0.16000000000000003]>",
+     "#<pmf: [#t 0.6] [#f 0.4]>",
+     "observed absent",
+     "#f",
+     "#f"
+    ],
+    "apply_calls": 205,
+    "find_bindings_ms": 0.0909999999998945,
+    "goal_bdd_nodes": [
+     6,
+     1,
+     3,
+     1,
+     2,
+     2,
+     1,
+     3,
+     1,
+     3,
+     1,
+     1
+    ],
+    "guard_build_ms": 0.03900000000021464,
+    "guard_ops": 174,
+    "index_ms": 0.022999999999967713,
+    "ms": 0.4350000000000023,
+    "rsdd_ms": 0.027000000000043656,
+    "runs_ms": [
+     0.47100000000000364,
+     0.4259999999999877,
+     0.4350000000000023
+    ],
+    "set_union_ms": 0.023999999999773536,
+    "status": "ok",
+    "tuples": 40,
+    "variables": 13
+   },
+   "program": "examples/semantics/correlation.rkt",
+   "rules": 8,
+   "statements": 12,
+   "uncertain_facts": 13
+  },
+  {
+   "base_facts": 19,
+   "kind": "example",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.87975] [#f 0.12024999999999997]>",
+     "#<pmf: [#t 0.81] [#f 0.18999999999999995]>",
+     "#<pmf: [#t 0.791775] [#f 0.208225]>",
+     "#<pmf: [#t 0.7038000000000001] [#f 0.2961999999999999]>",
+     "#f",
+     "#<pmf: [#t 0.7] [#f 0.30000000000000004]>",
+     "#f",
+     "#<pmf: [#t 0.7] [#f 0.30000000000000004]>",
+     "#f",
+     "#<pmf: [#t 0.9] [#f 0.09999999999999998]>",
+     "#f",
+     "#<pmf: [#t 0.9] [#f 0.09999999999999998]>",
+     "#<pmf: [#t 0.81] [#f 0.18999999999999995]>",
+     "#t",
+     "#t",
+     "#t",
+     "#<pmf: [#t 0.6] [#f 0.4]>",
+     "#<pmf: [#t 0.6] [#f 0.4]>",
+     "#<pmf: [#t 0.3] [#f 0.7]>",
+     "#<pmf: [#t 0.3] [#f 0.7]>",
+     "#f",
+     "#f",
+     "#<pmf: [#t 0.6561000000000001] [#f 0.3438999999999999]>",
+     "#<pmf: [#t 0.7290000000000001] [#f 0.2709999999999999]>",
+     "#<pmf: [#t 0.7290000000000001] [#f 0.2709999999999999]>",
+     "#<pmf: [#t 0.7290000000000001] [#f 0.2709999999999999]>"
+    ],
+    "apply_calls": 1854,
+    "find_bindings_ms": 0.7389999999998622,
+    "goal_bdd_nodes": [
+     7,
+     2,
+     9,
+     8,
+     0,
+     1,
+     0,
+     1,
+     0,
+     1,
+     0,
+     1,
+     2,
+     0,
+     0,
+     0,
+     1,
+     1,
+     2,
+     2,
+     0,
+     0,
+     4,
+     3,
+     3,
+     3
+    ],
+    "guard_build_ms": 0.2510000000000332,
+    "guard_ops": 1441,
+    "index_ms": 0.056999999999902684,
+    "ms": 1.8600000000000136,
+    "rsdd_ms": 0.21000000000003638,
+    "runs_ms": [
+     1.7620000000000005,
+     1.8600000000000136,
+     2.072999999999979
+    ],
+    "set_union_ms": 0.18299999999999272,
+    "status": "ok",
+    "tuples": 100,
+    "variables": 14
+   },
+   "program": "examples/semantics/cycles.rkt",
+   "rules": 10,
+   "statements": 26,
+   "uncertain_facts": 14
+  },
+  {
+   "base_facts": 18,
+   "kind": "benchmark",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.9362335074098689] [#f 0.06376649259013112]>"
+    ],
+    "apply_calls": 5477,
+    "find_bindings_ms": 0.2189999999998804,
+    "goal_bdd_nodes": [
+     46
+    ],
+    "guard_build_ms": 0.19099999999997408,
+    "guard_ops": 368,
+    "index_ms": 0.03100000000000591,
+    "ms": 0.8369999999999891,
+    "rsdd_ms": 0.3689999999999145,
+    "runs_ms": [
+     0.9770000000000323,
+     0.8369999999999891,
+     0.8360000000000127
+    ],
+    "set_union_ms": 0.17200000000002547,
+    "status": "ok",
+    "tuples": 29,
+    "variables": 18
+   },
+   "program": "ci-cyclic-ring.rkt",
+   "rules": 2,
+   "statements": 1,
+   "uncertain_facts": 18
+  },
+  {
+   "base_facts": 253,
+   "kind": "benchmark",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.7350918906249998] [#f 0.2649081093750002]>"
+    ],
+    "apply_calls": 1823,
+    "find_bindings_ms": 0.3719999999999004,
+    "goal_bdd_nodes": [
+     6
+    ],
+    "guard_build_ms": 0.13900000000001,
+    "guard_ops": 906,
+    "index_ms": 0.20300000000003138,
+    "ms": 1.7869999999999777,
+    "rsdd_ms": 0.1929999999996994,
+    "runs_ms": [
+     1.7869999999999777,
+     1.8050000000000068,
+     1.7849999999999682
+    ],
+    "set_union_ms": 0.07899999999989404,
+    "status": "ok",
+    "tuples": 254,
+    "variables": 126
+   },
+   "program": "ci-family.rkt",
+   "rules": 6,
+   "statements": 1,
+   "uncertain_facts": 126
+  },
+  {
+   "base_facts": 51,
+   "kind": "benchmark",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.9979448589072438] [#f 0.002055141092756174]>"
+    ],
+    "apply_calls": 18673,
+    "find_bindings_ms": 0.7440000000001419,
+    "goal_bdd_nodes": [
+     334
+    ],
+    "guard_build_ms": 1.0389999999999304,
+    "guard_ops": 259,
+    "index_ms": 0.047999999999944976,
+    "ms": 2.2549999999999955,
+    "rsdd_ms": 1.6490000000006262,
+    "runs_ms": [
+     2.415999999999997,
+     2.2549999999999955,
+     2.0500000000000114
+    ],
+    "set_union_ms": 0.051000000000044565,
+    "status": "ok",
+    "tuples": 72,
+    "variables": 51
+   },
+   "program": "ci-layered-dag.rkt",
+   "rules": 2,
+   "statements": 1,
+   "uncertain_facts": 51
+  },
+  {
+   "base_facts": 230,
+   "kind": "benchmark",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.15973775453916855] [#f 0.8402622454608315]>"
+    ],
+    "apply_calls": 61869,
+    "find_bindings_ms": 0.6200000000001182,
+    "goal_bdd_nodes": [
+     3047
+    ],
+    "guard_build_ms": 3.4659999999998945,
+    "guard_ops": 1382,
+    "index_ms": 0.14300000000019963,
+    "ms": 5.6059999999999945,
+    "rsdd_ms": 3.5419999999998026,
+    "runs_ms": [
+     5.6059999999999945,
+     6.449999999999989,
+     5.6049999999999045
+    ],
+    "set_union_ms": 0.06099999999997863,
+    "status": "ok",
+    "tuples": 304,
+    "variables": 230
+   },
+   "program": "ci-supply-chain.rkt",
+   "rules": 3,
+   "statements": 1,
+   "uncertain_facts": 230
+  },
+  {
+   "base_facts": 36,
+   "kind": "benchmark",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.9384050783941389] [#f 0.06159492160586111]>"
+    ],
+    "apply_calls": 119205,
+    "find_bindings_ms": 2.2189999999998236,
+    "goal_bdd_nodes": [
+     402
+    ],
+    "guard_build_ms": 4.424000000000092,
+    "guard_ops": 1105,
+    "index_ms": 0.07699999999994134,
+    "ms": 8.668999999999983,
+    "rsdd_ms": 7.220999999999265,
+    "runs_ms": [
+     8.220000000000027,
+     8.668999999999983,
+     9.253000000000043
+    ],
+    "set_union_ms": 1.4690000000002783,
+    "status": "ok",
+    "tuples": 56,
+    "variables": 36
+   },
+   "program": "timing-chordring.rkt",
+   "rules": 2,
+   "statements": 1,
+   "uncertain_facts": 36
+  },
+  {
+   "base_facts": 160,
+   "kind": "benchmark",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.9999799910944093] [#f 2.000890559072932e-5]>"
+    ],
+    "apply_calls": 1864549,
+    "find_bindings_ms": 92.91299999999967,
+    "goal_bdd_nodes": [
+     10238
+    ],
+    "guard_build_ms": 125.44500000000028,
+    "guard_ops": 660,
+    "index_ms": 0.1190000000000282,
+    "ms": 222.19799999999998,
+    "rsdd_ms": 220.19400000000235,
+    "runs_ms": [
+     229.20799999999997,
+     213.20400000000006,
+     222.19799999999998
+    ],
+    "set_union_ms": 2.7450000000000045,
+    "status": "ok",
+    "tuples": 198,
+    "variables": 160
+   },
+   "program": "timing-dag.rkt",
+   "rules": 2,
+   "statements": 1,
+   "uncertain_facts": 160
+  },
+  {
+   "base_facts": 281,
+   "kind": "benchmark",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.0006265787482177979] [#f 0.9993734212517822]>"
+    ],
+    "apply_calls": 19126,
+    "find_bindings_ms": 10.984000000000322,
+    "goal_bdd_nodes": [
+     70
+    ],
+    "guard_build_ms": 0.4539999999996098,
+    "guard_ops": 16043,
+    "index_ms": 0.3599999999999568,
+    "ms": 15.227000000000032,
+    "rsdd_ms": 2.0870000000002733,
+    "runs_ms": [
+     15.711000000000013,
+     15.227000000000032,
+     15.061000000000035
+    ],
+    "set_union_ms": 0.3939999999995507,
+    "status": "ok",
+    "tuples": 423,
+    "variables": 280
+   },
+   "program": "timing-pointsto.rkt",
+   "rules": 4,
+   "statements": 1,
+   "uncertain_facts": 280
+  },
+  {
+   "base_facts": 70,
+   "kind": "benchmark",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.025031555049932444] [#f 0.9749684449500675]>"
+    ],
+    "apply_calls": 3166,
+    "find_bindings_ms": 0.5319999999999823,
+    "goal_bdd_nodes": [
+     35
+    ],
+    "guard_build_ms": 0.0999999999999659,
+    "guard_ops": 646,
+    "index_ms": 0.0909999999998945,
+    "ms": 1.4099999999999682,
+    "rsdd_ms": 0.2610000000000241,
+    "runs_ms": [
+     1.5160000000000196,
+     1.4099999999999682,
+     1.379000000000019
+    ],
+    "set_union_ms": 0.0989999999995348,
+    "status": "ok",
+    "tuples": 142,
+    "variables": 70
+   },
+   "program": "timing-ring.rkt",
+   "rules": 2,
+   "statements": 1,
+   "uncertain_facts": 70
+  },
+  {
+   "base_facts": 255,
+   "kind": "benchmark",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.22876792454961012] [#f 0.7712320754503899]>"
+    ],
+    "apply_calls": 6275,
+    "find_bindings_ms": 1.068000000000552,
+    "goal_bdd_nodes": [
+     14
+    ],
+    "guard_build_ms": 0.4589999999996621,
+    "guard_ops": 2294,
+    "index_ms": 0.48300000000006094,
+    "ms": 4.63900000000001,
+    "rsdd_ms": 0.5869999999995912,
+    "runs_ms": [
+     4.630999999999972,
+     4.646000000000015,
+     4.63900000000001
+    ],
+    "set_union_ms": 0.2999999999998977,
+    "status": "ok",
+    "tuples": 645,
+    "variables": 254
+   },
+   "program": "timing-sg.rkt",
+   "rules": 3,
+   "statements": 1,
+   "uncertain_facts": 254
+  },
+  {
+   "base_facts": 350,
+   "kind": "benchmark",
+   "magic": {
+    "answers": [
+     "#<pmf: [#t 0.3213296398891967] [#f 0.6786703601108033]>"
+    ],
+    "apply_calls": 3006272,
+    "find_bindings_ms": 190.33400000000086,
+    "goal_bdd_nodes": [
+     546
+    ],
+    "guard_build_ms": 116.99600000000248,
+    "guard_ops": 40065,
+    "index_ms": 1.2250000000003638,
+    "ms": 445.9970000000002,
+    "rsdd_ms": 410.2189999999946,
+    "runs_ms": [
+     470.33299999999997,
+     445.9970000000002,
+     439.7449999999999
+    ],
+    "set_union_ms": 128.30799999999715,
+    "status": "ok",
+    "tuples": 490,
+    "variables": 210
+   },
+   "program": "timing-smokers.rkt",
+   "rules": 2,
+   "statements": 1,
+   "uncertain_facts": 210
+  }
+ ],
+ "reference": [
+  {
+   "ms": 236.35399999999998,
+   "program": "edge-cases.rkt",
+   "rows": [
+    {
+     "agree": true,
+     "engine": {
+      "label": "Coin(\"fair\")",
+      "probability": 0.5
+     },
+     "reference": {
+      "label": "Coin(\"fair\")",
+      "probability": 0.5
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Certain(\"a\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Certain(\"a\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Certain(\"b\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Certain(\"b\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Impossible(\"c\")",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "Impossible(\"c\")",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Precise(\"d\")",
+      "probability": 0.125
+     },
+     "reference": {
+      "label": "Precise(\"d\")",
+      "probability": 0.125
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Ready()",
+      "probability": 0.75
+     },
+     "reference": {
+      "label": "Ready()",
+      "probability": 0.75
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Reading(\"sensor7\", 3, -12.5, \"celsius\")",
+      "probability": 0.9
+     },
+     "reference": {
+      "label": "Reading(\"sensor7\", 3, -12.5, \"celsius\")",
+      "probability": 0.9
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Point(1, 2)",
+      "probability": 0.6
+     },
+     "reference": {
+      "label": "Point(1, 2)",
+      "probability": 0.6
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Point3(1, 2, 3)",
+      "probability": 0.6
+     },
+     "reference": {
+      "label": "Point3(1, 2, 3)",
+      "probability": 0.6
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Point(1.0, 2.0)",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "Point(1.0, 2.0)",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Overheating()",
+      "probability": 0.9
+     },
+     "reference": {
+      "label": "Overheating()",
+      "probability": 0.9
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Warm()",
+      "probability": 0.64
+     },
+     "reference": {
+      "label": "Warm()",
+      "probability": 0.64
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "BothHigh()",
+      "probability": 0.16000000000000003
+     },
+     "reference": {
+      "label": "BothHigh()",
+      "probability": 0.16000000000000003
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Grandlink(1, 3)",
+      "probability": 0.36
+     },
+     "reference": {
+      "label": "Grandlink(1, 3)",
+      "probability": 0.36
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "NeverDeclared(\"anything\")",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "NeverDeclared(\"anything\")",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Derived(\"anything\")",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "Derived(\"anything\")",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Point(99, 99)",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "Point(99, 99)",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Coin(\"fair\")",
+      "probability": 0.5
+     },
+     "reference": {
+      "label": "Coin(\"fair\")",
+      "probability": 0.5
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Coin(\"fair\")",
+      "probability": 0.5
+     },
+     "reference": {
+      "label": "Coin(\"fair\")",
+      "probability": 0.5
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Chain(1, 4)",
+      "probability": 0.216
+     },
+     "reference": {
+      "label": "Chain(1, 4)",
+      "probability": 0.21599999999999997
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Tiny(\"g\")",
+      "probability": 0.5
+     },
+     "reference": {
+      "label": "Tiny(\"g\")",
+      "probability": 0.5
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Warm()",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Warm()",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "High(\"s2\")",
+      "probability": 0.4000000000000001
+     },
+     "reference": {
+      "label": "High(\"s2\")",
+      "probability": 0.4
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "BothHigh()",
+      "probability": 0.4000000000000001
+     },
+     "reference": {
+      "label": "BothHigh()",
+      "probability": 0.4
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Certain(\"a\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Certain(\"a\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Impossible(\"c\")",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "Impossible(\"c\")",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "High(\"s2\")",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "High(\"s2\")",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Warm()",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Warm()",
+      "probability": 1.0
+     }
+    }
+   ],
+   "status": "agree"
+  },
+  {
+   "ms": 169.06400000000002,
+   "program": "family-example.rkt",
+   "rows": [
+    {
+     "agree": true,
+     "engine": {
+      "label": "Grandfather(\"Tom\", \"Carol\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Grandfather(\"Tom\", \"Carol\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Grandmother(\"Mary\", \"Carol\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Grandmother(\"Mary\", \"Carol\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Ancestor(\"Tom\", \"Carol\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Ancestor(\"Tom\", \"Carol\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Ancestor(\"Tom\", \"Gina\")",
+      "probability": 0.7
+     },
+     "reference": {
+      "label": "Ancestor(\"Tom\", \"Gina\")",
+      "probability": 0.7
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Son(\"Dave\", \"Alice\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Son(\"Dave\", \"Alice\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Daughter(\"Carol\", \"Bob\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Daughter(\"Carol\", \"Bob\")",
+      "probability": 1.0
+     }
+    }
+   ],
+   "status": "agree"
+  },
+  {
+   "ms": 88.394,
+   "program": "network-example.rkt",
+   "rows": [
+    {
+     "agree": true,
+     "engine": {
+      "label": "Path(\"a\", \"b\")",
+      "probability": 0.5
+     },
+     "reference": {
+      "label": "Path(\"a\", \"b\")",
+      "probability": 0.5
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Path(\"a\", \"c\")",
+      "probability": 0.25
+     },
+     "reference": {
+      "label": "Path(\"a\", \"c\")",
+      "probability": 0.25
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Path(\"b\", \"c\")",
+      "probability": 0.5
+     },
+     "reference": {
+      "label": "Path(\"b\", \"c\")",
+      "probability": 0.5
+     }
+    }
+   ],
+   "status": "agree"
+  },
+  {
+   "ms": 112.12800000000004,
+   "program": "alarm.rkt",
+   "rows": [
+    {
+     "agree": true,
+     "engine": {
+      "label": "Burglary()",
+      "probability": 0.01
+     },
+     "reference": {
+      "label": "Burglary()",
+      "probability": 0.01
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Earthquake()",
+      "probability": 0.02
+     },
+     "reference": {
+      "label": "Earthquake()",
+      "probability": 0.02
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Alarm()",
+      "probability": 0.0162296551
+     },
+     "reference": {
+      "label": "Alarm()",
+      "probability": 0.0162296551
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "JohnCalls()",
+      "probability": 0.0638763551105
+     },
+     "reference": {
+      "label": "JohnCalls()",
+      "probability": 0.06387635511050001
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "MaryCalls()",
+      "probability": 0.0311335433986
+     },
+     "reference": {
+      "label": "MaryCalls()",
+      "probability": 0.0311335433986
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Burglary()",
+      "probability": 0.1350328224830436
+     },
+     "reference": {
+      "label": "Burglary()",
+      "probability": 0.13503282248304357
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Earthquake()",
+      "probability": 0.095283538798843
+     },
+     "reference": {
+      "label": "Earthquake()",
+      "probability": 0.09528353879884299
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Alarm()",
+      "probability": 0.22994170284280377
+     },
+     "reference": {
+      "label": "Alarm()",
+      "probability": 0.22994170284280374
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Alarm()",
+      "probability": 0.9133500324241447
+     },
+     "reference": {
+      "label": "Alarm()",
+      "probability": 0.9133500324241446
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Burglary()",
+      "probability": 0.5348627490523304
+     },
+     "reference": {
+      "label": "Burglary()",
+      "probability": 0.5348627490523303
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Earthquake()",
+      "probability": 0.3360252191995999
+     },
+     "reference": {
+      "label": "Earthquake()",
+      "probability": 0.3360252191995999
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Burglary()",
+      "probability": 0.032309429434229736
+     },
+     "reference": {
+      "label": "Burglary()",
+      "probability": 0.03230942943422973
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Burglary()",
+      "probability": 0.028742207522367738
+     },
+     "reference": {
+      "label": "Burglary()",
+      "probability": 0.028742207522367735
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Alarm()",
+      "probability": 0.8845695704294078
+     },
+     "reference": {
+      "label": "Alarm()",
+      "probability": 0.884569570429408
+     }
+    }
+   ],
+   "status": "agree"
+  },
+  {
+   "ms": 246.26700000000005,
+   "program": "observation.rkt",
+   "rows": [
+    {
+     "agree": true,
+     "engine": {
+      "label": "Compromised(\"dmz\")",
+      "probability": 0.6
+     },
+     "reference": {
+      "label": "Compromised(\"dmz\")",
+      "probability": 0.6
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Compromised(\"web1\")",
+      "probability": 0.42
+     },
+     "reference": {
+      "label": "Compromised(\"web1\")",
+      "probability": 0.42
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Compromised(\"db\")",
+      "probability": 0.39359999999999995
+     },
+     "reference": {
+      "label": "Compromised(\"db\")",
+      "probability": 0.3936
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Compromised(\"admin\")",
+      "probability": 0.21
+     },
+     "reference": {
+      "label": "Compromised(\"admin\")",
+      "probability": 0.21
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Compromised(\"dmz\")",
+      "probability": 0.9815001417574762
+     },
+     "reference": {
+      "label": "Compromised(\"dmz\")",
+      "probability": 0.9815001417574762
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Compromised(\"web1\")",
+      "probability": 0.8798460106949623
+     },
+     "reference": {
+      "label": "Compromised(\"web1\")",
+      "probability": 0.8798460106949623
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Compromised(\"db\")",
+      "probability": 0.2559532994758485
+     },
+     "reference": {
+      "label": "Compromised(\"db\")",
+      "probability": 0.2559532994758486
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Compromised(\"admin\")",
+      "probability": 0.07998600097226925
+     },
+     "reference": {
+      "label": "Compromised(\"admin\")",
+      "probability": 0.07998600097226928
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Compromised(\"backup\")",
+      "probability": 0.07678598984275456
+     },
+     "reference": {
+      "label": "Compromised(\"backup\")",
+      "probability": 0.07678598984275457
+     }
+    }
+   ],
+   "status": "agree"
+  },
+  {
+   "program": "smokers.rkt",
+   "reason": "20 uncertain facts, limit 16 (see --max-facts)",
+   "status": "skipped"
+  },
+  {
+   "ms": 103.28999999999996,
+   "program": "problog-biomine.rkt",
+   "rows": [
+    {
+     "agree": true,
+     "engine": {
+      "label": "Linked(\"BRCA1\", \"breast_cancer\")",
+      "probability": 0.85
+     },
+     "reference": {
+      "label": "Linked(\"BRCA1\", \"breast_cancer\")",
+      "probability": 0.85
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Linked(\"BRCA1\", \"TP53\")",
+      "probability": 0.815
+     },
+     "reference": {
+      "label": "Linked(\"BRCA1\", \"TP53\")",
+      "probability": 0.815
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Linked(\"TP53\", \"CDKN2A\")",
+      "probability": 0.7280000000000001
+     },
+     "reference": {
+      "label": "Linked(\"TP53\", \"CDKN2A\")",
+      "probability": 0.728
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Linked(\"BRCA1\", \"melanoma\")",
+      "probability": 0.415324
+     },
+     "reference": {
+      "label": "Linked(\"BRCA1\", \"melanoma\")",
+      "probability": 0.41532399999999997
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Linked(\"melanoma\", \"BRCA1\")",
+      "probability": 0.415324
+     },
+     "reference": {
+      "label": "Linked(\"melanoma\", \"BRCA1\")",
+      "probability": 0.41532399999999997
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Linked(\"BARD1\", \"melanoma\")",
+      "probability": 0.425516
+     },
+     "reference": {
+      "label": "Linked(\"BARD1\", \"melanoma\")",
+      "probability": 0.42551599999999995
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Linked(\"MDM2\", \"breast_cancer\")",
+      "probability": 0.5874520000000001
+     },
+     "reference": {
+      "label": "Linked(\"MDM2\", \"breast_cancer\")",
+      "probability": 0.587452
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Linked(\"BRCA1\", \"melanoma\")",
+      "probability": 0.5705
+     },
+     "reference": {
+      "label": "Linked(\"BRCA1\", \"melanoma\")",
+      "probability": 0.5705
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Linked(\"TP53\", \"CDKN2A\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Linked(\"TP53\", \"CDKN2A\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Linked(\"BRCA1\", \"TP53\")",
+      "probability": 0.8150000000000001
+     },
+     "reference": {
+      "label": "Linked(\"BRCA1\", \"TP53\")",
+      "probability": 0.815
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Linked(\"BRCA1\", \"TP53\")",
+      "probability": 0.63
+     },
+     "reference": {
+      "label": "Linked(\"BRCA1\", \"TP53\")",
+      "probability": 0.63
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Linked(\"BRCA1\", \"melanoma\")",
+      "probability": 0.441
+     },
+     "reference": {
+      "label": "Linked(\"BRCA1\", \"melanoma\")",
+      "probability": 0.44099999999999995
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Linked(\"BRCA1\", \"breast_cancer\")",
+      "probability": 0.8500000000000001
+     },
+     "reference": {
+      "label": "Linked(\"BRCA1\", \"breast_cancer\")",
+      "probability": 0.85
+     }
+    }
+   ],
+   "status": "agree"
+  },
+  {
+   "program": "problog-epidemic.rkt",
+   "reason": "24 uncertain facts, limit 16 (see --max-facts)",
+   "status": "skipped"
+  },
+  {
+   "ms": 88.50500000000011,
+   "program": "problog-genetics.rkt",
+   "rows": [
+    {
+     "agree": true,
+     "engine": {
+      "label": "Carrier(\"dad\")",
+      "probability": 0.0975
+     },
+     "reference": {
+      "label": "Carrier(\"dad\")",
+      "probability": 0.0975
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Carrier(\"ann\")",
+      "probability": 0.09631250000000002
+     },
+     "reference": {
+      "label": "Carrier(\"ann\")",
+      "probability": 0.09631250000000001
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Affected(\"ann\")",
+      "probability": 0.0024375000000000004
+     },
+     "reference": {
+      "label": "Affected(\"ann\")",
+      "probability": 0.0024375000000000004
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Affected(\"ben\")",
+      "probability": 0.0024375000000000004
+     },
+     "reference": {
+      "label": "Affected(\"ben\")",
+      "probability": 0.0024375000000000004
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Affected(\"dad\")",
+      "probability": 0.0025000000000000005
+     },
+     "reference": {
+      "label": "Affected(\"dad\")",
+      "probability": 0.0025000000000000005
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Carrier(\"dad\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Carrier(\"dad\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Carrier(\"mom\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Carrier(\"mom\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Affected(\"ben\")",
+      "probability": 0.25
+     },
+     "reference": {
+      "label": "Affected(\"ben\")",
+      "probability": 0.25
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Carrier(\"ben\")",
+      "probability": 0.75
+     },
+     "reference": {
+      "label": "Carrier(\"ben\")",
+      "probability": 0.75
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Carrier(\"gpa\")",
+      "probability": 0.5384615384615384
+     },
+     "reference": {
+      "label": "Carrier(\"gpa\")",
+      "probability": 0.5384615384615384
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Carrier(\"gma\")",
+      "probability": 0.5384615384615384
+     },
+     "reference": {
+      "label": "Carrier(\"gma\")",
+      "probability": 0.5384615384615384
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Affected(\"ben\")",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "Affected(\"ben\")",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Carrier(\"ben\")",
+      "probability": 0.6666666666666666
+     },
+     "reference": {
+      "label": "Carrier(\"ben\")",
+      "probability": 0.6666666666666666
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Affected(\"ann\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Affected(\"ann\")",
+      "probability": 1.0
+     }
+    }
+   ],
+   "status": "agree"
+  },
+  {
+   "ms": 81.9670000000001,
+   "program": "psouffle-side-channel.rkt",
+   "rows": [
+    {
+     "agree": true,
+     "engine": {
+      "label": "Leak(\"cache-hit\")",
+      "probability": 0.72
+     },
+     "reference": {
+      "label": "Leak(\"cache-hit\")",
+      "probability": 0.72
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Leak(\"cache-miss\")",
+      "probability": 0.18
+     },
+     "reference": {
+      "label": "Leak(\"cache-miss\")",
+      "probability": 0.18
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Explained(\"cache-hit\")",
+      "probability": 0.6552
+     },
+     "reference": {
+      "label": "Explained(\"cache-hit\")",
+      "probability": 0.6552
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Explained(\"cache-miss\")",
+      "probability": 0.153
+     },
+     "reference": {
+      "label": "Explained(\"cache-miss\")",
+      "probability": 0.153
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Explained(\"timing\")",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "Explained(\"timing\")",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Secret(\"admin\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Secret(\"admin\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Monitor(\"cache-hit\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Monitor(\"cache-hit\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Explained(\"cache-miss\")",
+      "probability": 0.153
+     },
+     "reference": {
+      "label": "Explained(\"cache-miss\")",
+      "probability": 0.153
+     }
+    }
+   ],
+   "status": "agree"
+  },
+  {
+   "ms": 93.43499999999995,
+   "program": "psouffle-taint.rkt",
+   "rows": [
+    {
+     "agree": true,
+     "engine": {
+      "label": "Tainted(\"user\")",
+      "probability": 0.55
+     },
+     "reference": {
+      "label": "Tainted(\"user\")",
+      "probability": 0.55
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Tainted(\"config\")",
+      "probability": 0.21
+     },
+     "reference": {
+      "label": "Tainted(\"config\")",
+      "probability": 0.21
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Tainted(\"parser\")",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "Tainted(\"parser\")",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Tainted(\"cache\")",
+      "probability": 0.36300000000000004
+     },
+     "reference": {
+      "label": "Tainted(\"cache\")",
+      "probability": 0.36300000000000004
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Tainted(\"log\")",
+      "probability": 0.12389999999999998
+     },
+     "reference": {
+      "label": "Tainted(\"log\")",
+      "probability": 0.12389999999999998
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Tainted(\"network\")",
+      "probability": 0.32661550848
+     },
+     "reference": {
+      "label": "Tainted(\"network\")",
+      "probability": 0.32661550848000004
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Alarm(\"cache\")",
+      "probability": 0.29040000000000005
+     },
+     "reference": {
+      "label": "Alarm(\"cache\")",
+      "probability": 0.29040000000000005
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Alarm(\"network\")",
+      "probability": 0.261292406784
+     },
+     "reference": {
+      "label": "Alarm(\"network\")",
+      "probability": 0.261292406784
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Alarm(\"log\")",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "Alarm(\"log\")",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Source(\"user\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Source(\"user\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Flow(\"user\", \"cache\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Flow(\"user\", \"cache\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Fires(\"cache\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Fires(\"cache\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Tainted(\"network\")",
+      "probability": 0.76061696
+     },
+     "reference": {
+      "label": "Tainted(\"network\")",
+      "probability": 0.76061696
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Alarm(\"network\")",
+      "probability": 0.6084935680000001
+     },
+     "reference": {
+      "label": "Alarm(\"network\")",
+      "probability": 0.608493568
+     }
+    }
+   ],
+   "status": "agree"
+  },
+  {
+   "ms": 88.47299999999996,
+   "program": "souffle-points-to.rkt",
+   "rows": [
+    {
+     "agree": true,
+     "engine": {
+      "label": "VarPointsTo(\"a\", \"o1\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "VarPointsTo(\"a\", \"o1\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "VarPointsTo(\"c\", \"o1\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "VarPointsTo(\"c\", \"o1\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "FieldPointsTo(\"o1\", \"f\", \"o2\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "FieldPointsTo(\"o1\", \"f\", \"o2\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "VarPointsTo(\"d\", \"o2\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "VarPointsTo(\"d\", \"o2\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "VarPointsTo(\"x\", \"o1\")",
+      "probability": 0.7
+     },
+     "reference": {
+      "label": "VarPointsTo(\"x\", \"o1\")",
+      "probability": 0.7
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "VarPointsTo(\"x\", \"o3\")",
+      "probability": 0.3
+     },
+     "reference": {
+      "label": "VarPointsTo(\"x\", \"o3\")",
+      "probability": 0.3
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "VarPointsTo(\"y\", \"o1\")",
+      "probability": 0.6
+     },
+     "reference": {
+      "label": "VarPointsTo(\"y\", \"o1\")",
+      "probability": 0.6
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "VarPointsTo(\"y\", \"o2\")",
+      "probability": 0.4
+     },
+     "reference": {
+      "label": "VarPointsTo(\"y\", \"o2\")",
+      "probability": 0.4
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Alias(\"x\", \"a\")",
+      "probability": 0.7
+     },
+     "reference": {
+      "label": "Alias(\"x\", \"a\")",
+      "probability": 0.7
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Alias(\"y\", \"d\")",
+      "probability": 0.4
+     },
+     "reference": {
+      "label": "Alias(\"y\", \"d\")",
+      "probability": 0.4
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Alias(\"y\", \"c\")",
+      "probability": 0.6
+     },
+     "reference": {
+      "label": "Alias(\"y\", \"c\")",
+      "probability": 0.6
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Alias(\"x\", \"y\")",
+      "probability": 0.42
+     },
+     "reference": {
+      "label": "Alias(\"x\", \"y\")",
+      "probability": 0.42
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Assign(\"y\", \"b\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Assign(\"y\", \"b\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "VarPointsTo(\"y\", \"o2\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "VarPointsTo(\"y\", \"o2\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Assign(\"y\", \"a\")",
+      "probability": 0.6
+     },
+     "reference": {
+      "label": "Assign(\"y\", \"a\")",
+      "probability": 0.6
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Alias(\"y\", \"c\")",
+      "probability": 0.6
+     },
+     "reference": {
+      "label": "Alias(\"y\", \"c\")",
+      "probability": 0.6
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Assign(\"y\", \"a\")",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "Assign(\"y\", \"a\")",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "VarPointsTo(\"y\", \"o1\")",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "VarPointsTo(\"y\", \"o1\")",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Alias(\"x\", \"y\")",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "Alias(\"x\", \"y\")",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "VarPointsTo(\"x\", \"o1\")",
+      "probability": 0.6999999999999998
+     },
+     "reference": {
+      "label": "VarPointsTo(\"x\", \"o1\")",
+      "probability": 0.7
+     }
+    }
+   ],
+   "status": "agree"
+  },
+  {
+   "ms": 89.56400000000008,
+   "program": "souffle-same-generation.rkt",
+   "rows": [
+    {
+     "agree": true,
+     "engine": {
+      "label": "SameGen(\"a\", \"d\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "SameGen(\"a\", \"d\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "SameGen(\"a\", \"b\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "SameGen(\"a\", \"b\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "SameGen(\"e\", \"f\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "SameGen(\"e\", \"f\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "SameGen(\"a\", \"c\")",
+      "probability": 0.7
+     },
+     "reference": {
+      "label": "SameGen(\"a\", \"c\")",
+      "probability": 0.7
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "SameGen(\"c\", \"a\")",
+      "probability": 0.7
+     },
+     "reference": {
+      "label": "SameGen(\"c\", \"a\")",
+      "probability": 0.7
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "SameGen(\"b\", \"c\")",
+      "probability": 0.7
+     },
+     "reference": {
+      "label": "SameGen(\"b\", \"c\")",
+      "probability": 0.7
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "SameGen(\"e\", \"g\")",
+      "probability": 0.5599999999999999
+     },
+     "reference": {
+      "label": "SameGen(\"e\", \"g\")",
+      "probability": 0.5599999999999999
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "SameGen(\"g\", \"e\")",
+      "probability": 0.5599999999999999
+     },
+     "reference": {
+      "label": "SameGen(\"g\", \"e\")",
+      "probability": 0.5599999999999999
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "SameGen(\"g\", \"b\")",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "SameGen(\"g\", \"b\")",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Up(\"c\", \"q\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Up(\"c\", \"q\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Up(\"g\", \"c\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Up(\"g\", \"c\")",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "SameGen(\"a\", \"c\")",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "SameGen(\"a\", \"c\")",
+      "probability": 1.0
+     }
+    }
+   ],
+   "status": "agree"
+  },
+  {
+   "ms": 175.91200000000003,
+   "program": "correlation.rkt",
+   "rows": [
+    {
+     "agree": true,
+     "engine": {
+      "label": "IPath(\"s\", \"t\")",
+      "probability": 0.4375
+     },
+     "reference": {
+      "label": "IPath(\"s\", \"t\")",
+      "probability": 0.4375
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "SPath(\"s\", \"t\")",
+      "probability": 0.5
+     },
+     "reference": {
+      "label": "SPath(\"s\", \"t\")",
+      "probability": 0.5
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "PPath(\"s\", \"t\")",
+      "probability": 0.672
+     },
+     "reference": {
+      "label": "PPath(\"s\", \"t\")",
+      "probability": 0.672
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "DoubleRisk(\"host\")",
+      "probability": 0.4
+     },
+     "reference": {
+      "label": "DoubleRisk(\"host\")",
+      "probability": 0.4
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Twice(\"x\")",
+      "probability": 0.75
+     },
+     "reference": {
+      "label": "Twice(\"x\")",
+      "probability": 0.75
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Direct(\"y\")",
+      "probability": 0.75
+     },
+     "reference": {
+      "label": "Direct(\"y\")",
+      "probability": 0.75
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "PPath(\"s\", \"t\")",
+      "probability": 0.84
+     },
+     "reference": {
+      "label": "PPath(\"s\", \"t\")",
+      "probability": 0.84
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "PEdge(\"b2\", \"l\")",
+      "probability": 0.6
+     },
+     "reference": {
+      "label": "PEdge(\"b2\", \"l\")",
+      "probability": 0.6
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "PEdge(\"b2\", \"l\")",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "PEdge(\"b2\", \"l\")",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "PEdge(\"b2\", \"r\")",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "PEdge(\"b2\", \"r\")",
+      "probability": 0.0
+     }
+    }
+   ],
+   "status": "agree"
+  },
+  {
+   "ms": 358.6399999999999,
+   "program": "cycles.rkt",
+   "rows": [
+    {
+     "agree": true,
+     "engine": {
+      "label": "Reach(0, 3)",
+      "probability": 0.87975
+     },
+     "reference": {
+      "label": "Reach(0, 3)",
+      "probability": 0.87975
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Reach(3, 1)",
+      "probability": 0.81
+     },
+     "reference": {
+      "label": "Reach(3, 1)",
+      "probability": 0.81
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Reach(0, 0)",
+      "probability": 0.791775
+     },
+     "reference": {
+      "label": "Reach(0, 0)",
+      "probability": 0.791775
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Reach(0, 5)",
+      "probability": 0.7038000000000001
+     },
+     "reference": {
+      "label": "Reach(0, 5)",
+      "probability": 0.7038000000000001
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Reach(5, 0)",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "Reach(5, 0)",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Reach(4, 4)",
+      "probability": 0.7
+     },
+     "reference": {
+      "label": "Reach(4, 4)",
+      "probability": 0.7
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Reach(4, 0)",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "Reach(4, 0)",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "SelfLooping(4)",
+      "probability": 0.7
+     },
+     "reference": {
+      "label": "SelfLooping(4)",
+      "probability": 0.7
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "SelfLooping(0)",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "SelfLooping(0)",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "FromZero(1)",
+      "probability": 0.9
+     },
+     "reference": {
+      "label": "FromZero(1)",
+      "probability": 0.9
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "FromZero(3)",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "FromZero(3)",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "IntoZero(3)",
+      "probability": 0.9
+     },
+     "reference": {
+      "label": "IntoZero(3)",
+      "probability": 0.9
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "ZeroToTwo()",
+      "probability": 0.81
+     },
+     "reference": {
+      "label": "ZeroToTwo()",
+      "probability": 0.81
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Even(0)",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Even(0)",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Odd(1)",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Odd(1)",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Even(2)",
+      "probability": 1.0
+     },
+     "reference": {
+      "label": "Even(2)",
+      "probability": 1.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Odd(3)",
+      "probability": 0.6
+     },
+     "reference": {
+      "label": "Odd(3)",
+      "probability": 0.6
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Even(4)",
+      "probability": 0.6
+     },
+     "reference": {
+      "label": "Even(4)",
+      "probability": 0.6
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Odd(5)",
+      "probability": 0.3
+     },
+     "reference": {
+      "label": "Odd(5)",
+      "probability": 0.3
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Even(6)",
+      "probability": 0.3
+     },
+     "reference": {
+      "label": "Even(6)",
+      "probability": 0.3
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Even(1)",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "Even(1)",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Odd(2)",
+      "probability": 0.0
+     },
+     "reference": {
+      "label": "Odd(2)",
+      "probability": 0.0
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Trans(0, 0)",
+      "probability": 0.6561000000000001
+     },
+     "reference": {
+      "label": "Trans(0, 0)",
+      "probability": 0.6561
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Trans(0, 3)",
+      "probability": 0.7290000000000001
+     },
+     "reference": {
+      "label": "Trans(0, 3)",
+      "probability": 0.7290000000000001
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Trans(3, 2)",
+      "probability": 0.7290000000000001
+     },
+     "reference": {
+      "label": "Trans(3, 2)",
+      "probability": 0.7290000000000001
+     }
+    },
+    {
+     "agree": true,
+     "engine": {
+      "label": "Trans(1, 0)",
+      "probability": 0.7290000000000001
+     },
+     "reference": {
+      "label": "Trans(1, 0)",
+      "probability": 0.7290000000000001
+     }
+    }
+   ],
+   "status": "agree"
+  }
+ ],
+ "runs": [
+  {
+   "answer": 0.5,
+   "facts": 1,
+   "runs": [
+    0.28185154194943607,
+    0.27746037498582155,
+    0.2785461669554934
+   ],
+   "seconds": 0.2785461669554934,
+   "size": [],
+   "status": "ok",
+   "suite": "startup",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 1,
+   "runs": [
+    0.28046312503283843,
+    0.2823657090193592,
+    0.2777921250090003
+   ],
+   "seconds": 0.28046312503283843,
+   "size": [],
+   "status": "ok",
+   "suite": "startup",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.5,
+   "facts": 1,
+   "runs": [
+    0.09191366704180837,
+    0.07043441600399092,
+    0.07139929197728634
+   ],
+   "seconds": 0.07139929197728634,
+   "size": [],
+   "status": "ok",
+   "suite": "startup",
+   "system": "problog"
+  },
+  {
+   "answer": 0.5,
+   "facts": 1,
+   "runs": [
+    0.1859583330224268,
+    0.1692705419845879,
+    0.16843020799569786
+   ],
+   "seconds": 0.1692705419845879,
+   "size": [],
+   "status": "ok",
+   "suite": "startup",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 1,
+   "runs": [
+    0.04613024997524917,
+    0.038570832984987646,
+    0.03888916701544076
+   ],
+   "seconds": 0.03888916701544076,
+   "size": [],
+   "status": "ok",
+   "suite": "startup",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.5,
+   "compile_seconds": 5.417756374983583,
+   "compile_status": "ok",
+   "facts": 1,
+   "runs": [
+    0.22069766599452123,
+    0.17431358300382271,
+    0.18649229197762907
+   ],
+   "seconds": 0.18649229197762907,
+   "size": [],
+   "status": "ok",
+   "suite": "startup",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.5,
+   "apply_calls": 24,
+   "facts": 1,
+   "find_bindings_ms": 0.021999999999934516,
+   "goal_bdd_nodes": [
+    1
+   ],
+   "guard_build_ms": 0.008000000000038199,
+   "guard_ops": 25,
+   "index_ms": 0.0019999999999527063,
+   "rsdd_ms": 0.014000000000066848,
+   "runs": [
+    0.0001560000000000059,
+    0.00018200000000001638,
+    0.00012999999999999546
+   ],
+   "seconds": 0.0001560000000000059,
+   "set_union_ms": 0.0030000000000427463,
+   "size": [],
+   "status": "ok",
+   "suite": "startup",
+   "system": "engine",
+   "tuples": 4,
+   "variables": 1
+  },
+  {
+   "answer": 0.2847077732731954,
+   "facts": 250,
+   "runs": [
+    0.332375250000041,
+    0.38109404197894037,
+    0.36439758399501443
+   ],
+   "seconds": 0.36439758399501443,
+   "size": [
+    250
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 250,
+   "runs": [
+    0.33585770800709724,
+    0.32847116695484146,
+    0.3413156670285389
+   ],
+   "seconds": 0.33585770800709724,
+   "size": [
+    250
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.28470777,
+   "facts": 250,
+   "runs": [
+    0.1276827499968931,
+    0.12672691704938188,
+    0.12406183301936835
+   ],
+   "seconds": 0.12672691704938188,
+   "size": [
+    250
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "problog"
+  },
+  {
+   "answer": 0.2847077732731954,
+   "facts": 250,
+   "runs": [
+    1.3012202919926494,
+    1.2759775419835933,
+    1.2779733330244198
+   ],
+   "seconds": 1.2779733330244198,
+   "size": [
+    250
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 250,
+   "runs": [
+    0.07757533300900832,
+    0.07895299996016547,
+    0.07784408400766551
+   ],
+   "seconds": 0.07784408400766551,
+   "size": [
+    250
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.28470777,
+   "compile_seconds": 5.240854083036538,
+   "compile_status": "ok",
+   "facts": 250,
+   "runs": [
+    3.3714313749806024
+   ],
+   "seconds": 3.3714313749806024,
+   "size": [
+    250
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.2847077732731954,
+   "apply_calls": 33520,
+   "facts": 250,
+   "find_bindings_ms": 3.290999999999599,
+   "goal_bdd_nodes": [
+    125
+   ],
+   "guard_build_ms": 0.38599999999996726,
+   "guard_ops": 2266,
+   "index_ms": 0.36200000000025057,
+   "rsdd_ms": 2.4189999999993006,
+   "runs": [
+    0.006324999999999989,
+    0.006245999999999981,
+    0.006291999999999973
+   ],
+   "seconds": 0.006291999999999973,
+   "set_union_ms": 0.3230000000007749,
+   "size": [
+    250
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "engine",
+   "tuples": 502,
+   "variables": 250
+  },
+  {
+   "answer": 0.08105851616218133,
+   "facts": 500,
+   "runs": [
+    0.4127652080496773,
+    0.4121036250144243,
+    0.413623166969046
+   ],
+   "seconds": 0.4127652080496773,
+   "size": [
+    500
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 500,
+   "runs": [
+    0.3859538329998031,
+    0.3864527919795364,
+    0.38627262494992465
+   ],
+   "seconds": 0.38627262494992465,
+   "size": [
+    500
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.081058516,
+   "facts": 500,
+   "runs": [
+    0.18358387501211837,
+    0.17941004200838506,
+    0.1916984170093201
+   ],
+   "seconds": 0.18358387501211837,
+   "size": [
+    500
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "problog"
+  },
+  {
+   "answer": 0.08105851616218133,
+   "facts": 500,
+   "runs": [
+    7.785863832978066
+   ],
+   "seconds": 7.785863832978066,
+   "size": [
+    500
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 500,
+   "runs": [
+    0.18259933299850672,
+    0.18200162501307204,
+    0.1828504580189474
+   ],
+   "seconds": 0.18259933299850672,
+   "size": [
+    500
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "souffle"
+  },
+  {
+   "answer": null,
+   "compile_seconds": 5.175309542042669,
+   "compile_status": "ok",
+   "facts": 500,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    500
+   ],
+   "status": "timeout",
+   "suite": "ring",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.08105851616218133,
+   "apply_calls": 130016,
+   "facts": 500,
+   "find_bindings_ms": 11.68100000000004,
+   "goal_bdd_nodes": [
+    250
+   ],
+   "guard_build_ms": 0.8169999999992683,
+   "guard_ops": 4516,
+   "index_ms": 0.7509999999992942,
+   "rsdd_ms": 8.987000000000762,
+   "runs": [
+    0.01765300000000002,
+    0.016774,
+    0.017687000000000012
+   ],
+   "seconds": 0.01765300000000002,
+   "set_union_ms": 0.6220000000006394,
+   "size": [
+    500
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "engine",
+   "tuples": 1002,
+   "variables": 500
+  },
+  {
+   "answer": 0.006570483042414605,
+   "facts": 1000,
+   "runs": [
+    0.7217005839920603,
+    0.7449684999883175,
+    0.7161039580241777
+   ],
+   "seconds": 0.7217005839920603,
+   "size": [
+    1000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 1000,
+   "runs": [
+    0.5911622919957153,
+    0.5932217500521801,
+    0.5919851250364445
+   ],
+   "seconds": 0.5919851250364445,
+   "size": [
+    1000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.006570483,
+   "facts": 1000,
+   "runs": [
+    0.3168694160412997,
+    0.3164251249982044,
+    0.3116243749973364
+   ],
+   "seconds": 0.3164251249982044,
+   "size": [
+    1000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "problog"
+  },
+  {
+   "answer": null,
+   "facts": 1000,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    1000
+   ],
+   "status": "timeout",
+   "suite": "ring",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 1000,
+   "runs": [
+    0.615635541966185,
+    0.6101859160116874,
+    0.6135915420018137
+   ],
+   "seconds": 0.6135915420018137,
+   "size": [
+    1000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "souffle"
+  },
+  {
+   "facts": 1000,
+   "note": "timed out at size [500]",
+   "size": [
+    1000
+   ],
+   "status": "not run",
+   "suite": "ring",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.006570483042414605,
+   "apply_calls": 510016,
+   "facts": 1000,
+   "find_bindings_ms": 49.26800000000151,
+   "goal_bdd_nodes": [
+    500
+   ],
+   "guard_build_ms": 1.6929999999968004,
+   "guard_ops": 9016,
+   "index_ms": 1.5969999999991842,
+   "rsdd_ms": 44.294000000001574,
+   "runs": [
+    0.06618799999999998,
+    0.061496999999999954,
+    0.06163
+   ],
+   "seconds": 0.06163,
+   "set_union_ms": 1.4470000000005712,
+   "size": [
+    1000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "engine",
+   "tuples": 2002,
+   "variables": 1000
+  },
+  {
+   "answer": 4.317124741065784e-05,
+   "facts": 2000,
+   "runs": [
+    0.7254261669586413,
+    0.7644414579845034,
+    0.6805626670247875
+   ],
+   "seconds": 0.7254261669586413,
+   "size": [
+    2000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 2000,
+   "runs": [
+    0.464641832979396,
+    0.4491248750127852,
+    0.48576549999415874
+   ],
+   "seconds": 0.464641832979396,
+   "size": [
+    2000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 4.3171247e-05,
+   "facts": 2000,
+   "runs": [
+    0.7036903750267811,
+    0.7339949160232209,
+    0.690073040954303
+   ],
+   "seconds": 0.7036903750267811,
+   "size": [
+    2000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "problog"
+  },
+  {
+   "facts": 2000,
+   "note": "timed out at size [1000]",
+   "size": [
+    2000
+   ],
+   "status": "not run",
+   "suite": "ring",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 2000,
+   "runs": [
+    2.5921544159646146
+   ],
+   "seconds": 2.5921544159646146,
+   "size": [
+    2000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "souffle"
+  },
+  {
+   "facts": 2000,
+   "note": "timed out at size [500]",
+   "size": [
+    2000
+   ],
+   "status": "not run",
+   "suite": "ring",
+   "system": "psouffle"
+  },
+  {
+   "answer": 4.317124741065784e-05,
+   "apply_calls": 2018020,
+   "facts": 2000,
+   "find_bindings_ms": 247.93499999999062,
+   "goal_bdd_nodes": [
+    1000
+   ],
+   "guard_build_ms": 3.8019999999953598,
+   "guard_ops": 18016,
+   "index_ms": 3.7669999999961874,
+   "rsdd_ms": 238.6440000000116,
+   "runs": [
+    0.287696,
+    0.26871100000000003,
+    0.2752620000000002
+   ],
+   "seconds": 0.2752620000000002,
+   "set_union_ms": 3.4359999999971933,
+   "size": [
+    2000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "engine",
+   "tuples": 4002,
+   "variables": 2000
+  },
+  {
+   "answer": 1.8637566029922327e-09,
+   "facts": 4000,
+   "runs": [
+    2.1480628750286996
+   ],
+   "seconds": 2.1480628750286996,
+   "size": [
+    4000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 4000,
+   "runs": [
+    0.6701524170348421,
+    0.6540246249642223,
+    0.6101188749889843
+   ],
+   "seconds": 0.6540246249642223,
+   "size": [
+    4000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 1.8637566e-09,
+   "facts": 4000,
+   "runs": [
+    1.7109835830051452,
+    1.7996117920265533,
+    1.7406405410147272
+   ],
+   "seconds": 1.7406405410147272,
+   "size": [
+    4000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "problog"
+  },
+  {
+   "facts": 4000,
+   "note": "timed out at size [1000]",
+   "size": [
+    4000
+   ],
+   "status": "not run",
+   "suite": "ring",
+   "system": "pita"
+  },
+  {
+   "answer": null,
+   "facts": 4000,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    4000
+   ],
+   "status": "timeout",
+   "suite": "ring",
+   "system": "souffle"
+  },
+  {
+   "facts": 4000,
+   "note": "timed out at size [500]",
+   "size": [
+    4000
+   ],
+   "status": "not run",
+   "suite": "ring",
+   "system": "psouffle"
+  },
+  {
+   "answer": 1.8637566029922327e-09,
+   "apply_calls": 8036020,
+   "facts": 4000,
+   "find_bindings_ms": 1065.3490000000315,
+   "goal_bdd_nodes": [
+    2000
+   ],
+   "guard_build_ms": 8.195999999971718,
+   "guard_ops": 36016,
+   "index_ms": 7.225999999984197,
+   "rsdd_ms": 1045.2150000000106,
+   "runs": [
+    1.2057500000000003,
+    1.12115,
+    1.094658
+   ],
+   "seconds": 1.12115,
+   "set_union_ms": 7.0559999999541105,
+   "size": [
+    4000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "engine",
+   "tuples": 8002,
+   "variables": 4000
+  },
+  {
+   "answer": 8.046069742102501e-14,
+   "facts": 6000,
+   "runs": [
+    3.56626170797972
+   ],
+   "seconds": 3.56626170797972,
+   "size": [
+    6000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 6000,
+   "runs": [
+    0.6948481249855831,
+    0.6988913750392385,
+    0.6971863330109045
+   ],
+   "seconds": 0.6971863330109045,
+   "size": [
+    6000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": null,
+   "facts": 6000,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    6000
+   ],
+   "status": "error",
+   "suite": "ring",
+   "system": "problog"
+  },
+  {
+   "facts": 6000,
+   "note": "timed out at size [1000]",
+   "size": [
+    6000
+   ],
+   "status": "not run",
+   "suite": "ring",
+   "system": "pita"
+  },
+  {
+   "facts": 6000,
+   "note": "timed out at size [4000]",
+   "size": [
+    6000
+   ],
+   "status": "not run",
+   "suite": "ring",
+   "system": "souffle"
+  },
+  {
+   "facts": 6000,
+   "note": "timed out at size [500]",
+   "size": [
+    6000
+   ],
+   "status": "not run",
+   "suite": "ring",
+   "system": "psouffle"
+  },
+  {
+   "answer": 8.046069742102501e-14,
+   "apply_calls": 18054020,
+   "facts": 6000,
+   "find_bindings_ms": 2706.3320000000276,
+   "goal_bdd_nodes": [
+    3000
+   ],
+   "guard_build_ms": 13.539000000018405,
+   "guard_ops": 54016,
+   "index_ms": 11.6460000000111,
+   "rsdd_ms": 2672.6620000000203,
+   "runs": [
+    2.7947789999999997
+   ],
+   "seconds": 2.7947789999999997,
+   "set_union_ms": 10.849999999957845,
+   "size": [
+    6000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "engine",
+   "tuples": 12002,
+   "variables": 6000
+  },
+  {
+   "answer": 3.473588675197154e-18,
+   "facts": 8000,
+   "runs": [
+    6.6969738329644315
+   ],
+   "seconds": 6.6969738329644315,
+   "size": [
+    8000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 8000,
+   "runs": [
+    0.8344179580453783,
+    0.8305648329551332,
+    0.8302115420228802
+   ],
+   "seconds": 0.8305648329551332,
+   "size": [
+    8000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": null,
+   "facts": 8000,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    8000
+   ],
+   "status": "error",
+   "suite": "ring",
+   "system": "problog"
+  },
+  {
+   "facts": 8000,
+   "note": "timed out at size [1000]",
+   "size": [
+    8000
+   ],
+   "status": "not run",
+   "suite": "ring",
+   "system": "pita"
+  },
+  {
+   "facts": 8000,
+   "note": "timed out at size [4000]",
+   "size": [
+    8000
+   ],
+   "status": "not run",
+   "suite": "ring",
+   "system": "souffle"
+  },
+  {
+   "facts": 8000,
+   "note": "timed out at size [500]",
+   "size": [
+    8000
+   ],
+   "status": "not run",
+   "suite": "ring",
+   "system": "psouffle"
+  },
+  {
+   "answer": 3.473588675197154e-18,
+   "apply_calls": 32072020,
+   "facts": 8000,
+   "find_bindings_ms": 5513.977000000092,
+   "goal_bdd_nodes": [
+    4000
+   ],
+   "guard_build_ms": 21.237999999941167,
+   "guard_ops": 72016,
+   "index_ms": 18.657999999968524,
+   "rsdd_ms": 5463.60099999998,
+   "runs": [
+    5.646291
+   ],
+   "seconds": 5.646291,
+   "set_union_ms": 18.485000000030595,
+   "size": [
+    8000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "engine",
+   "tuples": 16002,
+   "variables": 8000
+  },
+  {
+   "answer": null,
+   "facts": 11000,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    11000
+   ],
+   "status": "timeout",
+   "suite": "ring",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 11000,
+   "runs": [
+    1.2293948330334388,
+    1.05420899996534,
+    1.0441814580117352
+   ],
+   "seconds": 1.05420899996534,
+   "size": [
+    11000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": null,
+   "facts": 11000,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    11000
+   ],
+   "status": "error",
+   "suite": "ring",
+   "system": "problog"
+  },
+  {
+   "facts": 11000,
+   "note": "timed out at size [1000]",
+   "size": [
+    11000
+   ],
+   "status": "not run",
+   "suite": "ring",
+   "system": "pita"
+  },
+  {
+   "facts": 11000,
+   "note": "timed out at size [4000]",
+   "size": [
+    11000
+   ],
+   "status": "not run",
+   "suite": "ring",
+   "system": "souffle"
+  },
+  {
+   "facts": 11000,
+   "note": "timed out at size [500]",
+   "size": [
+    11000
+   ],
+   "status": "not run",
+   "suite": "ring",
+   "system": "psouffle"
+  },
+  {
+   "answer": null,
+   "facts": 11000,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    11000
+   ],
+   "status": "timeout",
+   "suite": "ring",
+   "system": "engine"
+  },
+  {
+   "facts": 16000,
+   "note": "timed out at size [11000]",
+   "size": [
+    16000
+   ],
+   "status": "not run",
+   "suite": "ring",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 16000,
+   "runs": [
+    1.5340427919873036,
+    1.4527427079738118,
+    1.5351350830169395
+   ],
+   "seconds": 1.5340427919873036,
+   "size": [
+    16000
+   ],
+   "status": "ok",
+   "suite": "ring",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": null,
+   "facts": 16000,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    16000
+   ],
+   "status": "error",
+   "suite": "ring",
+   "system": "problog"
+  },
+  {
+   "facts": 16000,
+   "note": "timed out at size [1000]",
+   "size": [
+    16000
+   ],
+   "status": "not run",
+   "suite": "ring",
+   "system": "pita"
+  },
+  {
+   "facts": 16000,
+   "note": "timed out at size [4000]",
+   "size": [
+    16000
+   ],
+   "status": "not run",
+   "suite": "ring",
+   "system": "souffle"
+  },
+  {
+   "facts": 16000,
+   "note": "timed out at size [500]",
+   "size": [
+    16000
+   ],
+   "status": "not run",
+   "suite": "ring",
+   "system": "psouffle"
+  },
+  {
+   "facts": 16000,
+   "note": "timed out at size [11000]",
+   "size": [
+    16000
+   ],
+   "status": "not run",
+   "suite": "ring",
+   "system": "engine"
+  },
+  {
+   "answer": 0.942035318191214,
+   "facts": 24,
+   "runs": [
+    0.2870091670192778,
+    0.2812231249990873,
+    0.27907445799792185
+   ],
+   "seconds": 0.2812231249990873,
+   "size": [
+    12
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 24,
+   "runs": [
+    0.27970970899332315,
+    0.2835513750324026,
+    0.30954545800341293
+   ],
+   "seconds": 0.2835513750324026,
+   "size": [
+    12
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.94203532,
+   "facts": 24,
+   "runs": [
+    0.0844674160471186,
+    0.07906750001711771,
+    0.07918749999953434
+   ],
+   "seconds": 0.07918749999953434,
+   "size": [
+    12
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "problog"
+  },
+  {
+   "answer": 0.942035318191214,
+   "facts": 24,
+   "runs": [
+    0.20232087501790375,
+    0.1766991660115309,
+    0.177086292009335
+   ],
+   "seconds": 0.177086292009335,
+   "size": [
+    12
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 24,
+   "runs": [
+    0.06412200001068413,
+    0.040673250041436404,
+    0.03986199997598305
+   ],
+   "seconds": 0.040673250041436404,
+   "size": [
+    12
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.7225,
+   "compile_seconds": 5.567933874961454,
+   "compile_status": "ok",
+   "facts": 24,
+   "runs": [
+    0.39987941598519683,
+    0.22026020899647847,
+    0.25154633302008733
+   ],
+   "seconds": 0.25154633302008733,
+   "size": [
+    12
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.942035318191214,
+   "apply_calls": 22812,
+   "facts": 24,
+   "find_bindings_ms": 0.5220000000002187,
+   "goal_bdd_nodes": [
+    78
+   ],
+   "guard_build_ms": 0.8120000000000118,
+   "guard_ops": 533,
+   "index_ms": 0.03700000000003456,
+   "rsdd_ms": 1.4239999999997508,
+   "runs": [
+    0.0025570000000000163,
+    0.002076999999999998,
+    0.0021610000000000015
+   ],
+   "seconds": 0.0021610000000000015,
+   "set_union_ms": 0.44699999999988904,
+   "size": [
+    12
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "engine",
+   "tuples": 38,
+   "variables": 24
+  },
+  {
+   "answer": 0.9377826727081542,
+   "facts": 40,
+   "runs": [
+    0.35712329199304804,
+    0.3551752920029685,
+    0.34759800002211705
+   ],
+   "seconds": 0.3551752920029685,
+   "size": [
+    20
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 40,
+   "runs": [
+    0.3021088750101626,
+    0.33035954198567197,
+    0.33238508296199143
+   ],
+   "seconds": 0.33035954198567197,
+   "size": [
+    20
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.93778267,
+   "facts": 40,
+   "runs": [
+    0.1177492500282824,
+    0.11443991702981293,
+    0.11681370798032731
+   ],
+   "seconds": 0.11681370798032731,
+   "size": [
+    20
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "problog"
+  },
+  {
+   "answer": 0.9377826727081544,
+   "facts": 40,
+   "runs": [
+    0.30233650002628565,
+    0.2950320419622585,
+    0.2920142090297304
+   ],
+   "seconds": 0.2950320419622585,
+   "size": [
+    20
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 40,
+   "runs": [
+    0.04104654100956395,
+    0.04083833296317607,
+    0.03946274996269494
+   ],
+   "seconds": 0.04083833296317607,
+   "size": [
+    20
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.85427229,
+   "compile_seconds": 5.256546624994371,
+   "compile_status": "ok",
+   "facts": 40,
+   "runs": [
+    0.5091877920203842,
+    0.42331350001040846,
+    0.48260870802914724
+   ],
+   "seconds": 0.48260870802914724,
+   "size": [
+    20
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.9377826727081542,
+   "apply_calls": 252069,
+   "facts": 40,
+   "find_bindings_ms": 3.220999999999947,
+   "goal_bdd_nodes": [
+    391
+   ],
+   "guard_build_ms": 7.57400000000024,
+   "guard_ops": 1368,
+   "index_ms": 0.11099999999993315,
+   "rsdd_ms": 13.403999999999542,
+   "runs": [
+    0.015579999999999984,
+    0.014763999999999953,
+    0.014724999999999966
+   ],
+   "seconds": 0.014763999999999953,
+   "set_union_ms": 3.363999999999862,
+   "size": [
+    20
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "engine",
+   "tuples": 62,
+   "variables": 40
+  },
+  {
+   "answer": 0.9341221432366988,
+   "facts": 60,
+   "runs": [
+    0.43896795803448185,
+    0.4306559580145404,
+    0.42695220798486844
+   ],
+   "seconds": 0.4306559580145404,
+   "size": [
+    30
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 60,
+   "runs": [
+    0.2862161250086501,
+    0.29319141601445153,
+    0.29208791704149917
+   ],
+   "seconds": 0.29208791704149917,
+   "size": [
+    30
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.93412214,
+   "facts": 60,
+   "runs": [
+    6.786946207983419
+   ],
+   "seconds": 6.786946207983419,
+   "size": [
+    30
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "problog"
+  },
+  {
+   "answer": 0.9341221432366988,
+   "facts": 60,
+   "runs": [
+    1.760705874999985,
+    1.7582747499691322,
+    1.8666358750197105
+   ],
+   "seconds": 1.760705874999985,
+   "size": [
+    30
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 60,
+   "runs": [
+    0.04406504100188613,
+    0.04310012498172,
+    0.04279908299213275
+   ],
+   "seconds": 0.04310012498172,
+   "size": [
+    30
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.44370531,
+   "compile_seconds": 5.50784958404256,
+   "compile_status": "ok",
+   "facts": 60,
+   "runs": [
+    0.855362750007771,
+    0.85751166701084,
+    0.8907125829719007
+   ],
+   "seconds": 0.85751166701084,
+   "size": [
+    30
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.9341221432366988,
+   "apply_calls": 1562435,
+   "facts": 60,
+   "find_bindings_ms": 46.0089999999999,
+   "goal_bdd_nodes": [
+    2287
+   ],
+   "guard_build_ms": 58.80199999999991,
+   "guard_ops": 2900,
+   "index_ms": 0.1980000000002633,
+   "rsdd_ms": 130.4380000000001,
+   "runs": [
+    0.13388299999999997,
+    0.13235600000000006,
+    0.137668
+   ],
+   "seconds": 0.13388299999999997,
+   "set_union_ms": 27.779000000000053,
+   "size": [
+    30
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "engine",
+   "tuples": 92,
+   "variables": 60
+  },
+  {
+   "answer": 0.9308175785318447,
+   "facts": 80,
+   "runs": [
+    0.908302541996818,
+    0.8084825840196572,
+    0.8075040840194561
+   ],
+   "seconds": 0.8084825840196572,
+   "size": [
+    40
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 80,
+   "runs": [
+    0.3033718339866027,
+    0.2986732500139624,
+    0.301240916014649
+   ],
+   "seconds": 0.301240916014649,
+   "size": [
+    40
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": null,
+   "facts": 80,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    40
+   ],
+   "status": "timeout",
+   "suite": "chordring",
+   "system": "problog"
+  },
+  {
+   "answer": null,
+   "facts": 80,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    40
+   ],
+   "status": "timeout",
+   "suite": "chordring",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 80,
+   "runs": [
+    0.04224187502404675,
+    0.04304733301978558,
+    0.04221312497975305
+   ],
+   "seconds": 0.04224187502404675,
+   "size": [
+    40
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.84609012,
+   "compile_seconds": 5.22098558297148,
+   "compile_status": "ok",
+   "facts": 80,
+   "runs": [
+    2.920280916034244
+   ],
+   "seconds": 2.920280916034244,
+   "size": [
+    40
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.9308175785318447,
+   "apply_calls": 4314766,
+   "facts": 80,
+   "find_bindings_ms": 168.65599999999984,
+   "goal_bdd_nodes": [
+    3648
+   ],
+   "guard_build_ms": 177.04899999999964,
+   "guard_ops": 5072,
+   "index_ms": 0.361999999999739,
+   "rsdd_ms": 490.3149999999968,
+   "runs": [
+    0.497983,
+    0.49664800000000003,
+    0.4932220000000002
+   ],
+   "seconds": 0.49664800000000003,
+   "set_union_ms": 148.6230000000005,
+   "size": [
+    40
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "engine",
+   "tuples": 122,
+   "variables": 80
+  },
+  {
+   "answer": 0.9275293408958925,
+   "facts": 100,
+   "runs": [
+    1.6548335829866119,
+    1.6243438749806955,
+    1.6133177910232916
+   ],
+   "seconds": 1.6243438749806955,
+   "size": [
+    50
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 100,
+   "runs": [
+    0.3013733340194449,
+    0.30499512498499826,
+    0.3026472919736989
+   ],
+   "seconds": 0.3026472919736989,
+   "size": [
+    50
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "probalog-certain"
+  },
+  {
+   "facts": 100,
+   "note": "timed out at size [40]",
+   "size": [
+    50
+   ],
+   "status": "not run",
+   "suite": "chordring",
+   "system": "problog"
+  },
+  {
+   "facts": 100,
+   "note": "timed out at size [40]",
+   "size": [
+    50
+   ],
+   "status": "not run",
+   "suite": "chordring",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 100,
+   "runs": [
+    0.04387208301341161,
+    0.04567587503697723,
+    0.04606683301972225
+   ],
+   "seconds": 0.04567587503697723,
+   "size": [
+    50
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.57820091,
+   "compile_seconds": 5.261391707987059,
+   "compile_status": "ok",
+   "facts": 100,
+   "runs": [
+    2.343924375018105
+   ],
+   "seconds": 2.343924375018105,
+   "size": [
+    50
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.9275293408958925,
+   "apply_calls": 9807759,
+   "facts": 100,
+   "find_bindings_ms": 439.75999999999914,
+   "goal_bdd_nodes": [
+    4607
+   ],
+   "guard_build_ms": 555.8299999999979,
+   "guard_ops": 7878,
+   "index_ms": 0.5669999999972788,
+   "rsdd_ms": 1289.7040000000131,
+   "runs": [
+    1.3009099999999998,
+    1.3005380000000002,
+    1.2810859999999997
+   ],
+   "seconds": 1.3005380000000002,
+   "set_union_ms": 301.0679999999987,
+   "size": [
+    50
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "engine",
+   "tuples": 152,
+   "variables": 100
+  },
+  {
+   "answer": 0.9242536123534772,
+   "facts": 120,
+   "runs": [
+    3.8654241660260595
+   ],
+   "seconds": 3.8654241660260595,
+   "size": [
+    60
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 120,
+   "runs": [
+    0.3196080829948187,
+    0.31100383296143264,
+    0.31345441698795184
+   ],
+   "seconds": 0.31345441698795184,
+   "size": [
+    60
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "probalog-certain"
+  },
+  {
+   "facts": 120,
+   "note": "timed out at size [40]",
+   "size": [
+    60
+   ],
+   "status": "not run",
+   "suite": "chordring",
+   "system": "problog"
+  },
+  {
+   "facts": 120,
+   "note": "timed out at size [40]",
+   "size": [
+    60
+   ],
+   "status": "not run",
+   "suite": "chordring",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 120,
+   "runs": [
+    0.06144524994306266,
+    0.04627154202898964,
+    0.04630541702499613
+   ],
+   "seconds": 0.04630541702499613,
+   "size": [
+    60
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.1968744,
+   "compile_seconds": 5.363539582991507,
+   "compile_status": "ok",
+   "facts": 120,
+   "runs": [
+    3.088321332994383
+   ],
+   "seconds": 3.088321332994383,
+   "size": [
+    60
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.9242536123534772,
+   "apply_calls": 22091214,
+   "facts": 120,
+   "find_bindings_ms": 1336.4479999999994,
+   "goal_bdd_nodes": [
+    6797
+   ],
+   "guard_build_ms": 1008.1360000000004,
+   "guard_ops": 11177,
+   "index_ms": 0.8680000000026666,
+   "rsdd_ms": 3318.978000000006,
+   "runs": [
+    3.3358830000000004
+   ],
+   "seconds": 3.3358830000000004,
+   "set_union_ms": 985.8869999999988,
+   "size": [
+    60
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "engine",
+   "tuples": 182,
+   "variables": 120
+  },
+  {
+   "answer": 0.9209895475423708,
+   "facts": 140,
+   "runs": [
+    8.105502000020351
+   ],
+   "seconds": 8.105502000020351,
+   "size": [
+    70
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 140,
+   "runs": [
+    0.29995054204482585,
+    0.29353537497809157,
+    0.2937878330121748
+   ],
+   "seconds": 0.2937878330121748,
+   "size": [
+    70
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "probalog-certain"
+  },
+  {
+   "facts": 140,
+   "note": "timed out at size [40]",
+   "size": [
+    70
+   ],
+   "status": "not run",
+   "suite": "chordring",
+   "system": "problog"
+  },
+  {
+   "facts": 140,
+   "note": "timed out at size [40]",
+   "size": [
+    70
+   ],
+   "status": "not run",
+   "suite": "chordring",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 140,
+   "runs": [
+    0.06357987498631701,
+    0.04736166598740965,
+    0.04686075000790879
+   ],
+   "seconds": 0.04736166598740965,
+   "size": [
+    70
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "souffle"
+  },
+  {
+   "answer": null,
+   "compile_seconds": 5.341791375016328,
+   "compile_status": "ok",
+   "facts": 140,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    70
+   ],
+   "status": "error",
+   "suite": "chordring",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.9209895475423708,
+   "apply_calls": 42375404,
+   "facts": 140,
+   "find_bindings_ms": 2595.3169999999936,
+   "goal_bdd_nodes": [
+    8961
+   ],
+   "guard_build_ms": 2958.6560000000027,
+   "guard_ops": 15152,
+   "index_ms": 1.6140000000012265,
+   "rsdd_ms": 7256.701999999993,
+   "runs": [
+    7.2841569999999995
+   ],
+   "seconds": 7.2841569999999995,
+   "set_union_ms": 1721.039999999999,
+   "size": [
+    70
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "engine",
+   "tuples": 212,
+   "variables": 140
+  },
+  {
+   "answer": null,
+   "facts": 160,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    80
+   ],
+   "status": "timeout",
+   "suite": "chordring",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 160,
+   "runs": [
+    0.3805751249892637,
+    0.29432975000236183,
+    0.29296799999428913
+   ],
+   "seconds": 0.29432975000236183,
+   "size": [
+    80
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "probalog-certain"
+  },
+  {
+   "facts": 160,
+   "note": "timed out at size [40]",
+   "size": [
+    80
+   ],
+   "status": "not run",
+   "suite": "chordring",
+   "system": "problog"
+  },
+  {
+   "facts": 160,
+   "note": "timed out at size [40]",
+   "size": [
+    80
+   ],
+   "status": "not run",
+   "suite": "chordring",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 160,
+   "runs": [
+    0.06903762504225597,
+    0.047972083964850754,
+    0.05008087499300018
+   ],
+   "seconds": 0.05008087499300018,
+   "size": [
+    80
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.3448915,
+   "compile_seconds": 5.307766457961407,
+   "compile_status": "ok",
+   "facts": 160,
+   "runs": [
+    4.240351125015877
+   ],
+   "seconds": 4.240351125015877,
+   "size": [
+    80
+   ],
+   "status": "ok",
+   "suite": "chordring",
+   "system": "psouffle"
+  },
+  {
+   "answer": null,
+   "facts": 160,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    80
+   ],
+   "status": "timeout",
+   "suite": "chordring",
+   "system": "engine"
+  },
+  {
+   "answer": 0.9979448589072438,
+   "facts": 51,
+   "runs": [
+    0.3584842080017552,
+    0.2864772080210969,
+    0.2874449170194566
+   ],
+   "seconds": 0.2874449170194566,
+   "size": [
+    6,
+    3
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 51,
+   "runs": [
+    0.2829015830066055,
+    0.28225412499159575,
+    0.2844882500357926
+   ],
+   "seconds": 0.2829015830066055,
+   "size": [
+    6,
+    3
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.99794486,
+   "facts": 51,
+   "runs": [
+    0.11264591600047424,
+    0.08691991597879678,
+    0.08600466698408127
+   ],
+   "seconds": 0.08691991597879678,
+   "size": [
+    6,
+    3
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "problog"
+  },
+  {
+   "answer": 0.9979448589072439,
+   "facts": 51,
+   "runs": [
+    0.2673399170162156,
+    0.24476620904169977,
+    0.24969891703221947
+   ],
+   "seconds": 0.24969891703221947,
+   "size": [
+    6,
+    3
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 51,
+   "runs": [
+    0.05475091701373458,
+    0.03845020802691579,
+    0.03777833405183628
+   ],
+   "seconds": 0.03845020802691579,
+   "size": [
+    6,
+    3
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.99794486,
+   "compile_seconds": 5.29035466600908,
+   "compile_status": "ok",
+   "facts": 51,
+   "runs": [
+    0.3118937090039253,
+    0.30570954200811684,
+    0.44886758300708607
+   ],
+   "seconds": 0.3118937090039253,
+   "size": [
+    6,
+    3
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.9979448589072438,
+   "apply_calls": 18693,
+   "facts": 51,
+   "find_bindings_ms": 0.6859999999998081,
+   "goal_bdd_nodes": [
+    334
+   ],
+   "guard_build_ms": 0.8050000000001205,
+   "guard_ops": 259,
+   "index_ms": 0.04200000000008686,
+   "rsdd_ms": 1.393000000000029,
+   "runs": [
+    0.00197199999999998,
+    0.0019209999999999924,
+    0.0019250000000000113
+   ],
+   "seconds": 0.0019250000000000113,
+   "set_union_ms": 0.046000000000105956,
+   "size": [
+    6,
+    3
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "engine",
+   "tuples": 72,
+   "variables": 51
+  },
+  {
+   "answer": 0.9997992864553743,
+   "facts": 88,
+   "runs": [
+    0.310591125045903,
+    0.3046639999956824,
+    0.30674029199872166
+   ],
+   "seconds": 0.30674029199872166,
+   "size": [
+    6,
+    4
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 88,
+   "runs": [
+    0.2959427919704467,
+    0.2996270829462446,
+    0.29381591704441234
+   ],
+   "seconds": 0.2959427919704467,
+   "size": [
+    6,
+    4
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.99979929,
+   "facts": 88,
+   "runs": [
+    0.1727110409992747,
+    0.1715062499861233,
+    0.16801387496525422
+   ],
+   "seconds": 0.1715062499861233,
+   "size": [
+    6,
+    4
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "problog"
+  },
+  {
+   "answer": 0.999799286455375,
+   "facts": 88,
+   "runs": [
+    0.4430287079885602,
+    0.43811979197198525,
+    0.43631316698156297
+   ],
+   "seconds": 0.43811979197198525,
+   "size": [
+    6,
+    4
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 88,
+   "runs": [
+    0.03977474995190278,
+    0.03931520803598687,
+    0.04014274996006861
+   ],
+   "seconds": 0.03977474995190278,
+   "size": [
+    6,
+    4
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.99979929,
+   "compile_seconds": 5.222851541999262,
+   "compile_status": "ok",
+   "facts": 88,
+   "runs": [
+    0.6985229999991134,
+    1.0474776670453139,
+    1.1630700420355424
+   ],
+   "seconds": 1.0474776670453139,
+   "size": [
+    6,
+    4
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.9997992864553743,
+   "apply_calls": 161898,
+   "facts": 88,
+   "find_bindings_ms": 5.043999999999869,
+   "goal_bdd_nodes": [
+    1750
+   ],
+   "guard_build_ms": 6.001999999999953,
+   "guard_ops": 396,
+   "index_ms": 0.06099999999997863,
+   "rsdd_ms": 11.05099999999993,
+   "runs": [
+    0.012218999999999994,
+    0.011770999999999959,
+    0.011836000000000013
+   ],
+   "seconds": 0.011836000000000013,
+   "set_union_ms": 0.20100000000002183,
+   "size": [
+    6,
+    4
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "engine",
+   "tuples": 115,
+   "variables": 88
+  },
+  {
+   "answer": 0.9999799910944093,
+   "facts": 135,
+   "runs": [
+    0.4416360000032,
+    0.4379190419567749,
+    0.4401420409558341
+   ],
+   "seconds": 0.4401420409558341,
+   "size": [
+    6,
+    5
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 135,
+   "runs": [
+    0.3134197079925798,
+    0.31401716597611085,
+    0.33967337501235306
+   ],
+   "seconds": 0.31401716597611085,
+   "size": [
+    6,
+    5
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.99997999,
+   "facts": 135,
+   "runs": [
+    1.3185614579706453,
+    1.2983610419905744,
+    1.3273741249577142
+   ],
+   "seconds": 1.3185614579706453,
+   "size": [
+    6,
+    5
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "problog"
+  },
+  {
+   "answer": null,
+   "facts": 135,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    6,
+    5
+   ],
+   "status": "timeout",
+   "suite": "dag",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 135,
+   "runs": [
+    0.044117416022345424,
+    0.044037625018972903,
+    0.04352141701383516
+   ],
+   "seconds": 0.044037625018972903,
+   "size": [
+    6,
+    5
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "souffle"
+  },
+  {
+   "answer": null,
+   "compile_seconds": 5.48502224998083,
+   "compile_status": "ok",
+   "facts": 135,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    6,
+    5
+   ],
+   "status": "timeout",
+   "suite": "dag",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.9999799910944093,
+   "apply_calls": 1189181,
+   "facts": 135,
+   "find_bindings_ms": 55.40300000000002,
+   "goal_bdd_nodes": [
+    8542
+   ],
+   "guard_build_ms": 65.99099999999987,
+   "guard_ops": 563,
+   "index_ms": 0.11100000000010368,
+   "rsdd_ms": 122.03999999999928,
+   "runs": [
+    0.12302799999999996,
+    0.12343099999999993,
+    0.12726800000000002
+   ],
+   "seconds": 0.12343099999999993,
+   "set_union_ms": 1.1200000000001182,
+   "size": [
+    6,
+    5
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "engine",
+   "tuples": 168,
+   "variables": 135
+  },
+  {
+   "answer": 0.9999979998929917,
+   "facts": 192,
+   "runs": [
+    1.4786740000126883,
+    1.497492125025019,
+    1.4767085839994252
+   ],
+   "seconds": 1.4786740000126883,
+   "size": [
+    6,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 192,
+   "runs": [
+    0.3014575419947505,
+    0.30358029098715633,
+    0.3020432500052266
+   ],
+   "seconds": 0.3020432500052266,
+   "size": [
+    6,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": null,
+   "facts": 192,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    6,
+    6
+   ],
+   "status": "timeout",
+   "suite": "dag",
+   "system": "problog"
+  },
+  {
+   "facts": 192,
+   "note": "timed out at size [6, 5]",
+   "size": [
+    6,
+    6
+   ],
+   "status": "not run",
+   "suite": "dag",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 192,
+   "runs": [
+    0.04573562496807426,
+    0.04486987501149997,
+    0.044945707952138036
+   ],
+   "seconds": 0.044945707952138036,
+   "size": [
+    6,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "souffle"
+  },
+  {
+   "facts": 192,
+   "note": "timed out at size [6, 5]",
+   "size": [
+    6,
+    6
+   ],
+   "status": "not run",
+   "suite": "dag",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.9999979998929917,
+   "apply_calls": 7818452,
+   "facts": 192,
+   "find_bindings_ms": 532.5529999999994,
+   "goal_bdd_nodes": [
+    39966
+   ],
+   "guard_build_ms": 557.9380000000015,
+   "guard_ops": 760,
+   "index_ms": 0.1310000000007676,
+   "rsdd_ms": 1100.5969999999988,
+   "runs": [
+    1.116846,
+    1.110055,
+    1.1129490000000006
+   ],
+   "seconds": 1.1129490000000006,
+   "set_union_ms": 11.418999999999869,
+   "size": [
+    6,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "engine",
+   "tuples": 231,
+   "variables": 192
+  },
+  {
+   "answer": 0.9999979998929917,
+   "facts": 228,
+   "runs": [
+    2.183157375024166
+   ],
+   "seconds": 2.183157375024166,
+   "size": [
+    7,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 228,
+   "runs": [
+    0.3058687500306405,
+    0.30617545801214874,
+    0.3086570830200799
+   ],
+   "seconds": 0.30617545801214874,
+   "size": [
+    7,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "probalog-certain"
+  },
+  {
+   "facts": 228,
+   "note": "timed out at size [6, 6]",
+   "size": [
+    7,
+    6
+   ],
+   "status": "not run",
+   "suite": "dag",
+   "system": "problog"
+  },
+  {
+   "facts": 228,
+   "note": "timed out at size [6, 5]",
+   "size": [
+    7,
+    6
+   ],
+   "status": "not run",
+   "suite": "dag",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 228,
+   "runs": [
+    0.04769229202065617,
+    0.04943083395482972,
+    0.047482917027082294
+   ],
+   "seconds": 0.04769229202065617,
+   "size": [
+    7,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "souffle"
+  },
+  {
+   "facts": 228,
+   "note": "timed out at size [6, 5]",
+   "size": [
+    7,
+    6
+   ],
+   "status": "not run",
+   "suite": "dag",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.9999979998929917,
+   "apply_calls": 12389422,
+   "facts": 228,
+   "find_bindings_ms": 907.5339999999997,
+   "goal_bdd_nodes": [
+    47934
+   ],
+   "guard_build_ms": 865.0789999999997,
+   "guard_ops": 894,
+   "index_ms": 0.18999999999914507,
+   "rsdd_ms": 1783.8650000000011,
+   "runs": [
+    1.8035880000000002,
+    1.803315,
+    1.7955010000000002
+   ],
+   "seconds": 1.803315,
+   "set_union_ms": 13.237000000000535,
+   "size": [
+    7,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "engine",
+   "tuples": 273,
+   "variables": 228
+  },
+  {
+   "answer": 0.9999979998929917,
+   "facts": 264,
+   "runs": [
+    3.341034207958728
+   ],
+   "seconds": 3.341034207958728,
+   "size": [
+    8,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 264,
+   "runs": [
+    0.32576749997679144,
+    0.32130320800933987,
+    0.31834229198284447
+   ],
+   "seconds": 0.32130320800933987,
+   "size": [
+    8,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "probalog-certain"
+  },
+  {
+   "facts": 264,
+   "note": "timed out at size [6, 6]",
+   "size": [
+    8,
+    6
+   ],
+   "status": "not run",
+   "suite": "dag",
+   "system": "problog"
+  },
+  {
+   "facts": 264,
+   "note": "timed out at size [6, 5]",
+   "size": [
+    8,
+    6
+   ],
+   "status": "not run",
+   "suite": "dag",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 264,
+   "runs": [
+    0.05748358299024403,
+    0.05177575000561774,
+    0.05018845800077543
+   ],
+   "seconds": 0.05177575000561774,
+   "size": [
+    8,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "souffle"
+  },
+  {
+   "facts": 264,
+   "note": "timed out at size [6, 5]",
+   "size": [
+    8,
+    6
+   ],
+   "status": "not run",
+   "suite": "dag",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.9999979998929917,
+   "apply_calls": 18011780,
+   "facts": 264,
+   "find_bindings_ms": 1306.4910000000002,
+   "goal_bdd_nodes": [
+    55902
+   ],
+   "guard_build_ms": 1477.0170000000003,
+   "guard_ops": 1028,
+   "index_ms": 0.18900000000047612,
+   "rsdd_ms": 2797.914999999996,
+   "runs": [
+    2.8022
+   ],
+   "seconds": 2.8022,
+   "set_union_ms": 17.01099999999957,
+   "size": [
+    8,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "engine",
+   "tuples": 315,
+   "variables": 264
+  },
+  {
+   "answer": 0.9999979998929917,
+   "facts": 300,
+   "runs": [
+    4.653053457965143
+   ],
+   "seconds": 4.653053457965143,
+   "size": [
+    9,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 300,
+   "runs": [
+    0.33237566699972376,
+    0.3236787090427242,
+    0.32219450001139194
+   ],
+   "seconds": 0.3236787090427242,
+   "size": [
+    9,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "probalog-certain"
+  },
+  {
+   "facts": 300,
+   "note": "timed out at size [6, 6]",
+   "size": [
+    9,
+    6
+   ],
+   "status": "not run",
+   "suite": "dag",
+   "system": "problog"
+  },
+  {
+   "facts": 300,
+   "note": "timed out at size [6, 5]",
+   "size": [
+    9,
+    6
+   ],
+   "status": "not run",
+   "suite": "dag",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 300,
+   "runs": [
+    0.058354790962766856,
+    0.054048624995630234,
+    0.05223087500780821
+   ],
+   "seconds": 0.054048624995630234,
+   "size": [
+    9,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "souffle"
+  },
+  {
+   "facts": 300,
+   "note": "timed out at size [6, 5]",
+   "size": [
+    9,
+    6
+   ],
+   "status": "not run",
+   "suite": "dag",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.9999979998929917,
+   "apply_calls": 24685134,
+   "facts": 300,
+   "find_bindings_ms": 2166.742000000001,
+   "goal_bdd_nodes": [
+    63870
+   ],
+   "guard_build_ms": 1967.3090000000007,
+   "guard_ops": 1162,
+   "index_ms": 0.20400000000017826,
+   "rsdd_ms": 4150.449000000002,
+   "runs": [
+    4.155881999999999
+   ],
+   "seconds": 4.155881999999999,
+   "set_union_ms": 19.867999999999654,
+   "size": [
+    9,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "engine",
+   "tuples": 357,
+   "variables": 300
+  },
+  {
+   "answer": 0.9999979998929917,
+   "facts": 336,
+   "runs": [
+    6.425133874989115
+   ],
+   "seconds": 6.425133874989115,
+   "size": [
+    10,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 336,
+   "runs": [
+    0.3461472080089152,
+    0.3271257919841446,
+    0.327874917013105
+   ],
+   "seconds": 0.327874917013105,
+   "size": [
+    10,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "probalog-certain"
+  },
+  {
+   "facts": 336,
+   "note": "timed out at size [6, 6]",
+   "size": [
+    10,
+    6
+   ],
+   "status": "not run",
+   "suite": "dag",
+   "system": "problog"
+  },
+  {
+   "facts": 336,
+   "note": "timed out at size [6, 5]",
+   "size": [
+    10,
+    6
+   ],
+   "status": "not run",
+   "suite": "dag",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 336,
+   "runs": [
+    0.07204133400227875,
+    0.05582270899321884,
+    0.05498033296316862
+   ],
+   "seconds": 0.05582270899321884,
+   "size": [
+    10,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "souffle"
+  },
+  {
+   "facts": 336,
+   "note": "timed out at size [6, 5]",
+   "size": [
+    10,
+    6
+   ],
+   "status": "not run",
+   "suite": "dag",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.9999979998929917,
+   "apply_calls": 32410846,
+   "facts": 336,
+   "find_bindings_ms": 2467.9889999999996,
+   "goal_bdd_nodes": [
+    71838
+   ],
+   "guard_build_ms": 3636.365,
+   "guard_ops": 1296,
+   "index_ms": 0.2479999999982283,
+   "rsdd_ms": 6124.191999999993,
+   "runs": [
+    6.1304110000000005
+   ],
+   "seconds": 6.1304110000000005,
+   "set_union_ms": 23.833999999998923,
+   "size": [
+    10,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "engine",
+   "tuples": 399,
+   "variables": 336
+  },
+  {
+   "answer": null,
+   "facts": 408,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    12,
+    6
+   ],
+   "status": "timeout",
+   "suite": "dag",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 408,
+   "runs": [
+    0.35037370800273493,
+    0.3475762500311248,
+    0.34541495802113786
+   ],
+   "seconds": 0.3475762500311248,
+   "size": [
+    12,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "probalog-certain"
+  },
+  {
+   "facts": 408,
+   "note": "timed out at size [6, 6]",
+   "size": [
+    12,
+    6
+   ],
+   "status": "not run",
+   "suite": "dag",
+   "system": "problog"
+  },
+  {
+   "facts": 408,
+   "note": "timed out at size [6, 5]",
+   "size": [
+    12,
+    6
+   ],
+   "status": "not run",
+   "suite": "dag",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 408,
+   "runs": [
+    0.07908783399034292,
+    0.06192508403910324,
+    0.06139254098525271
+   ],
+   "seconds": 0.06192508403910324,
+   "size": [
+    12,
+    6
+   ],
+   "status": "ok",
+   "suite": "dag",
+   "system": "souffle"
+  },
+  {
+   "facts": 408,
+   "note": "timed out at size [6, 5]",
+   "size": [
+    12,
+    6
+   ],
+   "status": "not run",
+   "suite": "dag",
+   "system": "psouffle"
+  },
+  {
+   "answer": null,
+   "facts": 408,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    12,
+    6
+   ],
+   "status": "timeout",
+   "suite": "dag",
+   "system": "engine"
+  },
+  {
+   "answer": 0.32132963988758645,
+   "facts": 100,
+   "runs": [
+    0.3949255829793401,
+    0.30762087501352653,
+    0.3344999580294825
+   ],
+   "seconds": 0.3344999580294825,
+   "size": [
+    20
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 100,
+   "runs": [
+    0.3288767909980379,
+    0.3132252500508912,
+    0.32707920897519216
+   ],
+   "seconds": 0.32707920897519216,
+   "size": [
+    20
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.32132964,
+   "facts": 100,
+   "runs": [
+    0.19135945802554488,
+    0.08641158300451934,
+    0.08730970800388604
+   ],
+   "seconds": 0.08730970800388604,
+   "size": [
+    20
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "problog"
+  },
+  {
+   "answer": 0.32132963988758645,
+   "facts": 100,
+   "runs": [
+    0.2952949579921551,
+    0.26757174998056144,
+    0.3313350829994306
+   ],
+   "seconds": 0.2952949579921551,
+   "size": [
+    20
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 100,
+   "runs": [
+    0.06546291604172438,
+    0.04337837500497699,
+    0.04260349995456636
+   ],
+   "seconds": 0.04337837500497699,
+   "size": [
+    20
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.2,
+   "compile_seconds": 6.257556249969639,
+   "compile_status": "ok",
+   "facts": 100,
+   "runs": [
+    0.3083774999831803,
+    0.1877355839824304,
+    0.2039702910115011
+   ],
+   "seconds": 0.2039702910115011,
+   "size": [
+    20
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.32132963988758645,
+   "apply_calls": 90463,
+   "facts": 100,
+   "find_bindings_ms": 4.14100000000019,
+   "goal_bdd_nodes": [
+    146
+   ],
+   "guard_build_ms": 3.3559999999999377,
+   "guard_ops": 3690,
+   "index_ms": 0.15899999999999181,
+   "rsdd_ms": 7.443000000000154,
+   "runs": [
+    0.010681999999999959,
+    0.011923000000000001,
+    0.010482000000000085
+   ],
+   "seconds": 0.010681999999999959,
+   "set_union_ms": 1.9899999999998386,
+   "size": [
+    20
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "engine",
+   "tuples": 140,
+   "variables": 60
+  },
+  {
+   "answer": 0.3213296398891967,
+   "facts": 200,
+   "runs": [
+    0.4088236250099726,
+    0.44276720902416855,
+    0.4137182919657789
+   ],
+   "seconds": 0.4137182919657789,
+   "size": [
+    40
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 200,
+   "runs": [
+    0.35796308401040733,
+    0.3633962500025518,
+    0.32282624999061227
+   ],
+   "seconds": 0.35796308401040733,
+   "size": [
+    40
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.32132964,
+   "facts": 200,
+   "runs": [
+    0.10800300003029406,
+    0.10733245895244181,
+    0.10739087499678135
+   ],
+   "seconds": 0.10739087499678135,
+   "size": [
+    40
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "problog"
+  },
+  {
+   "answer": 0.3213296398891967,
+   "facts": 200,
+   "runs": [
+    1.3777432910283096,
+    1.3783482080325484,
+    1.3600876670097932
+   ],
+   "seconds": 1.3777432910283096,
+   "size": [
+    40
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 200,
+   "runs": [
+    0.04422712494852021,
+    0.04518079198896885,
+    0.04411354102194309
+   ],
+   "seconds": 0.04422712494852021,
+   "size": [
+    40
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.2,
+   "compile_seconds": 5.743958667037077,
+   "compile_status": "ok",
+   "facts": 200,
+   "runs": [
+    0.21648062503663823,
+    0.18317658302839845,
+    0.17865641601383686
+   ],
+   "seconds": 0.18317658302839845,
+   "size": [
+    40
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.3213296398891967,
+   "apply_calls": 613409,
+   "facts": 200,
+   "find_bindings_ms": 31.114999999999213,
+   "goal_bdd_nodes": [
+    306
+   ],
+   "guard_build_ms": 17.559000000001106,
+   "guard_ops": 13590,
+   "index_ms": 0.41200000000014825,
+   "rsdd_ms": 58.25800000000129,
+   "runs": [
+    0.06852199999999999,
+    0.06743,
+    0.0684240000000001
+   ],
+   "seconds": 0.0684240000000001,
+   "set_union_ms": 16.69599999999957,
+   "size": [
+    40
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "engine",
+   "tuples": 280,
+   "variables": 120
+  },
+  {
+   "answer": 0.3213296398891967,
+   "facts": 300,
+   "runs": [
+    0.5991324170026928,
+    0.5963379160384648,
+    0.6018459580373019
+   ],
+   "seconds": 0.5991324170026928,
+   "size": [
+    60
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 300,
+   "runs": [
+    0.3304504169500433,
+    0.34749725001165643,
+    0.3295030829613097
+   ],
+   "seconds": 0.3304504169500433,
+   "size": [
+    60
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.32132964,
+   "facts": 300,
+   "runs": [
+    0.12181341700488701,
+    0.1217431669938378,
+    0.11917499999981374
+   ],
+   "seconds": 0.1217431669938378,
+   "size": [
+    60
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "problog"
+  },
+  {
+   "answer": 0.3213296398891967,
+   "facts": 300,
+   "runs": [
+    5.819247624953277
+   ],
+   "seconds": 5.819247624953277,
+   "size": [
+    60
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 300,
+   "runs": [
+    0.04910066700540483,
+    0.047962000011466444,
+    0.04825295798946172
+   ],
+   "seconds": 0.04825295798946172,
+   "size": [
+    60
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.2,
+   "compile_seconds": 5.754698625009041,
+   "compile_status": "ok",
+   "facts": 300,
+   "runs": [
+    0.21800529200118035,
+    0.17549558402970433,
+    0.18708170898025855
+   ],
+   "seconds": 0.18708170898025855,
+   "size": [
+    60
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.3213296398891967,
+   "apply_calls": 1938125,
+   "facts": 300,
+   "find_bindings_ms": 114.6360000000002,
+   "goal_bdd_nodes": [
+    466
+   ],
+   "guard_build_ms": 66.21799999999973,
+   "guard_ops": 29690,
+   "index_ms": 0.8880000000000337,
+   "rsdd_ms": 244.5020000000036,
+   "runs": [
+    0.277477,
+    0.267192,
+    0.26380500000000007
+   ],
+   "seconds": 0.267192,
+   "set_union_ms": 79.67900000000134,
+   "size": [
+    60
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "engine",
+   "tuples": 420,
+   "variables": 180
+  },
+  {
+   "answer": 0.3213296398891967,
+   "facts": 400,
+   "runs": [
+    1.0419032909558155,
+    1.028251125011593,
+    1.0455051669850945
+   ],
+   "seconds": 1.0419032909558155,
+   "size": [
+    80
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 400,
+   "runs": [
+    0.3531927920412272,
+    0.3541682499926537,
+    0.3529458749690093
+   ],
+   "seconds": 0.3531927920412272,
+   "size": [
+    80
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.32132964,
+   "facts": 400,
+   "runs": [
+    0.13948491698829457,
+    0.13567129103466868,
+    0.13713216700125486
+   ],
+   "seconds": 0.13713216700125486,
+   "size": [
+    80
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "problog"
+  },
+  {
+   "answer": null,
+   "facts": 400,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    80
+   ],
+   "status": "timeout",
+   "suite": "smokers",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 400,
+   "runs": [
+    0.0565697499550879,
+    0.05510087497532368,
+    0.05572179198497906
+   ],
+   "seconds": 0.05572179198497906,
+   "size": [
+    80
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.2,
+   "compile_seconds": 5.759751416975632,
+   "compile_status": "ok",
+   "facts": 400,
+   "runs": [
+    0.21189079200848937,
+    0.21319824998499826,
+    0.17049270798452199
+   ],
+   "seconds": 0.21189079200848937,
+   "size": [
+    80
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.3213296398891967,
+   "apply_calls": 4432025,
+   "facts": 400,
+   "find_bindings_ms": 275.55699999999865,
+   "goal_bdd_nodes": [
+    626
+   ],
+   "guard_build_ms": 221.91900000000237,
+   "guard_ops": 51990,
+   "index_ms": 1.4139999999999873,
+   "rsdd_ms": 615.6979999999909,
+   "runs": [
+    0.660538,
+    0.658035,
+    0.657778
+   ],
+   "seconds": 0.658035,
+   "set_union_ms": 148.4379999999992,
+   "size": [
+    80
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "engine",
+   "tuples": 560,
+   "variables": 240
+  },
+  {
+   "answer": 0.3213296398891967,
+   "facts": 500,
+   "runs": [
+    1.7905283749569207,
+    1.778480417036917,
+    1.7837191249709576
+   ],
+   "seconds": 1.7837191249709576,
+   "size": [
+    100
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 500,
+   "runs": [
+    0.3843259169952944,
+    0.3854601249913685,
+    0.38514858396956697
+   ],
+   "seconds": 0.38514858396956697,
+   "size": [
+    100
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.32132964,
+   "facts": 500,
+   "runs": [
+    0.16095116699580103,
+    0.15533529198728502,
+    0.15516954200575128
+   ],
+   "seconds": 0.15533529198728502,
+   "size": [
+    100
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "problog"
+  },
+  {
+   "facts": 500,
+   "note": "timed out at size [80]",
+   "size": [
+    100
+   ],
+   "status": "not run",
+   "suite": "smokers",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 500,
+   "runs": [
+    0.06334945798153058,
+    0.05889758304692805,
+    0.05950866697821766
+   ],
+   "seconds": 0.05950866697821766,
+   "size": [
+    100
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.2,
+   "compile_seconds": 5.733504957985133,
+   "compile_status": "ok",
+   "facts": 500,
+   "runs": [
+    0.20985058299265802,
+    0.17750937503296882,
+    0.18134437495609745
+   ],
+   "seconds": 0.18134437495609745,
+   "size": [
+    100
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.3213296398891967,
+   "apply_calls": 8462719,
+   "facts": 500,
+   "find_bindings_ms": 550.9849999999999,
+   "goal_bdd_nodes": [
+    786
+   ],
+   "guard_build_ms": 346.17499999999546,
+   "guard_ops": 80490,
+   "index_ms": 2.3289999999997235,
+   "rsdd_ms": 1299.2620000000318,
+   "runs": [
+    1.396243,
+    1.361256,
+    1.3545460000000002
+   ],
+   "seconds": 1.361256,
+   "set_union_ms": 450.24100000000357,
+   "size": [
+    100
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "engine",
+   "tuples": 700,
+   "variables": 300
+  },
+  {
+   "answer": 0.3213296398891967,
+   "facts": 650,
+   "runs": [
+    3.7510881250491366
+   ],
+   "seconds": 3.7510881250491366,
+   "size": [
+    130
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 650,
+   "runs": [
+    0.4433444580063224,
+    0.43972362496424466,
+    0.44152375002158806
+   ],
+   "seconds": 0.44152375002158806,
+   "size": [
+    130
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.32132964,
+   "facts": 650,
+   "runs": [
+    0.20894974999828264,
+    0.1854133339948021,
+    0.18272987502859905
+   ],
+   "seconds": 0.1854133339948021,
+   "size": [
+    130
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "problog"
+  },
+  {
+   "facts": 650,
+   "note": "timed out at size [80]",
+   "size": [
+    130
+   ],
+   "status": "not run",
+   "suite": "smokers",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 650,
+   "runs": [
+    0.08575387502787635,
+    0.06963683298090473,
+    0.06775445799576119
+   ],
+   "seconds": 0.06963683298090473,
+   "size": [
+    130
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.2,
+   "compile_seconds": 5.868844708951656,
+   "compile_status": "ok",
+   "facts": 650,
+   "runs": [
+    0.21652399998856708,
+    0.17879412503680214,
+    0.19314037496224046
+   ],
+   "seconds": 0.19314037496224046,
+   "size": [
+    130
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.3213296398891967,
+   "apply_calls": 18196872,
+   "facts": 650,
+   "find_bindings_ms": 1540.4280000000017,
+   "goal_bdd_nodes": [
+    1026
+   ],
+   "guard_build_ms": 825.8040000000001,
+   "guard_ops": 134865,
+   "index_ms": 3.700000000002376,
+   "rsdd_ms": 3081.82899999999,
+   "runs": [
+    3.190876
+   ],
+   "seconds": 3.190876,
+   "set_union_ms": 802.3409999999992,
+   "size": [
+    130
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "engine",
+   "tuples": 910,
+   "variables": 390
+  },
+  {
+   "answer": 0.3213296398891967,
+   "facts": 800,
+   "runs": [
+    7.558438542007934
+   ],
+   "seconds": 7.558438542007934,
+   "size": [
+    160
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 800,
+   "runs": [
+    0.5046364170266315,
+    0.501248083950486,
+    0.5016460419865325
+   ],
+   "seconds": 0.5016460419865325,
+   "size": [
+    160
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.32132964,
+   "facts": 800,
+   "runs": [
+    0.23480520898010582,
+    0.2127532500308007,
+    0.2102377080009319
+   ],
+   "seconds": 0.2127532500308007,
+   "size": [
+    160
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "problog"
+  },
+  {
+   "facts": 800,
+   "note": "timed out at size [80]",
+   "size": [
+    160
+   ],
+   "status": "not run",
+   "suite": "smokers",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 800,
+   "runs": [
+    0.09427574998699129,
+    0.078254709020257,
+    0.07786874996963888
+   ],
+   "seconds": 0.078254709020257,
+   "size": [
+    160
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.2,
+   "compile_seconds": 5.816691624990199,
+   "compile_status": "ok",
+   "facts": 800,
+   "runs": [
+    0.2221150000113994,
+    0.18168750003678724,
+    0.176743375021033
+   ],
+   "seconds": 0.18168750003678724,
+   "size": [
+    160
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.3213296398891967,
+   "apply_calls": 33458363,
+   "facts": 800,
+   "find_bindings_ms": 3209.8100000000086,
+   "goal_bdd_nodes": [
+    1266
+   ],
+   "guard_build_ms": 2017.7660000000012,
+   "guard_ops": 203190,
+   "index_ms": 5.762999999998385,
+   "rsdd_ms": 6924.154000000038,
+   "runs": [
+    7.097899
+   ],
+   "seconds": 7.097899,
+   "set_union_ms": 1836.4299999999973,
+   "size": [
+    160
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "engine",
+   "tuples": 1120,
+   "variables": 480
+  },
+  {
+   "answer": null,
+   "facts": 950,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    190
+   ],
+   "status": "timeout",
+   "suite": "smokers",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 950,
+   "runs": [
+    0.6576564999995753,
+    0.5721347079961561,
+    0.5733134999754839
+   ],
+   "seconds": 0.5733134999754839,
+   "size": [
+    190
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.32132964,
+   "facts": 950,
+   "runs": [
+    0.28158658399479464,
+    0.25256516702938825,
+    0.24837729096179828
+   ],
+   "seconds": 0.25256516702938825,
+   "size": [
+    190
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "problog"
+  },
+  {
+   "facts": 950,
+   "note": "timed out at size [80]",
+   "size": [
+    190
+   ],
+   "status": "not run",
+   "suite": "smokers",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 950,
+   "runs": [
+    0.11169370904099196,
+    0.09060687501914799,
+    0.09003920905524865
+   ],
+   "seconds": 0.09060687501914799,
+   "size": [
+    190
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.2,
+   "compile_seconds": 6.5557790829916485,
+   "compile_status": "ok",
+   "facts": 950,
+   "runs": [
+    0.2329089580453001,
+    0.2574838340515271,
+    0.19836120901163667
+   ],
+   "seconds": 0.2329089580453001,
+   "size": [
+    190
+   ],
+   "status": "ok",
+   "suite": "smokers",
+   "system": "psouffle"
+  },
+  {
+   "answer": null,
+   "facts": 950,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    190
+   ],
+   "status": "timeout",
+   "suite": "smokers",
+   "system": "engine"
+  },
+  {
+   "answer": 0.25418658283290013,
+   "facts": 127,
+   "runs": [
+    0.42394508299184963,
+    0.33091966703068465,
+    0.3281244579702616
+   ],
+   "seconds": 0.33091966703068465,
+   "size": [
+    6
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 127,
+   "runs": [
+    0.3262788339634426,
+    0.32366545900003985,
+    0.3097582079935819
+   ],
+   "seconds": 0.32366545900003985,
+   "size": [
+    6
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.25418658,
+   "facts": 127,
+   "runs": [
+    0.11220149998553097,
+    0.08458525000605732,
+    0.0841673330287449
+   ],
+   "seconds": 0.08458525000605732,
+   "size": [
+    6
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "problog"
+  },
+  {
+   "answer": 0.25418658283290013,
+   "facts": 127,
+   "runs": [
+    0.19545391603605822,
+    0.1717092499602586,
+    0.17310791701311246
+   ],
+   "seconds": 0.17310791701311246,
+   "size": [
+    6
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 127,
+   "runs": [
+    0.061136625008657575,
+    0.042979750025551766,
+    0.044229208026081324
+   ],
+   "seconds": 0.044229208026081324,
+   "size": [
+    6
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.25418658,
+   "compile_seconds": 5.68421037500957,
+   "compile_status": "ok",
+   "facts": 127,
+   "runs": [
+    0.4502929160371423,
+    0.43272362498100847,
+    0.4275811249972321
+   ],
+   "seconds": 0.43272362498100847,
+   "size": [
+    6
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.25418658283290013,
+   "apply_calls": 2964,
+   "facts": 127,
+   "find_bindings_ms": 0.6019999999996344,
+   "goal_bdd_nodes": [
+    13
+   ],
+   "guard_build_ms": 0.214000000000226,
+   "guard_ops": 1212,
+   "index_ms": 0.24699999999995725,
+   "rsdd_ms": 0.290000000000191,
+   "runs": [
+    0.0024879999999999998,
+    0.0024490000000000124,
+    0.0024219999999999684
+   ],
+   "seconds": 0.0024490000000000124,
+   "set_union_ms": 0.1439999999999486,
+   "size": [
+    6
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "engine",
+   "tuples": 324,
+   "variables": 127
+  },
+  {
+   "answer": 0.16677181699666577,
+   "facts": 511,
+   "runs": [
+    0.451307832961902,
+    0.44990554195828736,
+    0.4504960000049323
+   ],
+   "seconds": 0.4504960000049323,
+   "size": [
+    8
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 511,
+   "runs": [
+    0.43155237496830523,
+    0.4307862920104526,
+    0.42894891696050763
+   ],
+   "seconds": 0.4307862920104526,
+   "size": [
+    8
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.16677182,
+   "facts": 511,
+   "runs": [
+    0.13636708399280906,
+    0.1354093329864554,
+    0.13318541698390618
+   ],
+   "seconds": 0.1354093329864554,
+   "size": [
+    8
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "problog"
+  },
+  {
+   "answer": 0.16677181699666577,
+   "facts": 511,
+   "runs": [
+    0.18943179096095264,
+    0.1937822499894537,
+    0.1875887910136953
+   ],
+   "seconds": 0.18943179096095264,
+   "size": [
+    8
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 511,
+   "runs": [
+    0.09226604201830924,
+    0.0909739580238238,
+    0.09597679099533707
+   ],
+   "seconds": 0.09226604201830924,
+   "size": [
+    8
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.16677182,
+   "compile_seconds": 5.590258374984842,
+   "compile_status": "ok",
+   "facts": 511,
+   "runs": [
+    5.030217249994166
+   ],
+   "seconds": 5.030217249994166,
+   "size": [
+    8
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.16677181699666577,
+   "apply_calls": 15338,
+   "facts": 511,
+   "find_bindings_ms": 2.0650000000004525,
+   "goal_bdd_nodes": [
+    17
+   ],
+   "guard_build_ms": 0.813000000000045,
+   "guard_ops": 4412,
+   "index_ms": 1.001999999999839,
+   "rsdd_ms": 1.2270000000003165,
+   "runs": [
+    0.00915100000000001,
+    0.008976999999999975,
+    0.008788000000000011
+   ],
+   "seconds": 0.008976999999999975,
+   "set_union_ms": 0.5159999999999059,
+   "size": [
+    8
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "engine",
+   "tuples": 1286,
+   "variables": 511
+  },
+  {
+   "answer": 0.10941898913151243,
+   "facts": 2047,
+   "runs": [
+    0.4336471669957973,
+    0.43299420800758526,
+    0.4296131660230458
+   ],
+   "seconds": 0.43299420800758526,
+   "size": [
+    10
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 2047,
+   "runs": [
+    0.41617595800198615,
+    0.4189977500354871,
+    0.41906254104105756
+   ],
+   "seconds": 0.4189977500354871,
+   "size": [
+    10
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.10941899,
+   "facts": 2047,
+   "runs": [
+    0.331618583004456,
+    0.3300042090122588,
+    0.33159233297919855
+   ],
+   "seconds": 0.33159233297919855,
+   "size": [
+    10
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "problog"
+  },
+  {
+   "answer": 0.10941898913151243,
+   "facts": 2047,
+   "runs": [
+    0.5817064170259982,
+    0.5813606670126319,
+    0.5871214169892482
+   ],
+   "seconds": 0.5817064170259982,
+   "size": [
+    10
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 2047,
+   "runs": [
+    0.8129062909865752,
+    0.7891130829812028,
+    0.7993419999838807
+   ],
+   "seconds": 0.7993419999838807,
+   "size": [
+    10
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "souffle"
+  },
+  {
+   "answer": null,
+   "compile_seconds": 5.552830500004347,
+   "compile_status": "ok",
+   "facts": 2047,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    10
+   ],
+   "status": "timeout",
+   "suite": "sg",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.10941898913151243,
+   "apply_calls": 76692,
+   "facts": 2047,
+   "find_bindings_ms": 9.349000000000615,
+   "goal_bdd_nodes": [
+    21
+   ],
+   "guard_build_ms": 3.2280000000000655,
+   "guard_ops": 16860,
+   "index_ms": 4.717000000000212,
+   "rsdd_ms": 6.337999999998829,
+   "runs": [
+    0.0421350000000001,
+    0.04205900000000008,
+    0.04202499999999998
+   ],
+   "seconds": 0.04205900000000008,
+   "set_union_ms": 1.9699999999993452,
+   "size": [
+    10
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "engine",
+   "tuples": 5128,
+   "variables": 2047
+  },
+  {
+   "answer": 0.08862938119652508,
+   "facts": 4095,
+   "runs": [
+    0.6599325420102105,
+    0.6234240839839913,
+    0.6339914579875767
+   ],
+   "seconds": 0.6339914579875767,
+   "size": [
+    11
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 4095,
+   "runs": [
+    0.5927158750128001,
+    0.5890313750132918,
+    0.5843002499896102
+   ],
+   "seconds": 0.5890313750132918,
+   "size": [
+    11
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.088629381,
+   "facts": 4095,
+   "runs": [
+    0.6188822920084931,
+    0.6200404169503599,
+    0.6131309160264209
+   ],
+   "seconds": 0.6188822920084931,
+   "size": [
+    11
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "problog"
+  },
+  {
+   "answer": 0.08862938119652508,
+   "facts": 4095,
+   "runs": [
+    1.3757987080025487,
+    1.3683912080014125,
+    1.3800371669931337
+   ],
+   "seconds": 1.3757987080025487,
+   "size": [
+    11
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 4095,
+   "runs": [
+    3.369041041994933
+   ],
+   "seconds": 3.369041041994933,
+   "size": [
+    11
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "souffle"
+  },
+  {
+   "facts": 4095,
+   "note": "timed out at size [10]",
+   "size": [
+    11
+   ],
+   "status": "not run",
+   "suite": "sg",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.08862938119652508,
+   "apply_calls": 169277,
+   "facts": 4095,
+   "find_bindings_ms": 20.318999999999733,
+   "goal_bdd_nodes": [
+    23
+   ],
+   "guard_build_ms": 6.598000000000411,
+   "guard_ops": 33336,
+   "index_ms": 11.849000000000387,
+   "rsdd_ms": 14.38399999999956,
+   "runs": [
+    0.09539999999999986,
+    0.09502499999999986,
+    0.09553900000000022
+   ],
+   "seconds": 0.09539999999999986,
+   "set_union_ms": 4.018999999999778,
+   "size": [
+    11
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "engine",
+   "tuples": 10249,
+   "variables": 4095
+  },
+  {
+   "answer": 0.07178979876918531,
+   "facts": 8191,
+   "runs": [
+    1.0019406249630265,
+    1.0032570419716649,
+    0.9954616250470281
+   ],
+   "seconds": 1.0019406249630265,
+   "size": [
+    12
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 8191,
+   "runs": [
+    0.9467599159688689,
+    0.9213143750093877,
+    0.9193274159915745
+   ],
+   "seconds": 0.9213143750093877,
+   "size": [
+    12
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.071789799,
+   "facts": 8191,
+   "runs": [
+    1.2446451659779996,
+    1.2500141669879667,
+    1.240777708007954
+   ],
+   "seconds": 1.2446451659779996,
+   "size": [
+    12
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "problog"
+  },
+  {
+   "answer": 0.07178979876918531,
+   "facts": 8191,
+   "runs": [
+    3.7078693750081584
+   ],
+   "seconds": 3.7078693750081584,
+   "size": [
+    12
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "pita"
+  },
+  {
+   "answer": null,
+   "facts": 8191,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    12
+   ],
+   "status": "timeout",
+   "suite": "sg",
+   "system": "souffle"
+  },
+  {
+   "facts": 8191,
+   "note": "timed out at size [10]",
+   "size": [
+    12
+   ],
+   "status": "not run",
+   "suite": "sg",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.07178979876918531,
+   "apply_calls": 370734,
+   "facts": 8191,
+   "find_bindings_ms": 46.197000000004664,
+   "goal_bdd_nodes": [
+    25
+   ],
+   "guard_build_ms": 14.181999999999789,
+   "guard_ops": 66204,
+   "index_ms": 25.009999999998854,
+   "rsdd_ms": 34.0519999999965,
+   "runs": [
+    0.22788500000000023,
+    0.22983100000000012,
+    0.22663200000000006
+   ],
+   "seconds": 0.22788500000000023,
+   "set_union_ms": 9.051999999999225,
+   "size": [
+    12
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "engine",
+   "tuples": 20490,
+   "variables": 8191
+  },
+  {
+   "answer": 0.05814973700304011,
+   "facts": 16383,
+   "runs": [
+    2.0460919169709086
+   ],
+   "seconds": 2.0460919169709086,
+   "size": [
+    13
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 16383,
+   "runs": [
+    1.7551197920111008,
+    1.7487194169661961,
+    1.7476563340169378
+   ],
+   "seconds": 1.7487194169661961,
+   "size": [
+    13
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.058149737,
+   "facts": 16383,
+   "runs": [
+    2.5227400000439957
+   ],
+   "seconds": 2.5227400000439957,
+   "size": [
+    13
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "problog"
+  },
+  {
+   "answer": null,
+   "facts": 16383,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    13
+   ],
+   "status": "timeout",
+   "suite": "sg",
+   "system": "pita"
+  },
+  {
+   "facts": 16383,
+   "note": "timed out at size [12]",
+   "size": [
+    13
+   ],
+   "status": "not run",
+   "suite": "sg",
+   "system": "souffle"
+  },
+  {
+   "facts": 16383,
+   "note": "timed out at size [10]",
+   "size": [
+    13
+   ],
+   "status": "not run",
+   "suite": "sg",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.05814973700304011,
+   "apply_calls": 806311,
+   "facts": 16383,
+   "find_bindings_ms": 113.23800000000028,
+   "goal_bdd_nodes": [
+    27
+   ],
+   "guard_build_ms": 32.838000000005195,
+   "guard_ops": 131848,
+   "index_ms": 49.268999999997504,
+   "rsdd_ms": 88.08500000004278,
+   "runs": [
+    0.5984369999999999,
+    0.5983159999999998,
+    0.6018000000000002
+   ],
+   "seconds": 0.5984369999999999,
+   "set_union_ms": 26.140000000000327,
+   "size": [
+    13
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "engine",
+   "tuples": 40971,
+   "variables": 16383
+  },
+  {
+   "answer": 0.04710128697246249,
+   "facts": 32767,
+   "runs": [
+    4.078084915992804
+   ],
+   "seconds": 4.078084915992804,
+   "size": [
+    14
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 32767,
+   "runs": [
+    3.8839442919706926
+   ],
+   "seconds": 3.8839442919706926,
+   "size": [
+    14
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.047101287,
+   "facts": 32767,
+   "runs": [
+    5.143934625026304
+   ],
+   "seconds": 5.143934625026304,
+   "size": [
+    14
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "problog"
+  },
+  {
+   "facts": 32767,
+   "note": "timed out at size [13]",
+   "size": [
+    14
+   ],
+   "status": "not run",
+   "suite": "sg",
+   "system": "pita"
+  },
+  {
+   "facts": 32767,
+   "note": "timed out at size [12]",
+   "size": [
+    14
+   ],
+   "status": "not run",
+   "suite": "sg",
+   "system": "souffle"
+  },
+  {
+   "facts": 32767,
+   "note": "timed out at size [10]",
+   "size": [
+    14
+   ],
+   "status": "not run",
+   "suite": "sg",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.04710128697246249,
+   "apply_calls": 1742888,
+   "facts": 32767,
+   "find_bindings_ms": 287.26599999999235,
+   "goal_bdd_nodes": [
+    29
+   ],
+   "guard_build_ms": 68.36500000000342,
+   "guard_ops": 263036,
+   "index_ms": 118.79500000000189,
+   "rsdd_ms": 231.13199999979588,
+   "runs": [
+    1.694974000000001,
+    1.6917840000000015,
+    1.695268
+   ],
+   "seconds": 1.694974000000001,
+   "set_union_ms": 43.40299999999115,
+   "size": [
+    14
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "engine",
+   "tuples": 81932,
+   "variables": 32767
+  },
+  {
+   "answer": null,
+   "facts": 65535,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    15
+   ],
+   "status": "timeout",
+   "suite": "sg",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 65535,
+   "runs": [
+    9.685241291997954
+   ],
+   "seconds": 9.685241291997954,
+   "size": [
+    15
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": null,
+   "facts": 65535,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    15
+   ],
+   "status": "timeout",
+   "suite": "sg",
+   "system": "problog"
+  },
+  {
+   "facts": 65535,
+   "note": "timed out at size [13]",
+   "size": [
+    15
+   ],
+   "status": "not run",
+   "suite": "sg",
+   "system": "pita"
+  },
+  {
+   "facts": 65535,
+   "note": "timed out at size [12]",
+   "size": [
+    15
+   ],
+   "status": "not run",
+   "suite": "sg",
+   "system": "souffle"
+  },
+  {
+   "facts": 65535,
+   "note": "timed out at size [10]",
+   "size": [
+    15
+   ],
+   "status": "not run",
+   "suite": "sg",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.03815204244769462,
+   "apply_calls": 3746993,
+   "facts": 65535,
+   "find_bindings_ms": 632.6329999999834,
+   "goal_bdd_nodes": [
+    31
+   ],
+   "guard_build_ms": 142.10200000000987,
+   "guard_ops": 525304,
+   "index_ms": 282.2559999999976,
+   "rsdd_ms": 499.2340000002223,
+   "runs": [
+    5.348150000000001
+   ],
+   "seconds": 5.348150000000001,
+   "set_union_ms": 105.50800000001254,
+   "size": [
+    15
+   ],
+   "status": "ok",
+   "suite": "sg",
+   "system": "engine",
+   "tuples": 163853,
+   "variables": 65535
+  },
+  {
+   "answer": 0.5989560064661611,
+   "facts": 201,
+   "runs": [
+    0.32894570799544454,
+    0.3198553750407882,
+    0.3216755830217153
+   ],
+   "seconds": 0.3216755830217153,
+   "size": [
+    50
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 201,
+   "runs": [
+    0.3187579170335084,
+    0.31811470800312236,
+    0.3185407079872675
+   ],
+   "seconds": 0.3185407079872675,
+   "size": [
+    50
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.59895601,
+   "facts": 201,
+   "runs": [
+    0.0947127920226194,
+    0.09440591599559411,
+    0.09394120803335682
+   ],
+   "seconds": 0.09440591599559411,
+   "size": [
+    50
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "problog"
+  },
+  {
+   "answer": 0.5989560064661611,
+   "facts": 201,
+   "runs": [
+    0.1741550830192864,
+    0.17778437497327104,
+    0.17309200001182035
+   ],
+   "seconds": 0.1741550830192864,
+   "size": [
+    50
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 201,
+   "runs": [
+    0.049864624976180494,
+    0.04978820797987282,
+    0.052877166017424315
+   ],
+   "seconds": 0.049864624976180494,
+   "size": [
+    50
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.59895601,
+   "compile_seconds": 6.945093749964144,
+   "compile_status": "ok",
+   "facts": 201,
+   "runs": [
+    0.492933958012145,
+    0.35464520897949114,
+    0.33920950000174344
+   ],
+   "seconds": 0.35464520897949114,
+   "size": [
+    50
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.5989560064661611,
+   "apply_calls": 10198,
+   "facts": 201,
+   "find_bindings_ms": 6.535999999999831,
+   "goal_bdd_nodes": [
+    51
+   ],
+   "guard_build_ms": 0.30699999999973215,
+   "guard_ops": 8465,
+   "index_ms": 0.23800000000028376,
+   "rsdd_ms": 1.590000000000657,
+   "runs": [
+    0.010560999999999978,
+    0.009519000000000005,
+    0.00900999999999999
+   ],
+   "seconds": 0.009519000000000005,
+   "set_union_ms": 0.26500000000021373,
+   "size": [
+    50
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "engine",
+   "tuples": 303,
+   "variables": 201
+  },
+  {
+   "answer": 0.21923726936647234,
+   "facts": 601,
+   "runs": [
+    0.5279254589695483,
+    0.5286243339651264,
+    0.530959542025812
+   ],
+   "seconds": 0.5286243339651264,
+   "size": [
+    150
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 601,
+   "runs": [
+    0.5389192500151694,
+    0.5475145000382327,
+    0.5001415000297129
+   ],
+   "seconds": 0.5389192500151694,
+   "size": [
+    150
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.21923727,
+   "facts": 601,
+   "runs": [
+    0.14193562499713153,
+    0.1433346249978058,
+    0.14059666701359674
+   ],
+   "seconds": 0.14193562499713153,
+   "size": [
+    150
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "problog"
+  },
+  {
+   "answer": 0.21923726936647234,
+   "facts": 601,
+   "runs": [
+    0.19861316698370501,
+    0.1992887500091456,
+    0.19775145803578198
+   ],
+   "seconds": 0.19861316698370501,
+   "size": [
+    150
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 601,
+   "runs": [
+    0.0787150840042159,
+    0.07801854197168723,
+    0.07693054096307606
+   ],
+   "seconds": 0.07801854197168723,
+   "size": [
+    150
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.21923727,
+   "compile_seconds": 7.287425625021569,
+   "compile_status": "ok",
+   "facts": 601,
+   "runs": [
+    1.3492925409809686,
+    1.308624040975701,
+    1.4263687080238014
+   ],
+   "seconds": 1.3492925409809686,
+   "size": [
+    150
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.21923726936647234,
+   "apply_calls": 80852,
+   "facts": 601,
+   "find_bindings_ms": 47.121999999999616,
+   "goal_bdd_nodes": [
+    151
+   ],
+   "guard_build_ms": 1.1350000000004457,
+   "guard_ops": 70365,
+   "index_ms": 0.7270000000003165,
+   "rsdd_ms": 8.159000000002948,
+   "runs": [
+    0.056125,
+    0.05794500000000005,
+    0.05669599999999991
+   ],
+   "seconds": 0.05669599999999991,
+   "set_union_ms": 0.8259999999978618,
+   "size": [
+    150
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "engine",
+   "tuples": 903,
+   "variables": 601
+  },
+  {
+   "answer": 0.0485504851305729,
+   "facts": 1201,
+   "runs": [
+    0.5805773750180379,
+    0.5746818750048988,
+    0.5766358330147341
+   ],
+   "seconds": 0.5766358330147341,
+   "size": [
+    300
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 1201,
+   "runs": [
+    0.5527992090210319,
+    0.5615983749739826,
+    0.5485993750044145
+   ],
+   "seconds": 0.5527992090210319,
+   "size": [
+    300
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.048550485,
+   "facts": 1201,
+   "runs": [
+    0.21138116699876264,
+    0.20803679199889302,
+    0.2075115409679711
+   ],
+   "seconds": 0.20803679199889302,
+   "size": [
+    300
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "problog"
+  },
+  {
+   "answer": 0.0485504851305729,
+   "facts": 1201,
+   "runs": [
+    0.22884524997789413,
+    0.22270416701212525,
+    0.22774466703413054
+   ],
+   "seconds": 0.22774466703413054,
+   "size": [
+    300
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 1201,
+   "runs": [
+    0.15663258399581537,
+    0.15488516696495935,
+    0.15366570802871138
+   ],
+   "seconds": 0.15488516696495935,
+   "size": [
+    300
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "souffle"
+  },
+  {
+   "answer": 0.048550485,
+   "compile_seconds": 7.0486249580280855,
+   "compile_status": "ok",
+   "facts": 1201,
+   "runs": [
+    5.7406919579952955
+   ],
+   "seconds": 5.7406919579952955,
+   "size": [
+    300
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.0485504851305729,
+   "apply_calls": 323928,
+   "facts": 1201,
+   "find_bindings_ms": 213.1159999999977,
+   "goal_bdd_nodes": [
+    301
+   ],
+   "guard_build_ms": 3.2219999999986157,
+   "guard_ops": 275715,
+   "index_ms": 1.840000000001055,
+   "rsdd_ms": 38.83100000003367,
+   "runs": [
+    0.24058800000000008,
+    0.23871000000000003,
+    0.23588599999999996
+   ],
+   "seconds": 0.23871000000000003,
+   "set_union_ms": 2.0970000000013442,
+   "size": [
+    300
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "engine",
+   "tuples": 1803,
+   "variables": 1201
+  },
+  {
+   "answer": 0.0023809591983979563,
+   "facts": 2401,
+   "runs": [
+    1.5121310420217924,
+    1.3722700420184992,
+    1.4626422909786925
+   ],
+   "seconds": 1.4626422909786925,
+   "size": [
+    600
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 2401,
+   "runs": [
+    1.312933083041571,
+    1.2861329169827513,
+    1.272798917023465
+   ],
+   "seconds": 1.2861329169827513,
+   "size": [
+    600
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 0.0023809592,
+   "facts": 2401,
+   "runs": [
+    0.36974866600940004,
+    0.3741990000125952,
+    0.3712490419857204
+   ],
+   "seconds": 0.3712490419857204,
+   "size": [
+    600
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "problog"
+  },
+  {
+   "answer": 0.0023809591983979563,
+   "facts": 2401,
+   "runs": [
+    0.29255737498169765,
+    0.28951304202200845,
+    0.2974090420175344
+   ],
+   "seconds": 0.29255737498169765,
+   "size": [
+    600
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 2401,
+   "runs": [
+    0.4455841669696383,
+    0.45174620795296505,
+    0.44604354101466015
+   ],
+   "seconds": 0.44604354101466015,
+   "size": [
+    600
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "souffle"
+  },
+  {
+   "answer": null,
+   "compile_seconds": 7.30275387497386,
+   "compile_status": "ok",
+   "facts": 2401,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    600
+   ],
+   "status": "timeout",
+   "suite": "pointsto",
+   "system": "psouffle"
+  },
+  {
+   "answer": 0.0023809591983979563,
+   "apply_calls": 1273012,
+   "facts": 2401,
+   "find_bindings_ms": 734.8280000000182,
+   "goal_bdd_nodes": [
+    601
+   ],
+   "guard_build_ms": 4.099000000001979,
+   "guard_ops": 1091415,
+   "index_ms": 3.523000000000593,
+   "rsdd_ms": 124.726999999908,
+   "runs": [
+    0.7809689999999999,
+    0.7813139999999998,
+    0.7853150000000001
+   ],
+   "seconds": 0.7813139999999998,
+   "set_union_ms": 3.3579999999838037,
+   "size": [
+    600
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "engine",
+   "tuples": 3603,
+   "variables": 2401
+  },
+  {
+   "answer": 4.2739534936551264e-05,
+   "facts": 4001,
+   "runs": [
+    2.7319213339942507
+   ],
+   "seconds": 2.7319213339942507,
+   "size": [
+    1000
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 4001,
+   "runs": [
+    2.609355333028361
+   ],
+   "seconds": 2.609355333028361,
+   "size": [
+    1000
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 4.2739535e-05,
+   "facts": 4001,
+   "runs": [
+    0.569144332956057,
+    0.5594171250122599,
+    0.5626346250064671
+   ],
+   "seconds": 0.5626346250064671,
+   "size": [
+    1000
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "problog"
+  },
+  {
+   "answer": 4.2739534936551264e-05,
+   "facts": 4001,
+   "runs": [
+    0.366719292011112,
+    0.37112945900298655,
+    0.36747354199178517
+   ],
+   "seconds": 0.36747354199178517,
+   "size": [
+    1000
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 4001,
+   "runs": [
+    1.0722987089538947,
+    1.0762447920278646,
+    1.0785560000222176
+   ],
+   "seconds": 1.0762447920278646,
+   "size": [
+    1000
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "souffle"
+  },
+  {
+   "facts": 4001,
+   "note": "timed out at size [600]",
+   "size": [
+    1000
+   ],
+   "status": "not run",
+   "suite": "pointsto",
+   "system": "psouffle"
+  },
+  {
+   "answer": 4.2739534936551264e-05,
+   "apply_calls": 3530958,
+   "facts": 4001,
+   "find_bindings_ms": 2138.282999999993,
+   "goal_bdd_nodes": [
+    1001
+   ],
+   "guard_build_ms": 8.808999999999287,
+   "guard_ops": 3019015,
+   "index_ms": 5.866999999986774,
+   "rsdd_ms": 391.39799999997126,
+   "runs": [
+    2.2335789999999998
+   ],
+   "seconds": 2.2335789999999998,
+   "set_union_ms": 6.428000000015345,
+   "size": [
+    1000
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "engine",
+   "tuples": 6003,
+   "variables": 4001
+  },
+  {
+   "answer": 5.726228994379637e-06,
+   "facts": 4801,
+   "runs": [
+    4.044316666957457
+   ],
+   "seconds": 4.044316666957457,
+   "size": [
+    1200
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 4801,
+   "runs": [
+    3.572266041999683
+   ],
+   "seconds": 3.572266041999683,
+   "size": [
+    1200
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 5.726229e-06,
+   "facts": 4801,
+   "runs": [
+    0.6739819169742987,
+    0.6782687500235625,
+    0.6780586249660701
+   ],
+   "seconds": 0.6780586249660701,
+   "size": [
+    1200
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "problog"
+  },
+  {
+   "answer": 5.726228994379637e-06,
+   "facts": 4801,
+   "runs": [
+    0.4071096670231782,
+    0.4072686249855906,
+    0.41046391701092944
+   ],
+   "seconds": 0.4072686249855906,
+   "size": [
+    1200
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 4801,
+   "runs": [
+    1.5046114159631543,
+    1.5267911669798195,
+    1.515398624993395
+   ],
+   "seconds": 1.515398624993395,
+   "size": [
+    1200
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "souffle"
+  },
+  {
+   "facts": 4801,
+   "note": "timed out at size [600]",
+   "size": [
+    1200
+   ],
+   "status": "not run",
+   "suite": "pointsto",
+   "system": "psouffle"
+  },
+  {
+   "answer": 5.726228994379637e-06,
+   "apply_calls": 5077430,
+   "facts": 4801,
+   "find_bindings_ms": 3031.6130000000153,
+   "goal_bdd_nodes": [
+    1201
+   ],
+   "guard_build_ms": 9.537000000004582,
+   "guard_ops": 4342815,
+   "index_ms": 6.491000000011127,
+   "rsdd_ms": 545.5870000000002,
+   "runs": [
+    3.1504090000000002
+   ],
+   "seconds": 3.1504090000000002,
+   "set_union_ms": 7.519999999989295,
+   "size": [
+    1200
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "engine",
+   "tuples": 7203,
+   "variables": 4801
+  },
+  {
+   "answer": 7.67198298829217e-07,
+   "facts": 5601,
+   "runs": [
+    5.991725417028647
+   ],
+   "seconds": 5.991725417028647,
+   "size": [
+    1400
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 5601,
+   "runs": [
+    4.84279433399206
+   ],
+   "seconds": 4.84279433399206,
+   "size": [
+    1400
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 7.671983e-07,
+   "facts": 5601,
+   "runs": [
+    0.8527110000140965,
+    0.8588616250199266,
+    0.8720365830231458
+   ],
+   "seconds": 0.8588616250199266,
+   "size": [
+    1400
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "problog"
+  },
+  {
+   "answer": 7.67198298829217e-07,
+   "facts": 5601,
+   "runs": [
+    0.45862962503451854,
+    0.46108079102123156,
+    0.4594838750199415
+   ],
+   "seconds": 0.4594838750199415,
+   "size": [
+    1400
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 5601,
+   "runs": [
+    2.123714542016387
+   ],
+   "seconds": 2.123714542016387,
+   "size": [
+    1400
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "souffle"
+  },
+  {
+   "facts": 5601,
+   "note": "timed out at size [600]",
+   "size": [
+    1400
+   ],
+   "status": "not run",
+   "suite": "pointsto",
+   "system": "psouffle"
+  },
+  {
+   "answer": 7.67198298829217e-07,
+   "apply_calls": 6886782,
+   "facts": 5601,
+   "find_bindings_ms": 4078.3859999999895,
+   "goal_bdd_nodes": [
+    1401
+   ],
+   "guard_build_ms": 12.643000000007078,
+   "guard_ops": 5906615,
+   "index_ms": 8.183999999976777,
+   "rsdd_ms": 729.0089999999725,
+   "runs": [
+    4.226523
+   ],
+   "seconds": 4.226523,
+   "set_union_ms": 8.846999999984746,
+   "size": [
+    1400
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "engine",
+   "tuples": 8403,
+   "variables": 5601
+  },
+  {
+   "answer": 3.762409050455422e-08,
+   "facts": 6801,
+   "runs": [
+    7.273152416979428
+   ],
+   "seconds": 7.273152416979428,
+   "size": [
+    1700
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 6801,
+   "runs": [
+    7.16201304201968
+   ],
+   "seconds": 7.16201304201968,
+   "size": [
+    1700
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 3.7624091e-08,
+   "facts": 6801,
+   "runs": [
+    0.9921733750379644,
+    1.010394707962405,
+    0.9925691250246018
+   ],
+   "seconds": 0.9925691250246018,
+   "size": [
+    1700
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "problog"
+  },
+  {
+   "answer": 3.762409050455422e-08,
+   "facts": 6801,
+   "runs": [
+    0.5180334169999696,
+    0.5173887080163695,
+    0.5133082499960437
+   ],
+   "seconds": 0.5173887080163695,
+   "size": [
+    1700
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 6801,
+   "runs": [
+    3.2200436660205014
+   ],
+   "seconds": 3.2200436660205014,
+   "size": [
+    1700
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "souffle"
+  },
+  {
+   "facts": 6801,
+   "note": "timed out at size [600]",
+   "size": [
+    1700
+   ],
+   "status": "not run",
+   "suite": "pointsto",
+   "system": "psouffle"
+  },
+  {
+   "answer": 3.762409050455422e-08,
+   "apply_calls": 10169646,
+   "facts": 6801,
+   "find_bindings_ms": 6205.83999999997,
+   "goal_bdd_nodes": [
+    1701
+   ],
+   "guard_build_ms": 14.286000000011654,
+   "guard_ops": 8702315,
+   "index_ms": 10.528000000010252,
+   "rsdd_ms": 1134.2549999999057,
+   "runs": [
+    6.4023270000000005
+   ],
+   "seconds": 6.4023270000000005,
+   "set_union_ms": 10.974999999999454,
+   "size": [
+    1700
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "engine",
+   "tuples": 10203,
+   "variables": 6801
+  },
+  {
+   "answer": null,
+   "facts": 8001,
+   "runs": [],
+   "seconds": null,
+   "size": [
+    2000
+   ],
+   "status": "timeout",
+   "suite": "pointsto",
+   "system": "probalog"
+  },
+  {
+   "answer": 1.0,
+   "facts": 8001,
+   "runs": [
+    9.3649308749591
+   ],
+   "seconds": 9.3649308749591,
+   "size": [
+    2000
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "probalog-certain"
+  },
+  {
+   "answer": 1.845119e-09,
+   "facts": 8001,
+   "runs": [
+    1.1824640830163844,
+    1.1893975830171257,
+    1.24777279101545
+   ],
+   "seconds": 1.1893975830171257,
+   "size": [
+    2000
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "problog"
+  },
+  {
+   "answer": 1.8451190369623103e-09,
+   "facts": 8001,
+   "runs": [
+    1.5436529589933343,
+    1.6878009159700014,
+    1.5969514999887906
+   ],
+   "seconds": 1.5969514999887906,
+   "size": [
+    2000
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "pita"
+  },
+  {
+   "answer": 1.0,
+   "facts": 8001,
+   "runs": [
+    4.431435749982484
+   ],
+   "seconds": 4.431435749982484,
+   "size": [
+    2000
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "souffle"
+  },
+  {
+   "facts": 8001,
+   "note": "timed out at size [600]",
+   "size": [
+    2000
+   ],
+   "status": "not run",
+   "suite": "pointsto",
+   "system": "psouffle"
+  },
+  {
+   "answer": 1.8451190369623103e-09,
+   "apply_calls": 14068872,
+   "facts": 8001,
+   "find_bindings_ms": 9231.317000000034,
+   "goal_bdd_nodes": [
+    2001
+   ],
+   "guard_build_ms": 22.690000000025066,
+   "guard_ops": 12038015,
+   "index_ms": 17.806999999982963,
+   "rsdd_ms": 1840.2059999993285,
+   "runs": [
+    9.539427
+   ],
+   "seconds": 9.539427,
+   "set_union_ms": 16.2859999999705,
+   "size": [
+    2000
+   ],
+   "status": "ok",
+   "suite": "pointsto",
+   "system": "engine",
+   "tuples": 12003,
+   "variables": 8001
+  }
+ ],
+ "systems": {
+  "engine": "9.1",
+  "pita": "SWI-Prolog version 10.0.2 for arm64-darwin",
+  "probalog": "9.1",
+  "probalog-certain": "9.1",
+  "problog": "2.3.0",
+  "psouffle": "Version: artifact-ae",
+  "souffle": "Version: 2.5"
+ },
+ "tests": {
+  "failed": 0,
+  "file": "test/probalog.rkt",
+  "seconds": 3.159657167037949,
+  "status": "ok",
+  "total": 162
+ }
+}

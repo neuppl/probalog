@@ -174,6 +174,7 @@
   (define guard-before    total-guard-build-time)
   (define union-before    total-set-union-time)
   (define index-before    total-index-time)
+  (define bdd-before      total-bdd-time)
   (define wall-start (current-inexact-monotonic-milliseconds))
   (define result (run-datalog facts rules))
   (define wall (- (current-inexact-monotonic-milliseconds) wall-start))
@@ -185,16 +186,18 @@
         (- total-find-bindings-time    bindings-before)
         (- total-guard-build-time      guard-before)
         (- total-set-union-time        union-before)
-        (- total-index-time            index-before)))
+        (- total-index-time            index-before)
+        (- total-bdd-time              bdd-before)))
 
 (define (aggregate-timing results)
-  (for/fold ([wall 0] [bind 0] [guard 0] [union 0] [idx 0])
+  (for/fold ([wall 0] [bind 0] [guard 0] [union 0] [idx 0] [bdd 0])
             ([r results])
     (values (+ wall  (list-ref r 1))
             (+ bind  (list-ref r 2))
             (+ guard (list-ref r 3))
             (+ union (list-ref r 4))
-            (+ idx   (list-ref r 5)))))
+            (+ idx   (list-ref r 5))
+            (+ bdd   (list-ref r 6)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Run benchmarks and build the chart
@@ -203,10 +206,13 @@
   (for/list ([b benchmarks])
     (run-benchmark (car b) (cadr b))))
 
-(define-values (wall bind guard union idx) (aggregate-timing results))
+(define-values (wall bind guard union idx bdd) (aggregate-timing results))
 
 ;; Each program's share of the total, so it is visible at a glance
 ;; whether any one of them is dictating the split.
+(printf "\ninside rsdd: ~ams (~a% of total), spread across the phases below\n"
+        (~r bdd #:precision 0) (~r (* 100 (/ bdd wall)) #:precision 1))
+
 (printf "\nshare of total per benchmark:\n")
 (for ([r results])
   (printf "  ~a ~a%\n"
@@ -234,8 +240,9 @@
                                                 (format "~a (~a%)"
                                                         (car p)
                                                         (~r (* 100 (/ (cdr p) total)) #:precision 1))))
-                                    #:title (format "timing split across ~a benchmarks (~ams total)"
-                                                    (length results) (~r wall #:precision 0))
+                                    #:title (format "timing split across ~a benchmarks (~ams total, ~a% inside rsdd)"
+                                                    (length results) (~r wall #:precision 0)
+                                                    (~r (* 100 (/ bdd wall)) #:precision 0))
                                     #:x-label "time (ms)"
                                     #:y-label #f
                                     #:legend-anchor 'outside-right-top

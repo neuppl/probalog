@@ -6,7 +6,8 @@
          guard-implies
          guard-equiv? guard-prob
          guard-known-true? guard-known-false?
-         reset-guards! add-reset-hook! guard-stats)
+         reset-guards! add-reset-hook! guard-stats
+         total-bdd-time)
 
 (require "rsdd.rkt"
          data/gvector
@@ -62,14 +63,23 @@
      (gvector-add! weights (cons (- 1 p) p))
      (rsdd-var builder l)]))
 
-(define (guard-and a b) (op!) (rsdd-and builder a b))
-(define (guard-or a b)  (op!) (rsdd-or builder a b))
-(define (guard-not a)   (op!) (rsdd-not builder a))
+;; Milliseconds spent inside rsdd's apply operations, for the timing
+;; split. It overlaps the engine's phases rather than adding to them.
+(define total-bdd-time 0.0)
+(define-syntax-rule (in-rsdd e)
+  (let ([start (current-inexact-monotonic-milliseconds)])
+    (begin0 e
+      (set! total-bdd-time
+            (+ total-bdd-time (- (current-inexact-monotonic-milliseconds) start))))))
+
+(define (guard-and a b) (op!) (in-rsdd (rsdd-and builder a b)))
+(define (guard-or a b)  (op!) (in-rsdd (rsdd-or builder a b)))
+(define (guard-not a)   (op!) (in-rsdd (rsdd-not builder a)))
 
 (define (guard-implies a b) (guard-or (guard-not a) b))
 
 ;; Logical equivalence: a comparison, not a search.
-(define (guard-equiv? a b) (op!) (rsdd-equal? builder a b))
+(define (guard-equiv? a b) (op!) (in-rsdd (rsdd-equal? builder a b)))
 
 (define (guard-known-true? g)  (rsdd-true? g))
 (define (guard-known-false? g) (rsdd-false? g))

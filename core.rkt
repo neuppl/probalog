@@ -122,23 +122,26 @@
 
 
 ;; all is a fallback for by-pos, which indexes arguments at every position.
+;; Indexes hold facts, not guards: a fact's guard is read from the current
+;; set when it is matched, so an index stays valid as guards grow and only
+;; needs extending with facts that are new.
 (struct pred-index (all by-pos) #:transparent)
 (define (empty-pred-index) (pred-index '() (hash)))
 
-(define (pred-index-add pi f g)
+(define (pred-index-add pi f)
   (define new-by-pos
     (for/fold ([bp (pred-index-by-pos pi)]) ([a (fact-args f)] [i (in-naturals)])
       (hash-update bp i
-                   (lambda (inner) (hash-update inner a (lambda (l) (cons (cons f g) l)) '()))
+                   (lambda (inner) (hash-update inner a (lambda (l) (cons f l)) '()))
                    (hash))))
-  (pred-index (cons (cons f g) (pred-index-all pi)) new-by-pos))
+  (pred-index (cons f (pred-index-all pi)) new-by-pos))
 
 ;; predicate name -> pred-index
-(define (index-by-name st)
-  (for/fold ([idx (hash)]) ([(k g) st])
+(define (index-add idx keys)
+  (for/fold ([idx idx]) ([k keys])
     (hash-update idx (fact-name k)
-                 (lambda (pi) (pred-index-add pi k g))
-                 (lambda () (pred-index-add (empty-pred-index) k g)))))
+                 (lambda (pi) (pred-index-add pi k))
+                 empty-pred-index)))
 
 ;; First argument position in clause whose value is already known
 ;; (a literal constant, or a variable already in bindings), as
@@ -163,15 +166,17 @@
       (hash-ref (hash-ref (pred-index-by-pos pi) (car ka) (hash)) (cdr ka) '())
       (pred-index-all pi)))
 
-(define (find-bindings-prob/at body full-idx delta-idx delta-pos)
+;; Guards are read from `full`. Without `guards?`, every binding keeps
+;; the guard true.
+(define (find-bindings-prob/at body full full-idx delta-idx delta-pos [guards? #t])
   (for/fold ([worlds (list (cons (hash) (guard-true)))])
             ([clause body] [i (in-naturals)])
     (define idx (if (= i delta-pos) delta-idx full-idx))
     (for*/list ([w worlds]
-                [fg (candidates-for clause (car w) idx)]
-                [b (in-value (match-fact clause (car fg) (car w)))]
+                [f (candidates-for clause (car w) idx)]
+                [b (in-value (match-fact clause f (car w)))]
                 #:when b)
-      (cons b (guard-and (cdr w) (cdr fg))))))
+      (cons b (if guards? (guard-and (cdr w) (set-member? full f)) (cdr w))))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -197,50 +202,206 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Immediate consequence operator
 
-;; The given keys, carrying their guards from `full`.
-(define (restrict-to full keys)
-  (for/sym-set ([k keys])
-    (values k (set-member? full k))))
+;; Keys among `keys` whose guard changed; a pointer comparison each.
+(define (changed-keys old new keys)
+  (for/list ([k keys] #:unless (guard-equiv? (set-member? new k) (set-member? old k))) k))
 
-;; Keys whose guard changed; a pointer comparison each.
-(define (changed-keys old new)
-  (for/list ([(k g) new] #:unless (guard-equiv? g (set-member? old k))) k))
-
-(define (immediate-semi full delta-keys rules)
-  (define full-idx (time-it! add-index-time! (lambda () (index-by-name full))))
+;; One round. Returns the new set and the facts derived in it, the only
+;; ones whose guard can have changed.
+(define (immediate-semi full full-idx delta-keys rules [deterministic (hasheq)])
   (define delta-idx
-    (time-it! add-index-time!
-              (lambda () (index-by-name (restrict-to full delta-keys)))))
-  (for/fold ([acc full]) ([r rules])
-    (define n (length (rule-body r)))
+    (time-it! add-index-time! (lambda () (index-add (hash) delta-keys))))
+  (for/fold ([acc full] [derived '()]) ([r rules])
+    (define body (rule-body r))
+    (define guards? (not (hash-ref deterministic (fact-name (rule-head r)) #f)))
     ;; Each clause position in turn draws from the delta; a derivation
-    ;; with two changed facts is built twice, and the second is free.
+    ;; with two changed facts is built twice, and the second is free. A
+    ;; position whose predicate has no delta derives nothing new.
     (define bindings
       (time-it! add-find-bindings-time!
                 (lambda ()
-                  (for*/list ([pos (in-range n)]
-                              [w (find-bindings-prob/at (rule-body r) full-idx delta-idx pos)])
+                  (for*/list ([(clause pos) (in-indexed body)]
+                              #:when (hash-ref delta-idx (fact-name clause) #f)
+                              [w (find-bindings-prob/at body full full-idx delta-idx pos guards?)])
                     w))))
     (define fresh
       (time-it! add-guard-build-time!
                 (lambda ()
                   (for/sym-set ([w bindings])
                     (values (substitute (rule-head r) (car w)) (cdr w))))))
-    (time-it! add-set-union-time! (lambda () (set-union acc fresh)))))
+    (values (time-it! add-set-union-time! (lambda () (set-union acc fresh)))
+            (for/fold ([derived derived]) ([(k g) fresh]) (cons k derived)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Saturation
 
 ;; Semi-naive fixpoint: the delta is the keys whose guard changed, and
 ;; guards are read from the accumulated set rather than the delta.
-(define (saturate-semi base rules)
-  (let loop ([full base] [delta (for/list ([(k g) base]) k)])
-    (define next (immediate-semi full delta rules))
-    (define changed (changed-keys full next))
-    (if (null? changed) full (loop next changed))))
+;; Predicates in `deterministic` are derived with the guard true.
+(define (saturate-semi base rules [deterministic (hasheq)])
+  (define base-keys (for/list ([(k g) base]) k))
+  (define indexed (make-hash))
+  (for ([k base-keys]) (hash-set! indexed k #t))
+  (let loop ([full base] [full-idx (index-add (hash) base-keys)] [delta base-keys])
+    (define-values (next derived) (immediate-semi full full-idx delta rules deterministic))
+    (define changed (changed-keys full next (remove-duplicates derived)))
+    (cond
+      [(null? changed) full]
+      [else
+       (define new-keys
+         (for/list ([k changed] #:unless (hash-ref indexed k #f))
+           (hash-set! indexed k #t)
+           k))
+       (loop next
+             (time-it! add-index-time! (lambda () (index-add full-idx new-keys)))
+             changed)])))
 
-(define (run-datalog base-fact-probs rules)
-  (saturate-semi (make-base-set base-fact-probs) rules))
+;; Predicates the goals can depend on: their own, and those in the body
+;; of any rule for one, transitively. Keyed by name alone, so a name used
+;; at two arities keeps both.
+(define (relevant-predicates goals rules)
+  (define keep (make-hasheq))
+  (let loop ([todo (map fact-name goals)])
+    (unless (null? todo)
+      (define p (car todo))
+      (cond
+        [(hash-ref keep p #f) (loop (cdr todo))]
+        [else
+         (hash-set! keep p #t)
+         (loop (append (for*/list ([r (in-list rules)]
+                                   #:when (eq? (fact-name (rule-head r)) p)
+                                   [b (in-list (rule-body r))])
+                         (fact-name b))
+                       (cdr todo)))])))
+  keep)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Magic sets
+;;
+;; Each rule is copied once per binding pattern (adornment) its head is
+;; called with, guarded by a magic atom holding the bound arguments, and
+;; magic rules pass bindings left to right into the body's derived atoms.
+;; Every copy still derives into the original predicate, so a tuple the
+;; magic atoms cover gets every derivation it has in the full program.
+;;
+;; Magic predicates are deterministic: their tuples are relevant in some
+;; world, so they hold in all of them. That over-approximates each
+;; world's relevant set, while the real body atoms keep their guards, so
+;; every covered tuple's guard is exact.
+
+;; An adornment is a list of booleans: #t where the argument is bound.
+(define (adornment atom bound)
+  (for/list ([a (fact-args atom)])
+    (or (not (symbol? a)) (hash-ref bound a #f))))
+
+(define (magic-name p ad)
+  (string->symbol
+   (format "magic:~a:~a" p (list->string (for/list ([b ad]) (if b #\b #\f))))))
+
+(define (magic-atom atom ad)
+  (fact (magic-name (fact-name atom) ad)
+        (for/list ([a (fact-args atom)] [b ad] #:when b) a)))
+
+(define (bind-vars bound atom)
+  (for/fold ([bound bound]) ([a (fact-args atom)] #:when (symbol? a))
+    (hash-set bound a #t)))
+
+;; Returns the rewritten rules, the magic seeds as base facts, and a hash
+;; from each derived predicate to the adornments it was called with.
+(define (magic-rewrite goals rules)
+  (define derived (for/hasheq ([r (in-list rules)]) (values (fact-name (rule-head r)) #t)))
+  (define (derived? a) (hash-ref derived (fact-name a) #f))
+  (define called (make-hasheq))
+  (define todo '())
+  (define (call! atom ad)
+    (define ads (hash-ref called (fact-name atom) '()))
+    (unless (member ad ads)
+      (hash-set! called (fact-name atom) (cons ad ads))
+      (set! todo (cons (cons (fact-name atom) ad) todo))))
+  (define seeds
+    (for/list ([g (in-list goals)] #:when (derived? g))
+      (define ad (adornment g (hash)))
+      (call! g ad)
+      (cons (magic-atom g ad) 1)))
+  (define out '())
+  (let loop ()
+    (unless (null? todo)
+      (match-define (cons p ad) (car todo))
+      (set! todo (cdr todo))
+      (for ([r (in-list rules)]
+            #:when (and (eq? (fact-name (rule-head r)) p)
+                        (= (length (fact-args (rule-head r))) (length ad))))
+        (define head (rule-head r))
+        (define m (magic-atom head ad))
+        (for/fold ([bound (for/fold ([bound (hash)])
+                                    ([a (fact-args head)] [b ad] #:when (and b (symbol? a)))
+                            (hash-set bound a #t))]
+                   [prefix '()])
+                  ([atom (in-list (rule-body r))])
+          (when (derived? atom)
+            (define ad* (adornment atom bound))
+            (call! atom ad*)
+            (define mh (magic-atom atom ad*))
+            (unless (and (null? prefix) (equal? mh m))
+              (set! out (cons (rule mh (cons m (reverse prefix))) out))))
+          (values (bind-vars bound atom) (cons atom prefix)))
+        (set! out (cons (rule head (cons m (rule-body r))) out)))
+      (loop)))
+  (values (reverse out) seeds called))
+
+;; Results computed for particular goals, mapped to a predicate saying
+;; which facts they cover, so a query outside them is an error rather
+;; than a wrong #f.
+(define pruned-results (make-weak-hasheq))
+
+;; With #:goals, only what those facts can depend on is derived: first by
+;; predicate, then, with #:magic?, by the constants the goals mention. A
+;; pruned base fact is an independent variable no kept guard mentions, so
+;; every goal's probability is unchanged.
+(define (run-datalog base-fact-probs rules #:goals [goals #f] #:magic? [magic? #t])
+  (cond
+    [(not goals) (saturate-semi (make-base-set base-fact-probs) rules)]
+    [else
+     (define keep (relevant-predicates goals rules))
+     (define (kept? f) (hash-ref keep (fact-name f) #f))
+     (define base (filter (lambda (fp) (kept? (car fp))) base-fact-probs))
+     (define kept-rules (filter (lambda (r) (kept? (rule-head r))) rules))
+     (cond
+       [magic?
+        (define-values (magic-rules seeds called) (magic-rewrite goals kept-rules))
+        (define deterministic
+          (for*/hasheq ([(p ads) (in-hash called)] [ad (in-list ads)])
+            (values (magic-name p ad) #t)))
+        (define result
+          ;; seeds are certain, so they take no variable, and are kept out
+          ;; of the ordering, where their constants would reorder the rest
+          (saturate-semi (set-union (make-base-set base) (make-base-set seeds))
+                         magic-rules deterministic))
+        (define (covered? f)
+          (and (kept? f)
+               (let ([ads (hash-ref called (fact-name f) #f)])
+                 (or (not ads)
+                     (for/or ([ad (in-list ads)]
+                              #:when (= (length ad) (length (fact-args f))))
+                       (guard-known-true? (set-member? result (magic-atom f ad))))))))
+        (hash-set! pruned-results result covered?)
+        result]
+       [else
+        (define result (saturate-semi (make-base-set base) kept-rules))
+        (hash-set! pruned-results result kept?)
+        result])]))
+
+;; The guard of `f` in `result`.
+(define (result-guard who where result f)
+  (define covered? (hash-ref pruned-results result #f))
+  (when (and covered? (not (covered? f)))
+    (probalog-error
+     who where
+     (string-append
+      "~a was not computed\n"
+      "  only facts the module's queries and observations depend on are derived")
+     f))
+  (set-member? result f))
 
 ;; Reports a runtime failure the way the parser reports a syntax one:
 ;; prefixed with the source location of the statement responsible.
@@ -296,7 +457,7 @@
   (set-box! evidence (guard-and (current-evidence) g)))
 
 (define (query-fact result f #:where [where #f])
-  (define pmf (guard->pmf (set-member? result f)))
+  (define pmf (guard->pmf (result-guard 'query-fact where result f)))
   (unless pmf
     (probalog-error
      'query-fact where
@@ -336,12 +497,12 @@
 ;; Condition on the fact being present (or absent); all later queries
 ;; see the posterior.
 (define (observe-fact result f #:where [where #f])
-  (define guard (set-member? result f))
+  (define guard (result-guard 'observe-fact where result f))
   (check-observable! 'observe-fact where guard #t f)
   (add-evidence! guard))
 
 (define (observe-not-fact result f #:where [where #f])
-  (define guard (set-member? result f))
+  (define guard (result-guard 'observe-not-fact where result f))
   (check-observable! 'observe-not-fact where guard #f
                      (format "the absence of ~a" f))
   (add-evidence! (guard-not guard)))

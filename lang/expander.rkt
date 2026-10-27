@@ -70,7 +70,20 @@
                   (syntax/loc f (observe-not-fact probalog-result fact-expr #:where where))
                   (syntax/loc f (observe-fact probalog-result fact-expr #:where where)))]
              [_ #'(void)]))))
-     (with-syntax ([(fact-e ...)  (reverse fact-forms)]
+     ;; The atoms the statements ask about. A module with none is only
+     ;; queried from the REPL, so everything is derived.
+     (define goal-forms
+       (for*/list ([f (syntax->list #'(form ...))]
+                   [g (in-value
+                       (syntax-parse f
+                         #:datum-literals (#%probalog-query-entry #%probalog-observe-entry)
+                         [(#%probalog-query-entry e) #'e]
+                         [(#%probalog-observe-entry e _) #'e]
+                         [_ #f]))]
+                   #:when g)
+         g))
+     (with-syntax ([goals (if (null? goal-forms) #'#f #`(list #,@goal-forms))]
+                   [(fact-e ...)  (reverse fact-forms)]
                     [(rule-e ...)  (reverse rule-forms)]
                     [(scaffold-e ...) (reverse scaffolds)]
                     [(stmt-e ...)  ordered-stmts]
@@ -78,7 +91,7 @@
        #'(#%plain-module-begin
           scaffold-e ...
           (define probalog-result
-            (run-datalog (list fact-e ...) (list rule-e ...)))
+            (run-datalog (list fact-e ...) (list rule-e ...) #:goals goals))
           (provide probalog-result)
           stmt-e ...))]))
 

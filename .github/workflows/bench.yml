@@ -5,16 +5,23 @@ on:
 
 name: benchmark
 
+# One run per branch at a time, so the data.json commits land in order.
+concurrency:
+  group: collect-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
-  benchmark:
+  collect:
     runs-on: ubuntu-latest
+    timeout-minutes: 360
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v5
 
       # Racket is pinned to a fixed release rather than "current" so that a
       # change in the numbers can be attributed to a probalog commit rather
-      # than to Racket moving underneath us. Fetching the rsdd shared
-      # library is the slow part, so the package addon dir is cached.
+      # than to Racket moving underneath us.
       #
       # Both directories live outside the workspace on purpose. The package
       # being installed is the repository root, and `raco pkg install`
@@ -40,69 +47,76 @@ jobs:
             racket-pkgs-${{ runner.os }}-${{ hashFiles('info.rkt') }}-
             racket-pkgs-${{ runner.os }}-
 
-      # Pulls the `roulette-*` platform package carrying librsdd; none of
-      # roulette's Racket code is involved.
-      #
       # On a cache hit the package is already linked and `raco pkg install`
       # refuses, so update first and fall back to install on a cold cache.
-      # `raco setup` is then explicit: updating a link whose dependencies
-      # are unchanged does no work at all, and the checkout it points at is
-      # fresh, so without this nothing would be compiled until the
-      # benchmarks ran -- putting compilation inside the timings.
-      #
-      # An absolute path is required for the install: `raco pkg install .`
-      # is rejected, because the last path element has to be the name.
+      # `raco setup` is explicit so that compilation is not inside the
+      # timings. An absolute path is required for the install.
       - name: Install probalog and its dependencies
         run: |
           raco pkg update --auto --no-docs probalog \
             || raco pkg install --auto --no-docs "$GITHUB_WORKSPACE"
           raco setup --no-docs --pkgs probalog
 
-      - name: Run tests
-        run: raco test test/probalog.rkt
+      # Every comparison system lives under one directory, installed by
+      # setup.sh. It is restored here and saved straight after setup, so
+      # a run whose report fails still keeps a warm cache for the next.
+      - name: Restore benchmark systems
+        id: systems-cache
+        uses: actions/cache/restore@v6
+        with:
+          path: ~/.cache/probalog-bench
+          key: bench-systems-${{ runner.os }}-${{ hashFiles('examples/bench/setup.sh') }}
 
-      - name: Run benchmarks
-        run: |
-          cd examples/bench
-          timeout --kill-after=10s 10m racket run-benchmarks.rkt \
-            -o "${{ github.workspace }}/results.json" \
-            "${{ github.sha }}" "${{ github.event.head_commit.message }}"
+      - name: Install benchmark systems
+        run: examples/bench/setup.sh
 
-      # The table goes to the Summary tab; the one-line total is also raised
-      # as an annotation so it shows on the run page without clicking in.
-      - name: Summarise
-        run: |
-          python3 - <<'PY'
-          import json, os
-          d = json.load(open(os.environ["GITHUB_WORKSPACE"] + "/results.json"))
-          t = d["total"]
-          rows = ["| benchmark | wall (ms) | find-bindings | guard build | set-union | index |",
-                  "| --- | ---: | ---: | ---: | ---: | ---: |"]
-          for b in d["benchmarks"]:
-              rows.append("| %s | %.1f | %.1f | %.1f | %.1f | %.1f |" % (
-                  b["name"], b["wall_ms"], b["find_bindings_ms"],
-                  b["guard_build_ms"], b["set_union_ms"], b["index_ms"]))
-          rows.append("| **total** | **%.1f** | %.1f | %.1f | %.1f | %.1f |" % (
-              t["wall_ms"], t["find_bindings_ms"], t["guard_build_ms"],
-              t["set_union_ms"], t["index_ms"]))
-          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
-              f.write("### probalog benchmarks\n\ncommit `%s`\n\n" % d["commit"][:12])
-              f.write("\n".join(rows) + "\n")
-          per = "%0A".join("%s: %.1f ms" % (b["name"], b["wall_ms"]) for b in d["benchmarks"])
-          print("::notice title=probalog benchmarks%%3A %.1f ms total::%s" % (t["wall_ms"], per))
-          PY
+      - name: Save benchmark systems
+        if: steps.systems-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v6
+        with:
+          path: ~/.cache/probalog-bench
+          key: bench-systems-${{ runner.os }}-${{ hashFiles('examples/bench/setup.sh') }}
 
-      # Always keep the run's own numbers, so the workflow is useful even
-      # before the history repository below is set up.
-      - name: Upload results
+      - name: Run every test, check and benchmark
+        run: python3 examples/bench/collect.py
+
+      # Annotations on the run page and tables on the Summary tab, all
+      # derived from data.json and compared with the committed one. Fails
+      # the job on failed tests, a ground-truth disagreement, or probalog
+      # disagreeing with ProbLog, PITA, Souffle or its own other modes.
+      - name: Report
+        run: python3 examples/bench/report.py data.json
+
+      - name: Upload data
+        if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: benchmark-results-${{ github.sha }}
-          path: results.json
+          name: data-${{ github.sha }}
+          path: data.json
+          if-no-files-found: ignore
 
-      # Appending to a separate repository is what makes trends visible
-      # across commits. Skipped unless a PAT is configured, and only from
-      # the default branch, so forks and pull requests do not write to it.
+      # Committed even when the report fails, so the file always reflects
+      # the latest run. [skip ci] keeps the commit from starting another
+      # run; rebasing onto the branch tip lets it land after a newer push.
+      - name: Commit data.json
+        if: >-
+          !cancelled()
+          && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        run: |
+          [ -f data.json ] || exit 0
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Update data.json for ${GITHUB_SHA::12} [skip ci]"
+          for attempt in 1 2 3; do
+            git pull --rebase origin "$GITHUB_REF_NAME" && git push origin "HEAD:$GITHUB_REF_NAME" && exit 0
+            sleep 5
+          done
+          exit 1
+
+      # Appending to a separate repository keeps the CI benchmark history.
+      # Skipped unless a PAT is configured, and only from the default branch.
       - name: Append to benchmark history
         if: >-
           github.event_name == 'push'
@@ -114,6 +128,7 @@ jobs:
             echo "no PAT secret configured; skipping history push"
             exit 0
           fi
+          jq '.ci_benchmarks' data.json > results.json
           git clone --depth 1 \
             "https://x-access-token:$PAT@github.com/Smaran-Teja/probalog-bench-data.git" history
           mkdir -p history/results
@@ -124,146 +139,3 @@ jobs:
           git add .
           git commit -m "benchmark results for ${{ github.sha }}"
           git push
-
-  # Cross-engine comparisons. These check that probalog agrees with other
-  # engines as well as how fast it is, so they are informative rather than
-  # gating: the job is `continue-on-error`, and a matrix entry whose tool
-  # fails to install does not hold up the rest.
-  #
-  # One entry per tool so they run in parallel; wall-clock is the slowest,
-  # not the sum. Every run uses `--quick` and a per-run timeout. souffle,
-  # problog and cplint install in seconds; psouffle is built from source
-  # and cached, so only a cold cache pays for it.
-  comparisons:
-    name: compare vs ${{ matrix.tool }}
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    timeout-minutes: 30
-    strategy:
-      fail-fast: false
-      matrix:
-        tool: [problog, souffle, cplint, psouffle]
-    steps:
-      - uses: actions/checkout@v5
-
-      - uses: Bogdanp/setup-racket@v1.15
-        with:
-          architecture: "x64"
-          distribution: "full"
-          version: "9.1"
-          dest: "${{ runner.temp }}/racket"
-          sudo: never
-
-      - name: Point package installs at the addon dir
-        run: echo "PLTADDONDIR=${{ runner.temp }}/racket-addon" >> "$GITHUB_ENV"
-
-      - name: Cache Racket packages
-        uses: actions/cache@v6
-        with:
-          path: ${{ runner.temp }}/racket-addon
-          key: racket-pkgs-${{ runner.os }}-${{ hashFiles('info.rkt') }}-${{ github.sha }}
-          restore-keys: |
-            racket-pkgs-${{ runner.os }}-${{ hashFiles('info.rkt') }}-
-            racket-pkgs-${{ runner.os }}-
-
-      - name: Install probalog
-        run: |
-          raco pkg update --auto --no-docs probalog \
-            || raco pkg install --auto --no-docs "$GITHUB_WORKSPACE"
-          raco setup --no-docs --pkgs probalog
-
-      # --- per-tool setup -------------------------------------------------
-
-      # The venv embeds absolute paths, so it is only reusable because the
-      # workspace path is fixed on hosted runners.
-      - name: Cache ProbLog virtualenv
-        if: matrix.tool == 'problog'
-        uses: actions/cache@v6
-        with:
-          path: examples/bench/.venv
-          key: problog-venv-${{ runner.os }}-${{ hashFiles('examples/bench/compare-problog.sh') }}
-
-      # Souffle is not in Ubuntu's repositories, so take the .deb from the
-      # latest upstream release. The asset is named for the Ubuntu version
-      # it was built against, so pick the one matching this runner and fall
-      # back to the newest available if that image is too new to have one.
-      - name: Install Souffle
-        if: matrix.tool == 'souffle'
-        run: |
-          set -o pipefail
-          rel=$(curl -fsSL https://api.github.com/repos/souffle-lang/souffle/releases/latest)
-          want=$(lsb_release -rs | tr -d .)
-          url=$(printf '%s' "$rel" | jq -r --arg v "$want" \
-                '.assets[] | select(.name | test("ubuntu-" + $v + ".*\\.deb$")) | .browser_download_url')
-          if [ -z "$url" ]; then
-            echo "no .deb built for Ubuntu $want; using the newest available"
-            url=$(printf '%s' "$rel" | jq -r \
-                  '[.assets[] | select(.name | test("ubuntu.*\\.deb$")) | .browser_download_url] | sort | last')
-          fi
-          echo "installing $url"
-          curl -fsSL -o /tmp/souffle.deb "$url"
-          sudo apt-get update
-          sudo apt-get install -y /tmp/souffle.deb
-          souffle --version | head -1
-
-      # Ubuntu's own swi-prolog is 9.0.4, and PITA errored on every query
-      # under it while working under the 10.0.2 used locally. The project's
-      # PPA tracks the current stable release -- 10.0.2 as well -- so CI and
-      # local runs use the same Prolog.
-      - name: Install SWI-Prolog
-        if: matrix.tool == 'cplint'
-        run: |
-          sudo apt-add-repository -y ppa:swi-prolog/stable
-          sudo apt-get update
-          sudo apt-get install -y swi-prolog-nox
-          swipl --version
-          echo "SWIPL_VERSION=$(swipl --version | awk '{print $3}')" >> "$GITHUB_ENV"
-
-      # cplint is a pack, compiled on first install into the user's pack dir.
-      - name: Cache cplint pack
-        if: matrix.tool == 'cplint'
-        uses: actions/cache@v6
-        with:
-          path: ~/.local/share/swi-prolog/pack
-          # Keyed on the Prolog version: the pack's foreign libraries are
-          # built against it, and one installed under another must not be
-          # restored.
-          key: cplint-pack-${{ runner.os }}-swipl-${{ env.SWIPL_VERSION }}
-
-      # libreadline-dev is needed at *comparison* time, not build time:
-      # souffle bakes `-lreadline` into the link line of every program it
-      # compiles, and `-l` resolves to the unversioned libreadline.so, which
-      # only the -dev package provides. Without it every program fails with
-      # "cannot find -lreadline".
-      - name: Install PSouffle build prerequisites
-        if: matrix.tool == 'psouffle'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y cmake bison flex libffi-dev zlib1g-dev \
-                                  libncurses-dev libreadline-dev mcpp
-
-      # The script builds CUDD and the Souffle fork here and reuses them.
-      - name: Cache PSouffle build
-        if: matrix.tool == 'psouffle'
-        uses: actions/cache@v6
-        with:
-          path: ~/.cache/probalog-psouffle
-          key: psouffle-${{ runner.os }}-${{ hashFiles('examples/bench/compare-psouffle.sh') }}
-
-      # --- run ------------------------------------------------------------
-
-      # pipefail so a failing comparison is not masked by `tee` succeeding.
-      # The job is continue-on-error, so this reports rather than gates.
-      - name: Run comparison
-        run: |
-          set -o pipefail
-          cd examples/bench
-          ./compare-${{ matrix.tool }}.sh --quick --timeout 30 \
-            2>&1 | tee "$RUNNER_TEMP/compare.txt"
-
-      # Step summaries only render on the run's Summary tab. This also
-      # raises an annotation -- notice, warning, or error on a disagreement
-      # -- so the outcome is visible from the run page and the job list.
-      - name: Report
-        if: always()
-        run: python3 examples/bench/ci-report.py ${{ matrix.tool }} "$RUNNER_TEMP/compare.txt"

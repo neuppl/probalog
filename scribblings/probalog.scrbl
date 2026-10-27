@@ -194,14 +194,33 @@ and a list of rules.
 @subsection{Saturation}
 
 @defproc[(run-datalog [base-fact-probs (listof (cons/c fact? (real-in 0 1)))]
-		      [rules (listof rule?)])
+		      [rules (listof rule?)]
+		      [#:goals goals (or/c #f (listof fact?)) #f]
+		      [#:magic? magic? any/c #t])
 	 sym-set?]{
   Saturates the database,
   returning the symbolic set of all derivable facts.
   Each base fact is admitted under an independent @tech{guard}
   variable of the given probability,
   and the immediate-consequence operator is iterated to a fixpoint.
-  Equivalent to @racket[(saturate-semi (make-base-set base-fact-probs) rules)].
+  Without @racket[goals], equivalent to
+  @racket[(saturate-semi (make-base-set base-fact-probs) rules)].
+
+  With @racket[goals], only what the goals can depend on is derived.
+  First, rules and base facts for predicates the goals cannot reach
+  through rule bodies are dropped. Then, unless @racket[magic?] is
+  @racket[#f], the rules are rewritten by magic sets: derived facts are
+  computed only for the constants the goals mention, as they are passed
+  left to right through rule bodies. The magic predicates are
+  deterministic, so they add no guard work, and every goal's
+  probability is unchanged.
+
+  @racket[query-fact], @racket[observe-fact] and
+  @racket[observe-not-fact] raise an error for a fact that was not
+  computed, rather than reporting it absent.
+
+  A @racketmodname[probalog] module passes the facts of its queries and
+  observations as @racket[goals], unless it has none.
 }
 
 @defproc[(saturate-semi [base sym-set?] [rules (listof rule?)]) sym-set?]{

@@ -28,7 +28,7 @@
 
 ;; "other" is wall-clock minus everything accounted for: GC and misc.
 (define (show-timing-split [results benchmark-results])
-  (define-values (wall bindings guard union index)
+  (define-values (wall bindings guard union index bdd)
     (aggregate-timing results))
   (define named
     (list (cons "find-bindings" bindings)
@@ -39,7 +39,8 @@
     (append named
             (list (cons "other" (max 0 (- wall (apply + (map cdr named))))))))
   (plot-breakdown (sort parts > #:key cdr)
-                  (format "timing split across ~a benchmarks (~ams total)"
-                          (length results) (~r wall #:precision 0))))
+                  (format "timing split across ~a benchmarks (~ams total, ~a% inside rsdd)"
+                          (length results) (~r wall #:precision 0)
+                          (~r (* 100 (/ bdd wall)) #:precision 0))))
 
 (show-timing-split)

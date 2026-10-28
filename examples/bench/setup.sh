@@ -66,9 +66,6 @@ if [ "$os" = Linux ]; then
   export PATH="$CENV/bin:$PATH"
   export CC=gcc CXX=g++
   export CPATH="$CENV/include" LIBRARY_PATH="$CENV/lib"
-  # The environment's OpenSSL, which SWI-Prolog uses to fetch cplint, has
-  # no certificate authorities of its own.
-  export SSL_CERT_FILE="$CENV/ssl/cacert.pem"
   export CMAKE_PREFIX_PATH="$CENV" PKG_CONFIG_PATH="$CENV/lib/pkgconfig"
   export LDFLAGS="-L$CENV/lib -Wl,-rpath,$CENV/lib"
 else
@@ -113,6 +110,19 @@ fi
 # Installed into the root rather than the user's pack directory, and keyed
 # on the Prolog version, since its foreign library is built against it.
 SWIPL_BIN="$(command -v swipl)"
+# SWI-Prolog reads root certificates from a file fixed when it was built,
+# which for the conda build is not on this machine; the environment's own
+# bundle is used instead, through the flag library(ssl) reads.
+cacert=""
+if [ "$os" = Linux ]; then
+  cacert="$CENV/ssl/cacert.pem"
+  [ -f "$cacert" ] || die "no certificate bundle at $cacert"
+fi
+use_cacert() {
+  if [ -n "$cacert" ]; then
+    echo "use_module(library(ssl)), set_prolog_flag(system_cacert_filename, '$cacert'),"
+  fi
+}
 swipl_version="$("$SWIPL_BIN" --version | awk '{print $3}')"
 PACKS="$ROOT/swipl-packs-$swipl_version"
 has_pita() {
@@ -122,7 +132,7 @@ if ! has_pita; then
   say "installing cplint for SWI-Prolog $swipl_version"
   rm -rf "$PACKS"
   mkdir -p "$PACKS"
-  quiet "$SWIPL_BIN" -g "pack_install(cplint, [interactive(false), package_directory('$PACKS')])" -t halt
+  quiet "$SWIPL_BIN" -g "$(use_cacert) pack_install(cplint, [interactive(false), package_directory('$PACKS')])" -t halt
   has_pita || die "cplint installed but library(pita) does not load"
 fi
 

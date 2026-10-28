@@ -25,7 +25,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 SYSTEMS = ["probalog", "probalog-certain", "problog", "pita", "souffle", "psouffle",
            "engine"]
 # (system, reference system) pairs whose answers must match, and whether a
-# mismatch fails the job. PSouffle is known to be wrong on cyclic programs.
+# mismatch fails the job. PSouffle drops derivations that arrive after a
+# tuple's first round, so it is wrong when derivation lengths differ.
 CHECKS = [("problog", "probalog", True), ("pita", "probalog", True),
           ("psouffle", "probalog", False), ("souffle", "probalog-certain", True),
           ("engine", "probalog", True)]

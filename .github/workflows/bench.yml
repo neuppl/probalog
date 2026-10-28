@@ -18,6 +18,24 @@ jobs:
     permissions:
       contents: write
     steps:
+      # The machine has no git, and without it checkout downloads a bare
+      # archive that cannot be committed to. So git comes first, from
+      # conda-forge into the same cache directory as everything else.
+      - name: Provide git
+        run: |
+          command -v git >/dev/null && exit 0
+          root="$HOME/.cache/probalog-bench"
+          mamba="$root/bin/micromamba"
+          if [ ! -x "$mamba" ]; then
+            mkdir -p "$root/bin"
+            curl -fsSL -o "$mamba" \
+              https://github.com/mamba-org/micromamba-releases/releases/latest/download/micromamba-linux-64
+            chmod +x "$mamba"
+          fi
+          [ -x "$root/git/bin/git" ] || MAMBA_ROOT_PREFIX="$root/mamba" \
+            "$mamba" create -y -q -p "$root/git" -c conda-forge --override-channels git
+          echo "$root/git/bin" >> "$GITHUB_PATH"
+
       - uses: actions/checkout@v5
 
       # Racket is pinned to a fixed release rather than "current" so that a

@@ -44,18 +44,28 @@ if [ "$os" = Linux ]; then
     chmod +x "$MAMBA"
   fi
   # gcc 13 rather than the newest: Souffle 2.5 and PSouffle predate it.
-  if [ ! -f "$CENV/.complete" ]; then
-    say "creating the conda environment"
-    rm -rf "$CENV"
-    quiet "$MAMBA" create -y -p "$CENV" -c conda-forge --override-channels \
-      python=3.12 swi-prolog cmake make bison flex pkg-config jq unzip \
-      gcc=13 gxx=13 gcc_linux-64=13 gxx_linux-64=13 \
-      readline ncurses libffi zlib sqlite
-    touch "$CENV/.complete"
+  # binutils for a plain `ar`, which the gcc packages only ship prefixed.
+  # The package list is recorded, so adding to it updates an existing
+  # environment rather than being skipped.
+  packages="python=3.12 swi-prolog cmake make bison flex pkg-config jq unzip
+            gcc=13 gxx=13 gcc_linux-64=13 gxx_linux-64=13 binutils
+            readline ncurses libffi zlib sqlite"
+  if [ "$(cat "$CENV/.complete" 2>/dev/null)" != "$(echo $packages)" ]; then
+    if [ -d "$CENV/conda-meta" ]; then
+      say "updating the conda environment"
+      quiet "$MAMBA" install -y -p "$CENV" -c conda-forge --override-channels $packages
+    else
+      say "creating the conda environment"
+      rm -rf "$CENV"
+      quiet "$MAMBA" create -y -p "$CENV" -c conda-forge --override-channels $packages
+    fi
+    echo $packages > "$CENV/.complete"
   fi
+  # No LD_LIBRARY_PATH: builds record the library path with -rpath, and
+  # setting it would make the machine's own tools load conda's libraries.
   export PATH="$CENV/bin:$PATH"
   export CC=gcc CXX=g++
-  export CPATH="$CENV/include" LIBRARY_PATH="$CENV/lib" LD_LIBRARY_PATH="$CENV/lib"
+  export CPATH="$CENV/include" LIBRARY_PATH="$CENV/lib"
   export CMAKE_PREFIX_PATH="$CENV" PKG_CONFIG_PATH="$CENV/lib/pkgconfig"
   export LDFLAGS="-L$CENV/lib -Wl,-rpath,$CENV/lib"
 else

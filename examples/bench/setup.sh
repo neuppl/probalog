@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # Installs every system the benchmarks compare against, under one cache
 # root, and writes <root>/env.sh naming each binary. Each step is skipped
-# when its result is already there, so a second run does nothing, and CI
-# caches the whole root.
+# when its result is already there, so a second run does nothing. Nothing
+# needs root: on Linux the toolchain and libraries come from a conda-forge
+# environment inside the root, and on macOS from Homebrew.
 #
 #   examples/bench/setup.sh            # install whatever is missing
 #   PROBALOG_BENCH_HOME=... setup.sh   # somewhere other than ~/.cache
@@ -18,6 +19,7 @@ esac
 mkdir -p "$ROOT"
 
 say() { printf '\033[1m==>\033[0m %s\n' "$*"; }
+die() { echo "setup.sh: $*" >&2; exit 1; }
 # Runs a noisy build step, showing its output only if it fails.
 quiet() {
   local log="$ROOT/build.log"
@@ -25,38 +27,61 @@ quiet() {
 }
 os="$(uname -s)"
 jobs="$(sysctl -n hw.ncpu 2>/dev/null || nproc)"
-die() { echo "setup.sh: $*" >&2; exit 1; }
-# -n, so a missing sudo rule fails at once instead of waiting for a password
-sudo=""; [ "$(id -u)" -ne 0 ] && sudo="sudo -n"
 
-# Linux packages are installed through apt with its archive directory
-# inside the root, so a cached root needs no downloads.
-DEBS="$ROOT/debs"
-apt_install() {
-  mkdir -p "$DEBS/partial"
-  $sudo apt-get install -y -q -o Dir::Cache::Archives="$DEBS" "$@" >/dev/null
-  $sudo chown -R "$(id -u):$(id -g)" "$DEBS"
-}
+# --- toolchain and libraries -------------------------------------------------
 
-# --- Linux prerequisites ---------------------------------------------------
-
-# probalog's rsdd library is only built for x86_64, and the packages below
-# come from Ubuntu's repositories and an Ubuntu-only PPA.
+CENV="$ROOT/conda"
 if [ "$os" = Linux ]; then
-  . /etc/os-release
-  [ "${ID:-}" = ubuntu ] || die "needs Ubuntu, found ${PRETTY_NAME:-unknown}"
+  # probalog's rsdd library is only built for x86_64.
   [ "$(uname -m)" = x86_64 ] || die "needs x86_64, found $(uname -m)"
-  prereqs="software-properties-common lsb-release jq curl unzip python3 python3-venv
-           python3-dev build-essential cmake bison flex libffi-dev zlib1g-dev
-           libncurses-dev libreadline-dev mcpp"
-  missing="$(for p in $prereqs; do dpkg -s "$p" >/dev/null 2>&1 || echo "$p"; done)"
-  if [ -n "$missing" ]; then
-    [ -z "$sudo" ] || $sudo true 2>/dev/null \
-      || die "needs root or passwordless sudo to install: $(echo $missing)"
-    say "installing prerequisites: $(echo $missing)"
-    $sudo apt-get update -q >/dev/null
-    apt_install $missing
+  MAMBA="$ROOT/bin/micromamba"
+  export MAMBA_ROOT_PREFIX="$ROOT/mamba"
+  if [ ! -x "$MAMBA" ]; then
+    say "downloading micromamba"
+    mkdir -p "$ROOT/bin"
+    curl -fsSL -o "$MAMBA" \
+      https://github.com/mamba-org/micromamba-releases/releases/latest/download/micromamba-linux-64
+    chmod +x "$MAMBA"
   fi
+  # gcc 13 rather than the newest: Souffle 2.5 and PSouffle predate it.
+  if [ ! -f "$CENV/.complete" ]; then
+    say "creating the conda environment"
+    rm -rf "$CENV"
+    quiet "$MAMBA" create -y -p "$CENV" -c conda-forge --override-channels \
+      python=3.12 swi-prolog cmake make bison flex pkg-config jq unzip \
+      gcc=13 gxx=13 gcc_linux-64=13 gxx_linux-64=13 \
+      readline ncurses libffi zlib sqlite
+    touch "$CENV/.complete"
+  fi
+  export PATH="$CENV/bin:$PATH"
+  export CC=gcc CXX=g++
+  export CPATH="$CENV/include" LIBRARY_PATH="$CENV/lib" LD_LIBRARY_PATH="$CENV/lib"
+  export CMAKE_PREFIX_PATH="$CENV" PKG_CONFIG_PATH="$CENV/lib/pkgconfig"
+  export LDFLAGS="-L$CENV/lib -Wl,-rpath,$CENV/lib"
+else
+  command -v souffle >/dev/null || { say "installing Souffle"; brew install souffle; }
+  command -v swipl >/dev/null || { say "installing SWI-Prolog"; brew install swi-prolog; }
+fi
+
+# --- Souffle (Linux) -----------------------------------------------------------
+
+# Not on conda-forge, so built from its release source.
+SF="$ROOT/souffle"
+if [ "$os" = Linux ]; then
+  if [ ! -x "$SF/bin/souffle" ]; then
+    say "building Souffle 2.5 (several minutes)"
+    rm -rf "$SF" "$ROOT/souffle-src"
+    mkdir -p "$ROOT/souffle-src"
+    curl -fsSL https://github.com/souffle-lang/souffle/archive/refs/tags/2.5.tar.gz \
+      | tar xz -C "$ROOT/souffle-src" --strip-components=1
+    quiet cmake -S "$ROOT/souffle-src" -B "$ROOT/souffle-src/build" -DCMAKE_BUILD_TYPE=Release \
+                -DSOUFFLE_ENABLE_TESTING=OFF -DSOUFFLE_GIT=OFF -DCMAKE_INSTALL_PREFIX="$SF"
+    quiet cmake --build "$ROOT/souffle-src/build" -j"$jobs"
+    quiet cmake --install "$ROOT/souffle-src/build"
+  fi
+  SOUFFLE_BIN="$SF/bin/souffle"
+else
+  SOUFFLE_BIN="$(command -v souffle)"
 fi
 
 # --- ProbLog -------------------------------------------------------------
@@ -70,58 +95,22 @@ if ! "$VENV/bin/problog" --version >/dev/null 2>&1 \
   quiet "$VENV/bin/pip" install --upgrade pip problog pysdd
 fi
 
-# --- Souffle and SWI-Prolog ----------------------------------------------
-
-if [ "$os" = Darwin ]; then
-  command -v souffle >/dev/null || { say "installing Souffle"; brew install souffle; }
-  command -v swipl >/dev/null || { say "installing SWI-Prolog"; brew install swi-prolog; }
-else
-  if [ ! -f "$ROOT/apt-sources-ready" ] || ! command -v swipl >/dev/null || ! command -v souffle >/dev/null; then
-    say "adding the SWI-Prolog PPA"
-    $sudo apt-add-repository -y ppa:swi-prolog/stable >/dev/null
-    $sudo apt-get update -q >/dev/null
-    touch "$ROOT/apt-sources-ready"
-  fi
-  if ! command -v swipl >/dev/null; then
-    say "installing SWI-Prolog"
-    apt_install swi-prolog-nox
-  fi
-  # Souffle is not packaged by Ubuntu; its releases carry .debs named for
-  # the Ubuntu version they were built against.
-  if ! command -v souffle >/dev/null; then
-    deb="$(ls "$DEBS"/souffle_*.deb 2>/dev/null | head -1 || true)"
-    if [ -z "$deb" ]; then
-      say "downloading Souffle"
-      rel="$(curl -fsSL https://api.github.com/repos/souffle-lang/souffle/releases/latest)"
-      want="$(lsb_release -rs | tr -d .)"
-      url="$(printf '%s' "$rel" | jq -r --arg v "$want" \
-             '.assets[] | select(.name | test("ubuntu-" + $v + ".*\\.deb$")) | .browser_download_url')"
-      [ -n "$url" ] || url="$(printf '%s' "$rel" | jq -r \
-             '[.assets[] | select(.name | test("ubuntu.*\\.deb$")) | .browser_download_url] | sort | last')"
-      mkdir -p "$DEBS"
-      deb="$DEBS/souffle_$(basename "$url")"
-      curl -fsSL -o "$deb" "$url"
-    fi
-    say "installing Souffle"
-    apt_install "$deb"
-  fi
-fi
-
 # --- cplint ----------------------------------------------------------------
 
 # Installed into the root rather than the user's pack directory, and keyed
 # on the Prolog version, since its foreign library is built against it.
-swipl_version="$(swipl --version | awk '{print $3}')"
+SWIPL_BIN="$(command -v swipl)"
+swipl_version="$("$SWIPL_BIN" --version | awk '{print $3}')"
 PACKS="$ROOT/swipl-packs-$swipl_version"
 has_pita() {
-  swipl -g "attach_packs('$PACKS', []), use_module(library(pita))" -t halt >/dev/null 2>&1
+  "$SWIPL_BIN" -g "attach_packs('$PACKS', []), use_module(library(pita))" -t halt >/dev/null 2>&1
 }
 if ! has_pita; then
   say "installing cplint for SWI-Prolog $swipl_version"
   rm -rf "$PACKS"
   mkdir -p "$PACKS"
-  swipl -g "pack_install(cplint, [interactive(false), package_directory('$PACKS')])" -t halt
-  has_pita || { echo "cplint installed but library(pita) does not load" >&2; exit 1; }
+  quiet "$SWIPL_BIN" -g "pack_install(cplint, [interactive(false), package_directory('$PACKS')])" -t halt
+  has_pita || die "cplint installed but library(pita) does not load"
 fi
 
 # --- CUDD and PSouffle -----------------------------------------------------
@@ -158,12 +147,22 @@ fi
 
 # --- environment -------------------------------------------------------------
 
+# BENCH_* are prepended to the search paths of the systems that need the
+# conda environment at run time: PSouffle compiles and links each program.
+if [ "$os" = Linux ]; then
+  bench_path="$CENV/bin" bench_lib="$CENV/lib" bench_include="$CENV/include"
+else
+  bench_path="" bench_lib="" bench_include=""
+fi
 cat > "$ROOT/env.sh" <<EOF
 export PROBLOG="$VENV/bin/problog"
-export SWIPL="$(command -v swipl)"
+export SWIPL="$SWIPL_BIN"
 export CPLINT_PACKS="$PACKS"
-export SOUFFLE="$(command -v souffle)"
+export SOUFFLE="$SOUFFLE_BIN"
 export PSOUFFLE="$PS_BIN"
 export CUDD_LIB_DIR="$CUDD/lib"
+export BENCH_PATH="$bench_path"
+export BENCH_LIB="$bench_lib"
+export BENCH_INCLUDE="$bench_include"
 EOF
 say "ready: $ROOT/env.sh"

@@ -42,6 +42,23 @@ def load_env():
 ENV = load_env()
 
 
+def prepend(env, var, value):
+    if value:
+        env[var] = value + (":" + env[var] if env.get(var) else "")
+
+
+def tool_env(*libs):
+    """The environment for a system built against setup.sh's toolchain:
+    its binaries, libraries and headers ahead of the system's."""
+    env = dict(os.environ)
+    prepend(env, "PATH", ENV.get("BENCH_PATH", ""))
+    for lib in (ENV.get("BENCH_LIB", ""), *libs):
+        prepend(env, "LD_LIBRARY_PATH", lib)
+        prepend(env, "LIBRARY_PATH", lib)
+    prepend(env, "CPATH", ENV.get("BENCH_INCLUDE", ""))
+    return env
+
+
 def tool(name, default):
     return os.environ.get(name) or ENV.get(name) or default
 
@@ -63,7 +80,7 @@ def timed(cmd, timeout=TIMEOUT, cwd=None, env=None):
 
 def version(cmd, pattern=None):
     try:
-        out = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+        out = subprocess.run(cmd, capture_output=True, text=True, timeout=30, env=tool_env())
     except (OSError, subprocess.TimeoutExpired):
         return None
     lines = [l.strip() for l in (out.stdout + out.stderr).splitlines() if l.strip()]
@@ -227,13 +244,14 @@ class Pita(System):
     def __init__(self):
         self.bin = tool("SWIPL", "swipl")
         self.packs = tool("CPLINT_PACKS", "")
+        self.env = tool_env()
 
     def attach(self):
         return f"attach_packs('{self.packs}', [])," if self.packs else ""
 
     def available(self):
         ok = subprocess.run([self.bin, "-g", f"{self.attach()}use_module(library(pita))", "-t", "halt"],
-                            capture_output=True).returncode == 0 if shutil.which(self.bin) or os.path.exists(self.bin) else False
+                            capture_output=True, env=self.env).returncode == 0 if shutil.which(self.bin) or os.path.exists(self.bin) else False
         return version([self.bin, "--version"]) if ok else None
 
     def run(self, m, case_dir):
@@ -243,7 +261,7 @@ class Pita(System):
                                + prolog_clauses(m) + [":- end_lpad."]) + "\n")
         q = render(m.query, lower, term_prolog)
         goal = f"{self.attach()}consult('{path}'), ((prob({q},P)->true;P=0.0), format('~w~n',[P]))"
-        status, t, out = timed([self.bin, "-g", goal, "-t", "halt"])
+        status, t, out = timed([self.bin, "-g", goal, "-t", "halt"], env=self.env)
         return status, t, first_float(out) if status == "ok" else None, failure(status, out)
 
 
@@ -266,7 +284,7 @@ class Souffle(System):
         lines += souffle_rules(m)
         with open(path, "w") as fh:
             fh.write("\n".join(lines) + "\n")
-        status, t, out = timed([self.bin, "-D", out_dir, path])
+        status, t, out = timed([self.bin, "-D", out_dir, path], env=tool_env())
         if status != "ok":
             return status, None, None, failure(status, out)
         answer = None
@@ -285,11 +303,7 @@ class PSouffle(System):
 
     def __init__(self):
         self.bin = tool("PSOUFFLE", "")
-        self.env = dict(os.environ)
-        lib = tool("CUDD_LIB_DIR", "")
-        if lib:
-            self.env["LD_LIBRARY_PATH"] = lib + (":" + self.env["LD_LIBRARY_PATH"]
-                                                 if self.env.get("LD_LIBRARY_PATH") else "")
+        self.env = tool_env(tool("CUDD_LIB_DIR", ""))
 
     def available(self):
         return version([self.bin, "--version"], r"[Vv]ersion") if self.bin and os.access(self.bin, os.X_OK) else None

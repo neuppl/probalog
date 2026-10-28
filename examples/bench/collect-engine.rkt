@@ -58,7 +58,7 @@
   (for ([b (in-list (eval 'benchmarks ci))])
     (define-values (facts rules) ((cadr b)))
     (write-program (build-path dir (format "ci-~a.rkt" (car b))) facts rules (list (caddr b))))
-  (define tp (instantiate (build-path here "timing-plot.rkt")))
+  (define tp (instantiate (build-path here "timing-programs.rkt")))
   (for ([b (in-list (eval 'benchmarks tp))])
     (define-values (facts rules goal) ((cadr b)))
     (write-program (build-path dir (format "timing-~a.rkt" (car b))) facts rules (list goal))))

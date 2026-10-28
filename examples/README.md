@@ -105,6 +105,7 @@ data file, [data.json](../data.json) at the repository root.
 | [report.py](bench/report.py)                     | agreement, speed and regression tables derived from `data.json`                                |
 | [run-benchmarks.rkt](bench/run-benchmarks.rkt)   | the CI timing-split benchmarks                                                                 |
 | [probalog-examples.rkt](bench/probalog-examples.rkt) | the four programs those benchmarks run                                                     |
+| [timing-programs.rkt](bench/timing-programs.rkt) | the six programs the timing plot runs, loadable without graphics libraries |
 | [timing-plot.rkt](bench/timing-plot.rkt), [probalog-plot.rkt](bench/probalog-plot.rkt) | stacked-bar plots of the timing split          |
 
 ```

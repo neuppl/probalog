@@ -49,7 +49,7 @@ if [ "$os" = Linux ]; then
   # environment rather than being skipped.
   packages="python=3.12 swi-prolog cmake make bison flex pkg-config jq unzip
             gcc=13 gxx=13 gcc_linux-64=13 gxx_linux-64=13 binutils
-            readline ncurses libffi zlib sqlite"
+            readline ncurses libffi zlib sqlite ca-certificates"
   if [ "$(cat "$CENV/.complete" 2>/dev/null)" != "$(echo $packages)" ]; then
     if [ -d "$CENV/conda-meta" ]; then
       say "updating the conda environment"
@@ -66,6 +66,9 @@ if [ "$os" = Linux ]; then
   export PATH="$CENV/bin:$PATH"
   export CC=gcc CXX=g++
   export CPATH="$CENV/include" LIBRARY_PATH="$CENV/lib"
+  # The environment's OpenSSL, which SWI-Prolog uses to fetch cplint, has
+  # no certificate authorities of its own.
+  export SSL_CERT_FILE="$CENV/ssl/cacert.pem"
   export CMAKE_PREFIX_PATH="$CENV" PKG_CONFIG_PATH="$CENV/lib/pkgconfig"
   export LDFLAGS="-L$CENV/lib -Wl,-rpath,$CENV/lib"
 else

@@ -40,10 +40,10 @@ def log(msg):
     print(f"==> {msg}", file=sys.stderr, flush=True)
 
 
-def run(cmd, timeout=None, cwd=ROOT):
+def run(cmd, timeout=None, cwd=ROOT, env=None):
     t0 = time.perf_counter()
     try:
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, cwd=cwd)
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, cwd=cwd, env=env)
     except subprocess.TimeoutExpired:
         return None, "", "timeout"
     return time.perf_counter() - t0, r.stdout, r.stderr if r.returncode else ""
@@ -96,8 +96,17 @@ def tests():
     )
 
 
+# The ground-truth check runs Souffle, which setup.sh may have built outside
+# PATH, and whose preprocessor fallback is the toolchain's gcc.
+def souffle_env():
+    env = dict(os.environ, SOUFFLE=systems.tool("SOUFFLE", "souffle"))
+    systems.prepend(env, "PATH", systems.ENV.get("BENCH_PATH", ""))
+    return env
+
+
 def engine_helper(*args, timeout=None):
-    _, out, err = run(["racket", os.path.join(HERE, "collect-engine.rkt"), *args], timeout=timeout)
+    _, out, err = run(["racket", os.path.join(HERE, "collect-engine.rkt"), *args],
+                      timeout=timeout, env=souffle_env())
     if err:
         raise RuntimeError(f"collect-engine.rkt {args[0]} failed: {err.strip()[:2000]}")
     return json.loads(out) if out else None

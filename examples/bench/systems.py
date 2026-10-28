@@ -220,15 +220,19 @@ class ProbLog(System):
 
     def __init__(self):
         self.bin = tool("PROBLOG", "problog")
+        # The interpreter of ProbLog's own environment, next to its command.
+        python = os.path.join(os.path.dirname(self.bin), "python")
+        self.cmd = ([python, os.path.join(HERE, "run-problog.py")]
+                    if os.path.exists(python) else [self.bin])
 
     def available(self):
-        return version([self.bin, "--version"])
+        return version([*self.cmd, "--version"])
 
     def run(self, m, case_dir):
         path = os.path.join(case_dir, "problog.pl")
         with open(path, "w") as fh:
             fh.write("\n".join(prolog_clauses(m) + [f"query({render(m.query, lower, term_prolog)})."]) + "\n")
-        status, t, out = timed([self.bin, "-k", "sdd", path])
+        status, t, out = timed([*self.cmd, "-k", "sdd", path])
         if status != "ok":
             return status, None, None, failure(status, out)
         answer = None

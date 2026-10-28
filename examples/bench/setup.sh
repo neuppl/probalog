@@ -43,22 +43,19 @@ if [ "$os" = Linux ]; then
       https://github.com/mamba-org/micromamba-releases/releases/latest/download/micromamba-linux-64
     chmod +x "$MAMBA"
   fi
-  # gcc 13 rather than the newest: Souffle 2.5 and PSouffle predate it.
-  # binutils for a plain `ar`, which the gcc packages only ship prefixed.
-  # The package list is recorded, so adding to it updates an existing
-  # environment rather than being skipped.
+  # gcc 14, conda-forge's own compiler, so its C++ runtime is the one the
+  # environment's libraries were built against; the newest gcc is past what
+  # Souffle 2.5 and PSouffle were written for. binutils for a plain `ar`.
+  # The package list is recorded: changing it recreates the environment and
+  # drops everything compiled against the old one.
   packages="python=3.12 swi-prolog cmake make bison flex pkg-config jq unzip
-            gcc=13 gxx=13 gcc_linux-64=13 gxx_linux-64=13 binutils
+            gcc=14 gxx=14 gcc_linux-64=14 gxx_linux-64=14 binutils
             readline ncurses libffi zlib sqlite ca-certificates"
   if [ "$(cat "$CENV/.complete" 2>/dev/null)" != "$(echo $packages)" ]; then
-    if [ -d "$CENV/conda-meta" ]; then
-      say "updating the conda environment"
-      quiet "$MAMBA" install -y -p "$CENV" -c conda-forge --override-channels $packages
-    else
-      say "creating the conda environment"
-      rm -rf "$CENV"
-      quiet "$MAMBA" create -y -p "$CENV" -c conda-forge --override-channels $packages
-    fi
+    say "creating the conda environment"
+    rm -rf "$CENV" "$ROOT/souffle" "$ROOT/psouffle/cudd-install" \
+           "$ROOT/psouffle/src/souffle-full-artifact-ae/build"
+    quiet "$MAMBA" create -y -p "$CENV" -c conda-forge --override-channels $packages
     echo $packages > "$CENV/.complete"
   fi
   # No LD_LIBRARY_PATH: builds record the library path with -rpath, and
@@ -85,7 +82,8 @@ if [ "$os" = Linux ]; then
     curl -fsSL https://github.com/souffle-lang/souffle/archive/refs/tags/2.5.tar.gz \
       | tar xz -C "$ROOT/souffle-src" --strip-components=1
     quiet cmake -S "$ROOT/souffle-src" -B "$ROOT/souffle-src/build" -DCMAKE_BUILD_TYPE=Release \
-                -DSOUFFLE_ENABLE_TESTING=OFF -DSOUFFLE_GIT=OFF -DCMAKE_INSTALL_PREFIX="$SF"
+                -DSOUFFLE_ENABLE_TESTING=OFF -DSOUFFLE_GIT=OFF -DCMAKE_INSTALL_PREFIX="$SF" \
+                -DPACKAGE_VERSION=2.5 -DGIT_PACKAGE_VERSION=2.5
     quiet cmake --build "$ROOT/souffle-src/build" -j"$jobs"
     quiet cmake --install "$ROOT/souffle-src/build"
   fi
